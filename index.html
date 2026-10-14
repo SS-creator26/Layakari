@@ -1,4 +1,10 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Layakari</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Mukta:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
@@ -170,6 +176,8 @@ form .f textarea{min-height:96px;font-family:var(--mono);font-size:13px}
 .note{font-size:12.5px;color:var(--muted);margin-top:10px}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
+</head>
+<body>
 
 <div class="app" id="app">
   <nav class="side" id="side" aria-label="Main"></nav>
@@ -182,6 +190,25 @@ form .f textarea{min-height:96px;font-family:var(--mono);font-size:13px}
 <script>
 (function(){
 "use strict";
+/* ================= SUPABASE SETTINGS: paste your two values here ================= */
+const SUPABASE_URL="https://srqvcszvnerdrldxnmbq.supabase.co";
+const SUPABASE_KEY="sb_publishable_mrNlVjna0IQSGo27MkBsDw_rOc7b72J";
+/* ================================================================================= */
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+function makeDb(){
+  return {
+    doc(path){const [table,id]=path.split("/");
+      return {set:async data=>{const {error}=await sb.from(table).upsert({id,data,updated_at:new Date().toISOString()});if(error)throw error;}};},
+    collection(table){return {onSnapshot(cb,onErr){
+      let t;
+      const load=async()=>{const {data,error}=await sb.from(table).select("id,data");
+        if(error){onErr&&onErr(error);return;}
+        cb({docs:(data||[]).map(r=>({id:r.id,exists:true,data:()=>r.data}))});};
+      load();
+      sb.channel("rt-"+table).on("postgres_changes",{event:"*",schema:"public",table},()=>{clearTimeout(t);t=setTimeout(load,200);}).subscribe();
+    }};}
+  };
+}
 /* ---------------- constants ---------------- */
 const TAALS={
   teentaal:{name:"Teentaal",n:16,bols:["Dha","Dhin","Dhin","Dha","Dha","Dhin","Dhin","Dha","Dha","Tin","Tin","Ta","Ta","Dhin","Dhin","Dha"],v:{0:"X",4:"2",8:"0",12:"3"}},
@@ -219,7 +246,7 @@ const NAV=[["discover","Discover"],["library","Library"],["academy","Academy"],[
 
 /* ---------------- state ---------------- */
 const S={view:"discover",gate:"loading",uid:null,db:null,user:null,profiles:{},ledgers:{},enrolls:{},loaded:{p:false,l:false,e:false},
-  q:"",taal:"all",selLvl:null,pvLvl:"",playing:null,beat:-1,bpm:{},modal:null,confirm:null,readOnly:false,avatar:""};
+  q:"",taal:"all",selLvl:null,pvLvl:"",playing:null,beat:-1,bpm:{},modal:null,confirm:null,readOnly:false,avatar:"",authMode:"in",authMsg:"",authBusy:false};
 
 /* ---------------- helpers ---------------- */
 const $=s=>document.querySelector(s);
@@ -400,13 +427,17 @@ function vProfile(){
   return `<p class="eyebrow">Profile</p>
   <div class="panel" style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap">${avatar(S.uid,72)}<div style="flex:1;min-width:220px"><h1 style="margin:0">${esc(p.name)}</h1><p class="muted" style="margin:2px 0 8px">${esc(p.city||"")}</p><div class="chips" style="margin:0">${(p.roles||[]).map(r=>`<span class="pill gold">${esc((ROLES.find(x=>x[0]===r)||[r,r])[1])}</span>`).join("")}</div><p style="margin:12px 0 0;max-width:62ch">${esc(p.bio||"")}</p></div><button class="btn ghost" data-act="prof-form">Edit profile</button></div>
   <div class="tiles"><div class="tile"><span>Compositions published</span><b>${nComp}</b></div><div class="tile"><span>Choreographies</span><b>${nCh}</b></div><div class="tile"><span>Licences bought</span><b>${nLic}</b></div><div class="tile"><span>Academy</span><b style="font-size:15px">${p.academy?esc(p.academy.name):"None"}</b></div></div>
-  <div class="sec"><h2>About this prototype</h2></div>
-  <div class="panel small muted"><p style="margin:0 0 8px">You're signed in with your Claude account. Your profile, compositions and academy are visible to everyone who can open this app. Purchases are simulated: licences are recorded, but no payment is taken.</p><p style="margin:0">Licence levels: Teach includes Perform, and Perform includes Listen. Students get listen and practice access to every piece released up to their level.</p></div>`;
+  <div class="sec"><h2>About this prototype</h2><button class="btn ghost sm" data-act="signout">Sign out</button></div>
+  <div class="panel small muted"><p style="margin:0 0 8px">Your profile, compositions and academy are visible to everyone who can open this app. Purchases are simulated: licences are recorded, but no payment is taken.</p><p style="margin:0">Licence levels: Teach includes Perform, and Perform includes Listen. Students get listen and practice access to every piece released up to their level.</p></div>`;
 }
 
 function vGate(){
   if(S.gate==="loading")return `<div class="gate"><p class="muted">Loading Layakari…</p></div>`;
-  if(S.gate==="signin")return `<div class="gate"><div class="dlg narrow"><p class="eyebrow">Layakari</p><h1>Sign in to continue</h1><p class="lede">Layakari uses your Claude account to sign you in. Sign in to claude.ai and open this page again to create your profile.</p></div></div>`;
+  if(S.gate==="signin"){const up=S.authMode==="up";return `<div class="gate"><div class="dlg narrow"><p class="eyebrow">Layakari</p><h1>${up?"Create your account":"Sign in"}</h1><p class="lede">${up?"Join the Kathak and tabla community: compose, learn and teach.":"Welcome back. Sign in to your Layakari account."}</p>
+   <form data-form="auth"><label class="f">Email<input id="au-email" type="email" required autocomplete="email" placeholder="you@example.com"></label>
+   <label class="f">Password<input id="au-pass" type="password" required minlength="8" autocomplete="${up?"new-password":"current-password"}" placeholder="At least 8 characters"></label>
+   ${S.authMsg?`<p class="note" role="status" style="color:var(--ink)">${esc(S.authMsg)}</p>`:""}
+   <div class="form-foot" style="justify-content:space-between;align-items:center"><button type="button" class="btn ghost sm" data-act="auth-mode">${up?"I already have an account":"New here? Create an account"}</button><button class="btn" type="submit" ${S.authBusy?"disabled":""}>${up?"Create account":"Sign in"}</button></div></form></div></div>`;}
   if(S.gate==="onboard")return `<div class="gate"><div class="dlg narrow"><p class="eyebrow">Welcome to Layakari</p><h1>Create your profile</h1><p class="lede">This is how other artists, students and gurus will see you.</p>${profileForm({})}</div></div>`;
   return "";
 }
@@ -499,6 +530,8 @@ function confirmOnce(tag){if(S.confirm===tag){S.confirm=null;return true;}S.conf
 document.addEventListener("click",e=>{
   const t=e.target.closest("[data-act]");if(!t)return;const d=t.dataset,act=d.act;
   if(act==="backdrop"){if(e.target===t)closeModal();return;}
+  if(act==="auth-mode"){S.authMode=S.authMode==="up"?"in":"up";S.authMsg="";render();return;}
+  if(act==="signout"){stop();sb.auth.signOut().finally(()=>location.reload());return;}
   if(act==="close"){closeModal();return;}
   if(act==="nav"){S.view=d.v;S.confirm=null;closeModal();render();window.scrollTo(0,0);return;}
   if(act==="taal"){S.taal=d.t;render();return;}
@@ -534,6 +567,15 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&S.modal)closeModal(
 document.addEventListener("submit",e=>{
   const f=e.target;if(!f.dataset||!f.dataset.form)return;e.preventDefault();const v=id=>{const el=document.getElementById(id);return el?el.value.trim():"";};
   const kind=f.dataset.form;
+  if(kind==="auth"){const email=v("au-email"),password=document.getElementById("au-pass").value;if(!email||!password)return;
+    S.authBusy=true;S.authMsg="";const keepEmail=email;
+    const done=msg=>{S.authBusy=false;S.authMsg=msg||"";render();const el=document.getElementById("au-email");if(el)el.value=keepEmail;};
+    if(S.authMode==="up"){sb.auth.signUp({email,password,options:{emailRedirectTo:location.origin}}).then(({data,error})=>{
+        if(error)return done(error.message);
+        if(!data.session)return done("Almost there: check your email and click the confirmation link, then sign in here.");
+        done("");});}
+    else{sb.auth.signInWithPassword({email,password}).then(({error})=>{if(error)return done(error.message==="Invalid login credentials"?"That email and password don't match. Try again or create an account.":error.message);done("");});}
+    return;}
   if(kind==="profile"){const prof={name:v("pf-name"),city:v("pf-city"),bio:v("pf-bio"),roles:ROLES.map(r=>r[0]).filter(k=>document.getElementById("pf-r-"+k).checked)};if(!prof.name)return;
     if(S.gate==="onboard"){const p=Object.assign({compositions:[],choreographies:[],created:Date.now()},prof);S.profiles[S.uid]=p;S.gate=null;S.view=prof.roles.includes("composer")?"studio":prof.roles.includes("guru")?"academy":"discover";render();queue(()=>S.db.doc("profiles/"+S.uid).set(p));toast("Profile created. Welcome to Layakari.");return;}
     saveMe(p=>Object.assign(p,prof));closeModal();toast("Profile saved.");return;}
@@ -553,23 +595,26 @@ function maybeReady(){
   if(S.gate)S.gate=null;
   render();if(S.modal&&S.modal.kind==="detail")renderModal();
 }
+let started=false;
+function start(session){
+  if(!session){S.gate="signin";render();return;}
+  if(started)return;started=true;
+  S.db=makeDb();S.user=session.user;S.uid=session.user.id;S.gate="loading";render();
+  const toMap=snap=>{const o={};snap.docs.forEach(d=>{if(d.exists)o[d.id]=d.data();});return o;};
+  const onErr=e=>{console.error(e);toast("Couldn't load data. Check your connection and refresh.");};
+  S.db.collection("profiles").onSnapshot(s=>{S.profiles=toMap(s);S.loaded.p=true;maybeReady();},onErr);
+  S.db.collection("ledger").onSnapshot(s=>{S.ledgers=toMap(s);S.loaded.l=true;maybeReady();},onErr);
+  S.db.collection("enroll").onSnapshot(s=>{S.enrolls=toMap(s);S.loaded.e=true;maybeReady();},onErr);
+}
 async function boot(){
   render();
-  const use=window.claude&&window.claude.use;
-  if(!use){S.gate="signin";render();return;}
-  let db=null,user=null;
-  try{[db,user]=await Promise.all([window.claude.use("db"),window.claude.use("user")]);}catch(e){}
-  if(!db||!user){S.gate="signin";render();return;}
-  const uid=await user.id();
-  if(!uid){S.gate="signin";render();return;}
-  S.db=db;S.user=user;S.uid=uid;
-  try{const w=await user.can("data.write");if(w===false)S.readOnly=true;}catch(e){}
-  const toMap=snap=>{const o={};snap.docs.forEach(d=>{if(d.exists)o[d.id]=d.data();});return o;};
-  const onErr=e=>{if(e&&e.code==="revoked"){S.gate="signin";render();}};
-  db.collection("profiles").onSnapshot(s=>{S.profiles=toMap(s);S.loaded.p=true;maybeReady();},onErr);
-  db.collection("ledger").onSnapshot(s=>{S.ledgers=toMap(s);S.loaded.l=true;maybeReady();},onErr);
-  db.collection("enroll").onSnapshot(s=>{S.enrolls=toMap(s);S.loaded.e=true;maybeReady();},onErr);
+  if(SUPABASE_URL.startsWith("PASTE")){document.getElementById("main").innerHTML=`<div class="wrap"><div class="empty"><b>Almost ready</b>Add your Supabase Project URL and publishable key at the top of the script in index.html.</div></div>`;return;}
+  sb.auth.onAuthStateChange((ev,session)=>{setTimeout(()=>{if(ev==="SIGNED_OUT"){location.reload();return;}if(session&&!started)start(session);},0);});
+  const {data}=await sb.auth.getSession();
+  start(data.session);
 }
 boot();
 })();
 </script>
+</body>
+</html>
