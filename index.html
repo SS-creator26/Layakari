@@ -162,6 +162,47 @@ form .f textarea{min-height:96px;font-family:var(--mono);font-size:13px}
 .form-foot{display:flex;gap:10px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
 .gate{min-height:80vh;display:grid;place-items:center;padding:16px}
 .gate .dlg{box-shadow:var(--shadow)}
+[hidden]{display:none!important}
+.app.gated main{padding:0}
+.app.gated .gate{min-height:100vh}
+/* landing */
+.land{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);grid-template-rows:auto 1fr;grid-template-areas:"copy auth" "feats auth";min-height:100vh;isolation:isolate}
+.land::before{content:"";position:absolute;top:0;bottom:0;left:0;width:52.38%;z-index:-1;background:radial-gradient(90% 70% at 100% 0%,var(--hero2) 0%,transparent 70%),radial-gradient(70% 60% at 0% 100%,#3E2443 0%,transparent 70%),var(--hero1)}
+.land-copy{grid-area:copy;color:var(--on-hero);padding:clamp(28px,5vw,64px) clamp(20px,5vw,64px) 0;display:flex;flex-direction:column;gap:18px}
+.land-brand{display:flex;align-items:center;gap:10px;font:400 26px var(--display);color:var(--on-hero)}
+.land-brand svg{width:28px;height:28px;color:var(--beat)}
+.land-copy .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--beat);margin:clamp(12px,4vh,40px) 0 0}
+.land-copy h1{font:400 clamp(36px,5.2vw,64px)/1.02 var(--display);margin:0;max-width:15ch;color:var(--on-hero)}
+.land-copy h1 em{font-style:normal;color:var(--beat)}
+.land-copy .lede{color:var(--on-hero-mut);font-size:clamp(15px,1.3vw,17px);max-width:46ch;margin:0}
+.land-row{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.land-ring{width:clamp(120px,14vw,170px);flex:none}
+.land-ring circle.d{fill:rgba(246,239,248,.16);animation:matra 8s steps(1) infinite}
+.land-ring circle.vib{fill:none;stroke:rgba(246,239,248,.45);stroke-width:1.2}
+.land-ring circle.sam{fill:var(--beat)}
+@keyframes matra{0%{fill:var(--beat)}6.25%,100%{fill:rgba(246,239,248,.16)}}
+.land-ring circle.sam{animation-name:sammatra}
+@keyframes sammatra{0%{fill:#fff}6.25%,100%{fill:var(--beat)}}
+.land-ring text{font:400 15px var(--display);fill:var(--on-hero)}
+.land-ring .bol{font:500 7.5px var(--mono);fill:var(--on-hero-mut);letter-spacing:.08em}
+.land-legend{font-family:var(--mono);font-size:11.5px;color:var(--on-hero-mut);line-height:1.7}
+.land-legend b{color:var(--on-hero);font-weight:500}
+.land-feats{grid-area:feats;list-style:none;margin:0;padding:clamp(24px,4vh,40px) clamp(20px,5vw,64px) clamp(28px,5vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:14px;align-content:end}
+.land-feats li{border:1px solid rgba(246,239,248,.14);background:rgba(255,255,255,.04);border-radius:16px;padding:14px 16px;color:var(--on-hero-mut);font-size:13.5px;line-height:1.45}
+.land-feats b{display:block;color:var(--on-hero);font:400 18px var(--display);margin-bottom:4px}
+.land-feats span.tag{display:inline-block;font-family:var(--mono);font-size:10.5px;color:var(--beat);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.land-auth{grid-area:auth;display:grid;place-items:center;padding:clamp(20px,4vw,56px)}
+.land-auth .dlg{box-shadow:var(--shadow);width:min(440px,100%)}
+.land-auth .fine{font-size:12px;color:var(--muted);margin:14px 0 0;text-align:center}
+@media (max-width:900px){
+  .land{grid-template-columns:minmax(0,1fr);grid-template-rows:auto;grid-template-areas:"copy" "auth" "feats"}
+  .land::before{width:100%;bottom:auto;height:var(--land-top,0px);display:none}
+  .land-copy{background:radial-gradient(90% 70% at 100% 0%,var(--hero2) 0%,transparent 70%),var(--hero1);padding-bottom:28px}
+  .land-copy .k{margin-top:4px}
+  .land-auth{padding:20px 16px;margin-top:-1px}
+  .land-feats{background:var(--hero1);padding-top:28px}
+}
+@media (prefers-reduced-motion: reduce){.land-ring circle.d{animation:none}}
 /* player + toast */
 .player{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));width:min(560px,calc(100% - 32px));background:var(--hero1);color:var(--on-hero);border-radius:16px;display:flex;align-items:center;gap:12px;padding:8px 10px;box-shadow:var(--shadow);z-index:30}
 @media (max-width:760px){.player{bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
@@ -246,7 +287,7 @@ const NAV=[["discover","Discover"],["library","Library"],["academy","Academy"],[
 
 /* ---------------- state ---------------- */
 const S={view:"discover",gate:"loading",uid:null,db:null,user:null,profiles:{},ledgers:{},enrolls:{},loaded:{p:false,l:false,e:false},
-  q:"",taal:"all",selLvl:null,pvLvl:"",playing:null,beat:-1,bpm:{},modal:null,confirm:null,readOnly:false,avatar:"",authMode:"in",authMsg:"",authBusy:false};
+  q:"",taal:"all",selLvl:null,pvLvl:"",playing:null,beat:-1,bpm:{},modal:null,confirm:null,readOnly:false,avatar:"",authMode:"up",authMsg:"",authBusy:false};
 
 /* ---------------- helpers ---------------- */
 const $=s=>document.querySelector(s);
@@ -433,11 +474,34 @@ function vProfile(){
 
 function vGate(){
   if(S.gate==="loading")return `<div class="gate"><p class="muted">Loading Layakari…</p></div>`;
-  if(S.gate==="signin"){const up=S.authMode==="up";return `<div class="gate"><div class="dlg narrow"><p class="eyebrow">Layakari</p><h1>${up?"Create your account":"Sign in"}</h1><p class="lede">${up?"Join the Kathak and tabla community: compose, learn and teach.":"Welcome back. Sign in to your Layakari account."}</p>
-   <form data-form="auth"><label class="f">Email<input id="au-email" type="email" required autocomplete="email" placeholder="you@example.com"></label>
-   <label class="f">Password<input id="au-pass" type="password" required minlength="8" autocomplete="${up?"new-password":"current-password"}" placeholder="At least 8 characters"></label>
-   ${S.authMsg?`<p class="note" role="status" style="color:var(--ink)">${esc(S.authMsg)}</p>`:""}
-   <div class="form-foot" style="justify-content:space-between;align-items:center"><button type="button" class="btn ghost sm" data-act="auth-mode">${up?"I already have an account":"New here? Create an account"}</button><button class="btn" type="submit" ${S.authBusy?"disabled":""}>${up?"Create account":"Sign in"}</button></div></form></div></div>`;}
+  if(S.gate==="signin"){const up=S.authMode==="up";
+    const tl=TAALS.teentaal;let ring="";
+    for(let i=0;i<tl.n;i++){const a=-Math.PI/2+i*2*Math.PI/tl.n,x=60+46*Math.cos(a),y=60+46*Math.sin(a),m=tl.v[i];
+      ring+=`<circle class="d ${i===0?"sam":""}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${i===0?5.2:m?4:2.8}" style="animation-delay:${(i*0.5).toFixed(1)}s"/>`;
+      if(m==="0")ring+=`<circle class="vib" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6.5"/>`;}
+    return `<div class="land">
+   <section class="land-copy" aria-labelledby="land-h">
+     <div class="land-brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="3.5" r="1.8" fill="currentColor"/></svg>Layakari</div>
+     <p class="k">Kathak · Tabla · Taal</p>
+     <h1 id="land-h">Every composition finds its <em>sam</em>.</h1>
+     <p class="lede">A home for Kathak and tabla artists. Composers publish and license their work, gurus run their academies, and students practise every piece with full notation and a live theka.</p>
+     <div class="land-row"><svg class="land-ring" viewBox="0 0 120 120" role="img" aria-label="Teentaal, 16 matras, cycling to sam"><circle cx="60" cy="60" r="46" fill="none" stroke="rgba(246,239,248,.14)" stroke-width=".8"/>${ring}<text x="60" y="62" text-anchor="middle">16</text><text class="bol" x="60" y="76" text-anchor="middle">TEENTAAL</text></svg>
+       <div class="land-legend"><b>Dha Dhin Dhin Dha</b><br>Dha Dhin Dhin Dha<br>Dha Tin Tin Ta<br>Ta Dhin Dhin Dha</div></div>
+   </section>
+   <section class="land-auth"><div class="dlg narrow">
+     <p class="eyebrow">${up?"Join Layakari":"Welcome back"}</p><h2 style="font-size:30px">${up?"Create your account":"Sign in"}</h2>
+     <form data-form="auth"><label class="f">Email<input id="au-email" type="email" required autocomplete="email" placeholder="you@example.com"></label>
+     <label class="f">Password<input id="au-pass" type="password" required minlength="8" autocomplete="${up?"new-password":"current-password"}" placeholder="At least 8 characters"></label>
+     ${S.authMsg?`<p class="note" role="status" style="color:var(--ink)">${esc(S.authMsg)}</p>`:""}
+     <div class="form-foot"><button class="btn" type="submit" style="width:100%;padding:11px 14px" ${S.authBusy?"disabled":""}>${up?"Create account":"Sign in"}</button></div></form>
+     <p class="fine">${up?"Already have an account?":"New to Layakari?"} <button type="button" class="btn ghost sm" data-act="auth-mode">${up?"Sign in":"Create an account"}</button></p>
+   </div></section>
+   <ul class="land-feats">
+     <li><span class="tag">Composers</span><b>Publish and earn</b>Share parans, tihais and kavitts with notation and theka. License them to listen, perform or teach, and keep 80%.</li>
+     <li><span class="tag">Dancers &amp; students</span><b>Practise at your laya</b>Open every piece you hold with the full bols and a theka you can slow down or speed up.</li>
+     <li><span class="tag">Gurus</span><b>Run your academy</b>Organise students into levels and release compositions to each level as they grow.</li>
+   </ul>
+ </div>`;}
   if(S.gate==="onboard")return `<div class="gate"><div class="dlg narrow"><p class="eyebrow">Welcome to Layakari</p><h1>Create your profile</h1><p class="lede">This is how other artists, students and gurus will see you.</p>${profileForm({})}</div></div>`;
   return "";
 }
