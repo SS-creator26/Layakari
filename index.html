@@ -1,0 +1,575 @@
+<title>Layakari</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Mukta:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: web app shell, left sidebar nav + scrolling main column; sidebar becomes a bottom tab bar on phones. Modal for detail and forms. */
+:root{
+  --bg:#F4F0F6; --surface:#FFFFFF; --surface2:#EEE7F1; --ink:#22182A; --muted:#6B5E74; --line:#E0D7E5;
+  --gold:#A4580F; --gold-ink:#FFFFFF; --gold-soft:#F6E7D6; --teal:#1E7A6E; --teal-soft:#DDF0EC; --danger:#B23A4E;
+  --hero1:#2A1B33; --hero2:#5A2E4E; --on-hero:#F6EFF8; --on-hero-mut:#CDBBD6; --beat:#E8A33D; --beat-ink:#241405;
+  --display:"Rozha One", Georgia, serif; --body:"Mukta", system-ui, -apple-system, "Segoe UI", sans-serif; --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --shadow:0 18px 50px -20px rgba(40,15,50,.35);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#151019;--surface:#1E1725;--surface2:#2A2033;--ink:#F1E9F5;--muted:#A99BB3;--line:#33293D;--gold:#E8A33D;--gold-ink:#241405;--gold-soft:#3A2A1A;--teal:#57C9B9;--teal-soft:#1B3330;--danger:#F07A8D;--shadow:0 18px 50px -20px rgba(0,0,0,.7);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#151019;--surface:#1E1725;--surface2:#2A2033;--ink:#F1E9F5;--muted:#A99BB3;--line:#33293D;--gold:#E8A33D;--gold-ink:#241405;--gold-soft:#3A2A1A;--teal:#57C9B9;--teal-soft:#1B3330;--danger:#F07A8D;--shadow:0 18px 50px -20px rgba(0,0,0,.7);color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.app{display:grid;grid-template-columns:232px minmax(0,1fr);min-height:100%}
+.side{position:sticky;top:env(safe-area-inset-top,0px);height:100vh;display:flex;flex-direction:column;gap:4px;padding:22px 14px;border-right:1px solid var(--line);background:var(--surface)}
+.brand{font:400 26px var(--display);padding:0 10px 16px;display:flex;align-items:center;gap:8px}
+.brand svg{width:26px;height:26px;color:var(--gold)}
+.nav{display:flex;align-items:center;gap:10px;background:none;border:0;padding:9px 10px;border-radius:10px;text-align:left;font-weight:500;color:var(--muted)}
+.nav svg{width:20px;height:20px;flex:none}
+.nav:hover{background:var(--surface2);color:var(--ink)}
+.nav[aria-current="page"]{background:var(--gold-soft);color:var(--gold)}
+.me{margin-top:auto;display:flex;align-items:center;gap:10px;padding:10px;border-top:1px solid var(--line)}
+.me img{width:32px;height:32px;border-radius:50%}
+.me b{display:block;font-size:13.5px;line-height:1.2}
+.me span{font-size:12px;color:var(--muted)}
+main{min-width:0;padding-inline:clamp(16px,4vw,48px);padding-block:28px 140px}
+.wrap{max-width:1080px;margin:0 auto}
+.app.gated{grid-template-columns:minmax(0,1fr)}
+@media (max-width:760px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .side{position:fixed;top:auto;bottom:0;left:0;right:0;height:auto;flex-direction:row;justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));border-right:0;border-top:1px solid var(--line);z-index:20}
+  .brand,.me{display:none}
+  .nav{flex-direction:column;gap:2px;font-size:11px;padding:6px 4px;flex:1;align-items:center}
+  main{padding-block:20px 170px}
+}
+h1{font:400 clamp(30px,4.2vw,42px)/1.08 var(--display);margin:0 0 6px;text-wrap:balance}
+h2{font:400 24px/1.15 var(--display);margin:0;text-wrap:balance}
+h3{font-size:16px;margin:0;font-weight:600}
+.lede{color:var(--muted);margin:0;max-width:62ch}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}
+.sec{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:34px 0 14px;flex-wrap:wrap}
+.sec span{color:var(--muted);font-size:13px}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid transparent;border-radius:10px;padding:8px 14px;font-weight:600;font-size:14px;background:var(--gold);color:var(--gold-ink);white-space:nowrap}
+.btn.ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+.btn.ghost:hover{background:var(--surface2)}
+.btn.sm{padding:5px 10px;font-size:13px;border-radius:8px}
+.btn.danger{background:transparent;border-color:var(--danger);color:var(--danger)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn svg{width:16px;height:16px}
+.row-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.search{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:9px 12px;margin-top:18px;max-width:560px}
+.search input{flex:1;border:0;background:none;outline:none;min-width:0}
+.search svg{width:16px;height:16px;color:var(--muted)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;font-size:13px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:18px}
+.card{background:none;border:0;padding:0;text-align:left;min-width:0}
+.cover{width:100%;aspect-ratio:1;max-width:100%;border-radius:14px;display:block}
+.card b{display:block;margin-top:8px;font-size:14.5px;line-height:1.25}
+.card span{font-size:12.5px;color:var(--muted);display:block}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px}
+.list{display:flex;flex-direction:column}
+.li{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);min-width:0}
+.li:last-child{border-bottom:0}
+.li .cover{width:52px;flex:none;border-radius:10px}
+.li .meta{flex:1;min-width:0}
+.li .meta b{display:block;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.li .meta span{font-size:12.5px;color:var(--muted)}
+.li button.meta{background:none;border:0;padding:0;text-align:left}
+.pill{display:inline-block;font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill.gold{border-color:var(--gold);color:var(--gold)}
+.pill.teal{border-color:var(--teal);color:var(--teal)}
+.av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font:400 15px var(--display);color:#fff;flex:none}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.acad{display:flex;flex-direction:column;gap:8px}
+.acad .top{display:flex;gap:12px;align-items:center}
+.acad p{margin:0;font-size:13.5px;color:var(--muted)}
+.hero{border-radius:20px;padding:22px;background:radial-gradient(120% 120% at 100% 0%,var(--hero2) 0%,var(--hero1) 60%);color:var(--on-hero)}
+.hero .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--beat)}
+.hero b.big{display:block;font:400 40px/1.1 var(--display);margin:4px 0}
+.hero p{margin:0;color:var(--on-hero-mut);font-size:13.5px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:14px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.tile span{display:block;font-size:12.5px;color:var(--muted)}
+.tile b{font-family:var(--mono);font-weight:500;font-size:18px;font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:500}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:13px;white-space:nowrap}
+.empty{border:1px dashed var(--line);border-radius:16px;padding:26px;text-align:center;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:12px}
+.empty b{color:var(--ink);font-size:16px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.tab{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px 12px;font-weight:600;font-size:13.5px}
+.tab[aria-pressed="true"]{border-color:var(--gold);background:var(--gold-soft);color:var(--gold)}
+.tab small{font-family:var(--mono);font-weight:400;color:var(--muted);margin-left:4px}
+.sw{width:42px;height:24px;border-radius:999px;border:0;background:var(--surface2);position:relative;flex:none;box-shadow:inset 0 0 0 1px var(--line)}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--muted);transition:transform .15s}
+.sw[aria-checked="true"]{background:var(--teal)}
+.sw[aria-checked="true"]::after{transform:translateX(18px);background:#fff}
+.sw[disabled]{opacity:.4;cursor:not-allowed}
+select.inline{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:4px 8px;font-size:13px}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(15,8,20,.55);display:flex;align-items:flex-start;justify-content:center;padding:max(5vh,16px) 16px;overflow-y:auto;z-index:40}
+.dlg{width:min(720px,100%);background:var(--surface);border-radius:20px;box-shadow:var(--shadow);padding:22px;position:relative}
+.dlg.narrow{width:min(520px,100%)}
+.x{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;border:0;background:var(--surface2);display:grid;place-items:center}
+.x svg{width:16px;height:16px}
+.det{display:grid;grid-template-columns:180px minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:600px){.det{grid-template-columns:minmax(0,1fr)}.det .cover{max-width:180px}}
+.meta-line{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.taal{margin-top:18px;background:var(--hero1);color:var(--on-hero);border-radius:16px;padding:14px}
+.taal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:13px}
+.taal-head span{font-family:var(--mono);font-size:11px;color:var(--on-hero-mut)}
+.beats{display:grid;gap:5px}
+.m{position:relative;background:rgba(255,255,255,.07);border-radius:8px;padding:15px 2px 6px;text-align:center;font-size:12px;line-height:1.1;min-width:0;overflow:hidden}
+.m small{position:absolute;top:2px;left:0;right:0;font-family:var(--mono);font-size:9.5px;color:var(--on-hero-mut)}
+.m.vs small{color:var(--beat)}
+.m.sam{box-shadow:inset 0 0 0 1px var(--beat)}
+.m.on{background:var(--beat);color:var(--beat-ink)}
+.m.on small{color:var(--beat-ink)}
+.ctrl{display:flex;align-items:center;gap:14px;margin-top:12px}
+.bigplay{width:46px;height:46px;border-radius:50%;border:0;background:var(--beat);color:var(--beat-ink);display:grid;place-items:center;flex:none}
+.bigplay svg{width:22px;height:22px}
+.ctrl label{flex:1;font-size:12px;color:var(--on-hero-mut);display:flex;flex-direction:column}
+.ctrl input{accent-color:var(--beat);width:100%}
+.bols{margin-top:12px;font-family:var(--mono);font-size:12.5px;line-height:1.7;background:rgba(0,0,0,.25);border-radius:12px;padding:10px 12px;white-space:pre-wrap;overflow-wrap:anywhere}
+.lock{color:var(--on-hero-mut);font-family:var(--body);font-size:12.5px;margin-top:6px}
+.lic{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:12px}
+.lic-opt{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--surface);text-align:left;display:flex;flex-direction:column;gap:2px}
+.lic-opt b{font-size:14px}
+.lic-opt span{font-size:12px;color:var(--muted)}
+.lic-opt em{font-style:normal;font-family:var(--mono);font-size:14px;margin-top:6px}
+.lic-opt.owned{border-color:var(--teal);background:var(--teal-soft)}
+.lic-opt.owned em{color:var(--teal)}
+.access{display:inline-flex;gap:6px;align-items:center;font-size:13px;color:var(--teal);font-weight:600;margin-top:12px}
+.access svg{width:16px;height:16px;flex:none}
+/* forms */
+form .f{display:flex;flex-direction:column;gap:4px;margin-top:12px;font-size:13px;color:var(--muted);font-weight:500}
+form .f input,form .f select,form .f textarea{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:8px 10px;color:var(--ink);font-size:14.5px;font-weight:400}
+form .f textarea{min-height:96px;font-family:var(--mono);font-size:13px}
+.f2{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0 12px}
+.roles{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.roles label{display:flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:13.5px;color:var(--ink);cursor:pointer}
+.roles input{accent-color:var(--gold)}
+.form-foot{display:flex;gap:10px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
+.gate{min-height:80vh;display:grid;place-items:center;padding:16px}
+.gate .dlg{box-shadow:var(--shadow)}
+/* player + toast */
+.player{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));width:min(560px,calc(100% - 32px));background:var(--hero1);color:var(--on-hero);border-radius:16px;display:flex;align-items:center;gap:12px;padding:8px 10px;box-shadow:var(--shadow);z-index:30}
+@media (max-width:760px){.player{bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
+.player .cover{width:40px;border-radius:8px;flex:none}
+.player .meta{flex:1;min-width:0;font-size:13px}
+.player .meta b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player .meta span{font-family:var(--mono);font-size:11px;color:var(--on-hero-mut)}
+.player button{width:36px;height:36px;border-radius:50%;border:0;background:var(--beat);color:var(--beat-ink);display:grid;place-items:center;flex:none}
+.player button svg{width:16px;height:16px}
+.toast{position:fixed;left:50%;top:calc(16px + env(safe-area-inset-top,0px));transform:translate(-50%,-20px);opacity:0;background:var(--ink);color:var(--bg);border-radius:12px;padding:10px 16px;font-size:14px;font-weight:500;transition:.2s;z-index:60;pointer-events:none;max-width:calc(100% - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.note{font-size:12.5px;color:var(--muted);margin-top:10px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="app" id="app">
+  <nav class="side" id="side" aria-label="Main"></nav>
+  <main id="main"><div class="wrap"><p class="muted">Loading Layakari…</p></div></main>
+</div>
+<div id="player"></div>
+<div id="modal" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+/* ---------------- constants ---------------- */
+const TAALS={
+  teentaal:{name:"Teentaal",n:16,bols:["Dha","Dhin","Dhin","Dha","Dha","Dhin","Dhin","Dha","Dha","Tin","Tin","Ta","Ta","Dhin","Dhin","Dha"],v:{0:"X",4:"2",8:"0",12:"3"}},
+  jhaptaal:{name:"Jhaptaal",n:10,bols:["Dhi","Na","Dhi","Dhi","Na","Ti","Na","Dhi","Dhi","Na"],v:{0:"X",2:"2",5:"0",7:"3"}},
+  rupak:{name:"Rupak",n:7,bols:["Tin","Tin","Na","Dhi","Na","Dhi","Na"],v:{0:"0",3:"1",5:"2"}},
+  ektaal:{name:"Ektaal",n:12,bols:["Dhin","Dhin","DhaGe","Tirakita","Tu","Na","Kat","Ta","DhaGe","Tirakita","Dhi","Na"],v:{0:"X",2:"0",4:"2",6:"0",8:"3",10:"4"}},
+  dhamar:{name:"Dhamar",n:14,bols:["Ka","Dhi","Ta","Dhi","Ta","Dha","–","Ga","Ti","Ta","Ti","Ta","Ta","–"],v:{0:"X",5:"2",7:"0",10:"3"}}
+};
+const TYPES=["Paran","Tukda","Tihai","Chakradar","Kavitt","Gat","Tatkar","Amad","Thaat","Peshkar","Kaida","Rela"];
+const LAYAS=["Vilambit","Madhya","Drut"];
+const ROLES=[["listener","Listener"],["dancer","Dancer"],["tabla","Tabla player"],["composer","Composer"],["choreographer","Choreographer"],["guru","Guru / teacher"],["student","Student"]];
+const KIND={listen:{n:"Listen",r:1,d:"Stream and read full notation"},perform:{n:"Perform",r:2,d:"One public performance"},teach:{n:"Teach",r:3,d:"Teach it, incl. in your academy, for 1 year"}};
+const SAMPLES=[
+ {title:"Megh Malhar Paran",type:"Paran",taal:"teentaal",laya:"Madhya",bpm:96,bols:"Dha-ge-tita Kat-ta Gadi-gana Dha\nKran-dha Kran-dha Dha-ge Na-dha\nTira-kita Taka Dhum-kita Taka\nDha – Kran-dha Kran-dha Dha (×3)"},
+ {title:"Chakradar Tihai No. 7",type:"Chakradar",taal:"teentaal",laya:"Drut",bpm:132,bols:"Dhit-ta Dhit-ta Kat-ta Ga-di\nGa-na Dha – Dhit-ta Dhit-ta\nKat-ta Ga-di Ga-na Dha –\n(whole phrase three times, landing on sam)"},
+ {title:"Barkha Tukda",type:"Tukda",taal:"jhaptaal",laya:"Madhya",bpm:88,bols:"Ta Thei Thei Tat | Aa Thei\nThei Tat Ta | Thei Ta Thei\nTigdha Dig Dig Thei (×3)"},
+ {title:"Radha Kavitt",type:"Kavitt",taal:"rupak",laya:"Vilambit",bpm:66,bols:"Shyam kahe sun Radhe pyari\nBansi baje Yamuna kinare\nDha Ki Ta Dha | Thei Thei Tat\nTigdha Dig Dig Thei (×3)"},
+ {title:"Ektaal Gat Nikas",type:"Gat",taal:"ektaal",laya:"Madhya",bpm:84,bols:"Ta – Thei – | Tat – Aa –\nThei Thei Tat | Ta Thei Thei\nGat walk: right, left, chakkar on sam"},
+ {title:"Basant Tatkar Set",type:"Tatkar",taal:"teentaal",laya:"Vilambit",bpm:60,bols:"Ta Thei Thei Tat | Aa Thei Thei Tat\nTa Thei Thei Tat | Aa Thei Thei Tat\nThen dugun and chaugun"}
+];
+const I={
+ discover:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="3.5" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="2"/></svg>',
+ library:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4v16M9 4v16M14 5l4 15"/></svg>',
+ academy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11.5V16c0 1.5 2.5 3 5 3s5-1.5 5-3v-4.5"/></svg>',
+ studio:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V9M9 19V5M14 19v-8M19 19V7"/></svg>',
+ profile:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
+ play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
+ pause:'<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>',
+ x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+ search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>',
+ plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>',
+ check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12.5l4.5 4.5L19 7"/></svg>'
+};
+const NAV=[["discover","Discover"],["library","Library"],["academy","Academy"],["studio","Studio"],["profile","Profile"]];
+
+/* ---------------- state ---------------- */
+const S={view:"discover",gate:"loading",uid:null,db:null,user:null,profiles:{},ledgers:{},enrolls:{},loaded:{p:false,l:false,e:false},
+  q:"",taal:"all",selLvl:null,pvLvl:"",playing:null,beat:-1,bpm:{},modal:null,confirm:null,readOnly:false,avatar:""};
+
+/* ---------------- helpers ---------------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const rid=()=>Math.random().toString(36).slice(2,10);
+const money=n=>"$"+(+n||0).toLocaleString(undefined,{minimumFractionDigits:(+n%1)?2:0,maximumFractionDigits:2});
+const num=(v,d)=>{const n=parseFloat(v);return isFinite(n)&&n>=0?Math.round(n*100)/100:d;};
+const hash=s=>{let h=0;for(const c of String(s))h=(h*31+c.charCodeAt(0))>>>0;return h;};
+const hue=s=>hash(s)%360;
+const date=t=>t?new Date(t).toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"}):"";
+const initials=n=>String(n||"?").trim().split(/\s+/).slice(0,2).map(w=>w[0]||"").join("").toUpperCase()||"?";
+const me=()=>S.profiles[S.uid];
+const pname=id=>(S.profiles[id]&&S.profiles[id].name)||"Unknown artist";
+const avatar=(id,size)=>`<span class="av" style="background:hsl(${hue(id)} 38% 36%);${size?`width:${size}px;height:${size}px`:""}" aria-hidden="true">${esc(initials(pname(id)))}</span>`;
+let gid=0;
+function cover(c){
+  const tl=TAALS[c.taal]||TAALS.teentaal,h=hue(c.key||c.title),g="g"+(++gid);let dots="";
+  for(let i=0;i<tl.n;i++){const a=-Math.PI/2+i*2*Math.PI/tl.n,x=50+40*Math.cos(a),y=50+40*Math.sin(a),m=tl.v[i];
+    dots+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${m?(i===0?4.6:3.4):2.2}" fill="${i===0?"#E8A33D":m==="0"?"none":`hsl(${h} 70% 84%)`}" stroke="hsl(${h} 70% 84%)" stroke-width="1"/>`;}
+  return `<svg class="cover" viewBox="0 0 100 100" role="img" aria-label="${tl.name}, ${tl.n} beats"><defs><radialGradient id="${g}" cx="30%" cy="25%"><stop offset="0" stop-color="hsl(${h} 45% 38%)"/><stop offset="1" stop-color="hsl(${(h+30)%360} 40% 15%)"/></radialGradient></defs><rect width="100" height="100" fill="url(#${g})"/><circle cx="50" cy="50" r="40" fill="none" stroke="hsl(${h} 60% 80% / .25)" stroke-width=".8"/>${dots}<text x="50" y="56" text-anchor="middle" font-family="Rozha One, Georgia, serif" font-size="16" fill="#F6EFF8">${tl.n}</text></svg>`;
+}
+let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2800);}
+
+/* ---------------- derived data ---------------- */
+function allComps(){const out=[];for(const [pid,p] of Object.entries(S.profiles)){for(const c of (p.compositions||[])){if(c&&c.id)out.push(Object.assign({},c,{owner:pid,key:pid+":"+c.id}));}}return out.sort((a,b)=>(b.created||0)-(a.created||0));}
+function comp(key){return allComps().find(c=>c.key===key);}
+function allChors(){const out=[];for(const [pid,p] of Object.entries(S.profiles)){for(const c of (p.choreographies||[])){if(c&&c.id)out.push(Object.assign({},c,{owner:pid,ckey:pid+":"+c.id}));}}return out;}
+function myItems(){return ((S.ledgers[S.uid]||{}).items)||[];}
+function academies(){return Object.entries(S.profiles).filter(([,p])=>p.academy).map(([pid,p])=>Object.assign({},p.academy,{guru:pid}));}
+function memberships(){ // academies I belong to (request exists + guru placed me in a level)
+  const req=((S.enrolls[S.uid]||{}).req)||{};
+  return academies().filter(a=>req[a.guru]).map(a=>{const lvl=(a.roster||{})[S.uid];return {a,lvl,status:lvl&&(a.levels||[]).some(l=>l.id===lvl)?"active":((a.declined||{})[S.uid]?"declined":"pending")};});
+}
+function levelPieces(a,lvlId){const ls=a.levels||[];const idx=ls.findIndex(l=>l.id===lvlId);if(idx<0)return [];const keys=new Set();ls.slice(0,idx+1).forEach(l=>(l.pieces||[]).forEach(k=>keys.add(k)));return [...keys];}
+function rank(key){ // my licence rank for a composition
+  const c=comp(key);if(c&&c.owner===S.uid)return 9;
+  let r=0;for(const it of myItems()){if(it.key!==key)continue;if(it.kind==="choreo")r=Math.max(r,2);else r=Math.max(r,(KIND[it.kind]||{}).r||0);}return r;
+}
+function academyAccess(key){for(const m of memberships()){if(m.status==="active"&&levelPieces(m.a,m.lvl).includes(key)){const l=(m.a.levels||[]).find(x=>x.id===m.lvl);return `${m.a.name} · ${l?l.name:""}`;}}return "";}
+
+/* ---------------- writes ---------------- */
+let q=Promise.resolve();
+function errText(e){const c=e&&e.code;if(c==="invalid_argument")return "You can view Layakari but can't save changes here. Ask the owner for edit access.";if(c==="quota_exceeded")return "Storage is full. Remove some items and try again.";if(c==="resource_exhausted")return "Too many changes at once. Wait a moment and try again.";return "Couldn't save. Check your connection and try again.";}
+function queue(fn){q=q.then(fn).catch(e=>{if(e&&e.code==="invalid_argument")S.readOnly=true;toast(errText(e));render();});return q;}
+const clone=o=>JSON.parse(JSON.stringify(o||{}));
+function saveMe(mut){const p=clone(me());mut(p);p.updated=Date.now();S.profiles[S.uid]=p;render();const ref=S.db.doc("profiles/"+S.uid);return queue(()=>ref.set(p));}
+function saveLedger(mut){const l=clone(S.ledgers[S.uid]);l.items=l.items||[];mut(l);S.ledgers[S.uid]=l;render();const ref=S.db.doc("ledger/"+S.uid);return queue(()=>ref.set(l));}
+function saveEnroll(mut){const e=clone(S.enrolls[S.uid]);e.req=e.req||{};mut(e);S.enrolls[S.uid]=e;render();const ref=S.db.doc("enroll/"+S.uid);return queue(()=>ref.set(e));}
+
+/* ---------------- audio ---------------- */
+let ac,noise;
+function ctx(){if(!ac){ac=new (window.AudioContext||window.webkitAudioContext)();const b=ac.createBuffer(1,ac.sampleRate*.2,ac.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;noise=b;}if(ac.state==="suspended")ac.resume();return ac;}
+function env(g,t,p,d){g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(p,t+.004);g.gain.exponentialRampToValueAtTime(.0001,t+d);}
+function bayan(t,v){const a=ctx(),o=a.createOscillator(),g=a.createGain();o.frequency.setValueAtTime(130,t);o.frequency.exponentialRampToValueAtTime(68,t+.25);env(g,t,.55*v,.55);o.connect(g).connect(a.destination);o.start(t);o.stop(t+.6);}
+function click(t,v,f){const a=ctx(),s=a.createBufferSource(),bp=a.createBiquadFilter(),g=a.createGain();s.buffer=noise;bp.type="bandpass";bp.frequency.value=f||1800;env(g,t,v,.05);s.connect(bp).connect(g).connect(a.destination);s.start(t);s.stop(t+.08);}
+function dayan(t,f,d,v){const a=ctx();[[1,.32],[2.01,.16],[3.02,.08],[4.1,.05]].forEach(([m,amp])=>{const o=a.createOscillator(),g=a.createGain();o.frequency.value=f*m;env(g,t,amp*v,d/m*1.4);o.connect(g).connect(a.destination);o.start(t);o.stop(t+d+.05);});click(t,.12*v,3200);}
+function strike(bol,t,beat){const b=bol.toLowerCase();
+  if(b==="–")return;
+  if(b==="tirakita"){[0,.25,.5,.75].forEach((k,i)=>i%2?dayan(t+k*beat,470,.12,.6):click(t+k*beat,.35,1500));return;}
+  if(b==="dhage"){bayan(t,1);dayan(t,440,.3,.8);bayan(t+beat/2,.7);return;}
+  if(/^dh/.test(b)){bayan(t,1);dayan(t,440,/in|dhi/.test(b)?.55:.3,.9);return;}
+  if(/^tin|^ti$|^tu/.test(b)){dayan(t,466,.6,.8);return;}
+  if(/^kat|^ka|^ke|^ga/.test(b)){b.startsWith("ga")?bayan(t,.7):click(t,.5,1200);return;}
+  dayan(t,440,.25,1);}
+let timer=null;
+function stop(){clearInterval(timer);timer=null;S.playing=null;S.beat=-1;paint();renderPlayer();syncPlay();}
+function bpmOf(c){return S.bpm[c.key]||c.bpm||90;}
+function play(key){
+  if(S.playing===key){stop();return;}
+  const c=comp(key);if(!c)return;stop();ctx();S.playing=key;
+  const tl=TAALS[c.taal]||TAALS.teentaal;
+  const tick=()=>{const cc=comp(key)||c;S.beat=(S.beat+1)%tl.n;strike(tl.bols[S.beat],ctx().currentTime+.02,60/bpmOf(cc));paint();};
+  tick();timer=setInterval(tick,60000/bpmOf(c));renderPlayer();syncPlay();
+}
+function retempo(key){if(S.playing===key){const c=comp(key);clearInterval(timer);const tl=TAALS[c.taal]||TAALS.teentaal;timer=setInterval(()=>{S.beat=(S.beat+1)%tl.n;strike(tl.bols[S.beat],ctx().currentTime+.02,60/bpmOf(c));paint();},60000/bpmOf(c));}}
+function paint(){document.querySelectorAll(".m").forEach(el=>el.classList.toggle("on",S.playing===el.dataset.k&&+el.dataset.i===S.beat));const pb=$("#pbeat");if(pb&&S.playing){const c=comp(S.playing);if(c){const tl=TAALS[c.taal]||TAALS.teentaal;pb.textContent=`${tl.name} · matra ${S.beat+1}/${tl.n} · ${tl.bols[S.beat]}`;}}}
+function syncPlay(){document.querySelectorAll("[data-act=play]").forEach(b=>{const on=S.playing===b.dataset.k;b.innerHTML=on?I.pause:I.play;b.setAttribute("aria-label",on?"Pause theka":"Play theka");});}
+function renderPlayer(){const el=$("#player");if(!S.playing){el.innerHTML="";return;}const c=comp(S.playing);if(!c){stop();return;}
+  el.innerHTML=`<div class="player">${cover(c)}<div class="meta"><b>${esc(c.title)}</b><span id="pbeat">${esc(pname(c.owner))}</span></div><button data-act="play" data-k="${esc(c.key)}" aria-label="Pause theka">${I.pause}</button></div>`;}
+
+/* ---------------- views ---------------- */
+function compCard(c){const from=Math.min(...["listen","perform","teach"].map(k=>(c.prices||{})[k]??99));
+  return `<button class="card" data-act="open" data-k="${esc(c.key)}">${cover(c)}<b>${esc(c.title)}</b><span>${esc(pname(c.owner))}</span><span>${esc((TAALS[c.taal]||{}).name||"")} · ${esc(c.type)} · from ${money(from)}</span></button>`;}
+function compLi(c,right){return `<div class="li">${cover(c)}<button class="meta" data-act="open" data-k="${esc(c.key)}"><b>${esc(c.title)}</b><span>${esc(pname(c.owner))} · ${esc((TAALS[c.taal]||{}).name||"")} · ${esc(c.type)}</span></button>${right||""}</div>`;}
+
+function vDiscover(){
+  const p=me(),qq=S.q.toLowerCase();
+  const comps=allComps().filter(c=>(S.taal==="all"||c.taal===S.taal)&&(c.title+" "+pname(c.owner)+" "+c.type).toLowerCase().includes(qq));
+  const acs=academies().filter(a=>a.guru!==S.uid&&a.open!==false);
+  const req=((S.enrolls[S.uid]||{}).req)||{};
+  const chors=allChors();
+  return `<p class="eyebrow">Discover</p><h1>Namaste, ${esc(p.name.split(" ")[0])}</h1><p class="lede">Compositions published by Kathak and tabla artists, academies taking students, and choreographies set to these pieces.</p>
+  <label class="search">${I.search}<input id="q" type="search" placeholder="Search compositions, composers, forms" value="${esc(S.q)}" aria-label="Search"></label>
+  <div class="chips">${[["all","All taals"]].concat(Object.entries(TAALS).map(([k,t])=>[k,`${t.name} · ${t.n}`])).map(([k,l])=>`<button class="chip" data-act="taal" data-t="${k}" aria-pressed="${S.taal===k}">${l}</button>`).join("")}</div>
+  <div class="sec"><h2>Compositions</h2><span>${comps.length} ${S.q||S.taal!=="all"?"matching":"published"}</span></div>
+  ${comps.length?`<div class="grid">${comps.map(compCard).join("")}</div>`:(allComps().length?`<div class="empty">No compositions match. Try another taal or search.</div>`:`<div class="empty"><b>No compositions published yet</b>Composers publish from Studio. If you compose, add your first piece.<button class="btn" data-act="nav" data-v="studio">Open Studio</button></div>`)}
+  <div class="sec"><h2>Academies</h2><span>${acs.length} open for students</span></div>
+  ${acs.length?`<div class="cols">${acs.map(a=>{const st=req[a.guru]?(((a.roster||{})[S.uid])?"Enrolled":"Requested"):"";const n=Object.keys(a.roster||{}).length;
+    return `<div class="panel acad"><div class="top">${avatar(a.guru)}<div style="min-width:0"><h3>${esc(a.name)}</h3><span class="small muted">Guru ${esc(pname(a.guru))} · ${(a.levels||[]).length} levels · ${n} student${n===1?"":"s"}</span></div></div><p>${esc(a.about||"")}</p><div class="row-actions"><span class="pill gold">${money(a.fee||0)}/month</span>${st?`<span class="pill teal">${st}</span><button class="btn sm ghost" data-act="nav" data-v="library">View</button>`:`<button class="btn sm" data-act="join" data-g="${esc(a.guru)}">Request to join</button>`}</div></div>`;}).join("")}</div>`:`<div class="empty">No other academies yet. Gurus can start one from the Academy tab.</div>`}
+  ${chors.length?`<div class="sec"><h2>Choreographies</h2><span>linked to compositions</span></div><div class="panel list">${chors.map(ch=>{const c=comp(ch.comp);return c?compLi(c,`<span class="pill teal">${esc(ch.title)} · ${esc(pname(ch.owner))}</span>`):"";}).join("")}</div>`:""}`;
+}
+
+function vLibrary(){
+  const items=myItems();const byKey={};items.forEach(it=>{(byKey[it.key]=byKey[it.key]||[]).push(it);});
+  const ms=memberships();
+  const lic=Object.entries(byKey).map(([k,its])=>{const c=comp(k);if(!c)return "";const kinds=[...new Set(its.map(i=>i.kind==="choreo"?"Choreography":KIND[i.kind].n))];
+    return compLi(c,`<span class="row-actions">${kinds.map(k=>`<span class="pill teal">${k}</span>`).join("")}<button class="btn sm ghost" data-act="play" data-k="${esc(k)}" aria-label="Play theka">${I.play}</button></span>`);}).join("");
+  return `<p class="eyebrow">Library</p><h1>Your compositions</h1><p class="lede">Everything you've licensed, plus what your gurus have released to you.</p>
+  <div class="sec"><h2>Licensed by you</h2><span>${Object.keys(byKey).length}</span></div>
+  ${lic?`<div class="panel list">${lic}</div>`:`<div class="empty"><b>No licences yet</b>Open a composition in Discover and choose Listen, Perform or Teach.<button class="btn" data-act="nav" data-v="discover">Browse compositions</button></div>`}
+  <div class="sec"><h2>Your academies</h2><span>${ms.length}</span></div>
+  ${ms.length?ms.map(m=>{const l=(m.a.levels||[]).find(x=>x.id===m.lvl);const keys=m.status==="active"?levelPieces(m.a,m.lvl):[];
+    return `<div class="panel" style="margin-bottom:14px"><div class="row-actions" style="justify-content:space-between"><div><h3>${esc(m.a.name)}</h3><span class="small muted">Guru ${esc(pname(m.a.guru))}${l&&m.status==="active"?` · Your level: <b>${esc(l.name)}</b>`:""}</span></div><span class="row-actions">${m.status==="active"?`<span class="pill teal">Enrolled</span>`:m.status==="declined"?`<span class="pill">Not accepted</span>`:`<span class="pill gold">Waiting for guru</span>`}<button class="btn sm ghost" data-act="leave" data-g="${esc(m.a.guru)}">${m.status==="active"?"Leave":"Withdraw"}</button></span></div>
+    ${m.status==="active"?(keys.length?`<div class="list" style="margin-top:6px">${keys.map(k=>{const c=comp(k);return c?compLi(c,`<button class="btn sm" data-act="open" data-k="${esc(k)}">Practice</button>`):"";}).join("")}</div>`:`<p class="note">Your guru hasn't released pieces for your level yet.</p>`):`<p class="note">${m.status==="declined"?"The guru didn't accept this request.":"Your guru will place you in a level, then pieces appear here."}</p>`}</div>`;}).join(""):`<div class="empty">You haven't joined an academy. Find one in Discover.</div>`}`;
+}
+
+function vAcademy(){
+  const p=me(),a=p.academy;
+  if(!a)return `<p class="eyebrow">Academy</p><h1>Teach on Layakari</h1><p class="lede">Run your own academy. Organise students into levels and release compositions to each level. Students practise with the full notation and theka, and the composers you teach are paid for every student.</p>
+   <div class="empty" style="margin-top:24px"><b>You don't have an academy yet</b>You can teach your own compositions, and any composition you hold a Teach licence for.<button class="btn" data-act="acad-form">Start your academy</button></div>`;
+  const levels=a.levels||[];if(!levels.find(l=>l.id===S.selLvl))S.selLvl=levels[0]&&levels[0].id;
+  const lvl=levels.find(l=>l.id===S.selLvl);
+  const roster=a.roster||{},declined=a.declined||{};
+  const reqs=Object.entries(S.enrolls).filter(([sid,e])=>sid!==S.uid&&e&&e.req&&e.req[S.uid]&&!roster[sid]&&!declined[sid]);
+  const students=Object.keys(roster).filter(sid=>((S.enrolls[sid]||{}).req||{})[S.uid]);
+  const mine=allComps().filter(c=>c.owner===S.uid);
+  const licensed=allComps().filter(c=>c.owner!==S.uid&&rank(c.key)>0);
+  const pieceRow=(c,ok)=>{const on=lvl&&(lvl.pieces||[]).includes(c.key);
+    return compLi(c,ok?`<button class="sw" role="switch" aria-checked="${!!on}" aria-label="Release ${esc(c.title)} to ${esc(lvl?lvl.name:"")}" data-act="piece" data-k="${esc(c.key)}"></button>`:`<span class="row-actions"><span class="small muted">Needs a Teach licence</span><button class="btn sm ghost" data-act="open" data-k="${esc(c.key)}">Upgrade</button></span>`);};
+  const lvlOpts=sel=>levels.map(l=>`<option value="${esc(l.id)}" ${l.id===sel?"selected":""}>${esc(l.name)}</option>`).join("");
+  const pv=levels.find(l=>l.id===S.pvLvl)||levels[0];
+  return `<p class="eyebrow">Academy · Guru</p>
+  <div class="row-actions" style="justify-content:space-between;align-items:flex-start"><div style="min-width:0"><h1>${esc(a.name)}</h1><p class="lede">${esc(a.about||"")}</p></div><span class="row-actions"><button class="btn ghost sm" data-act="acad-form">Edit details</button><button class="btn ghost sm" data-act="acad-open">${a.open===false?"Open to new students":"Close to new students"}</button></span></div>
+  <div class="tiles"><div class="tile"><span>Students</span><b>${students.length}</b></div><div class="tile"><span>Join requests</span><b>${reqs.length}</b></div><div class="tile"><span>Levels</span><b>${levels.length}</b></div><div class="tile"><span>Fee per student</span><b>${money(a.fee||0)}/mo</b></div></div>
+
+  <div class="sec"><h2>Levels and syllabus</h2><span>Students see their level and every level below it</span></div>
+  <div class="tabs">${levels.map(l=>`<button class="tab" data-act="lvl" data-l="${esc(l.id)}" aria-pressed="${l.id===S.selLvl}">${esc(l.name)}<small>${(l.pieces||[]).length}</small></button>`).join("")}<button class="btn sm ghost" data-act="lvl-form">${I.plus}Add level</button></div>
+  ${lvl?`<div class="panel" style="margin-top:12px"><div class="row-actions" style="justify-content:space-between"><h3>${esc(lvl.name)}: pieces released</h3><span class="row-actions"><button class="btn sm ghost" data-act="lvl-form" data-l="${esc(lvl.id)}">Rename</button><button class="btn sm danger" data-act="lvl-del" data-l="${esc(lvl.id)}">${S.confirm==="lvl:"+lvl.id?"Confirm delete":"Delete level"}</button></span></div>
+    ${mine.length+licensed.length?`<div class="list">${mine.map(c=>pieceRow(c,true)).join("")}${licensed.map(c=>pieceRow(c,rank(c.key)>=3)).join("")}</div>`:`<div class="empty" style="margin-top:12px">No compositions to teach yet. Publish your own in Studio, or get a Teach licence for one in Discover.<span class="row-actions"><button class="btn sm" data-act="nav" data-v="studio">Open Studio</button><button class="btn sm ghost" data-act="nav" data-v="discover">Discover</button></span></div>`}</div>`:`<div class="empty" style="margin-top:12px">Add a level to start building your syllabus.</div>`}
+
+  <div class="sec"><h2>Students</h2><span>${students.length} enrolled · ${reqs.length} waiting</span></div>
+  ${reqs.length?`<div class="panel list" style="margin-bottom:14px">${reqs.map(([sid,e])=>`<div class="li">${avatar(sid)}<div class="meta"><b>${esc(pname(sid))}</b><span>Asked to join ${esc(date(e.req[S.uid].at))}</span></div><span class="row-actions"><select class="inline" id="ap-${esc(sid)}" aria-label="Level for ${esc(pname(sid))}">${lvlOpts(levels[0]&&levels[0].id)}</select><button class="btn sm" data-act="approve" data-s="${esc(sid)}" ${levels.length?"":"disabled"}>Accept</button><button class="btn sm ghost" data-act="decline" data-s="${esc(sid)}">Decline</button></span></div>`).join("")}</div>`:""}
+  ${students.length?`<div class="panel list">${students.map(sid=>`<div class="li">${avatar(sid)}<div class="meta"><b>${esc(pname(sid))}</b><span>${levelPieces(a,roster[sid]).length} pieces available</span></div><span class="row-actions"><select class="inline" data-act="move" data-s="${esc(sid)}" id="mv-${esc(sid)}" aria-label="Level for ${esc(pname(sid))}">${lvlOpts(roster[sid])}</select><button class="btn sm ghost" data-act="remove" data-s="${esc(sid)}">${S.confirm==="rm:"+sid?"Confirm":"Remove"}</button></span></div>`).join("")}</div>`:`<div class="empty">No students yet. Students find your academy in Discover and ask to join; you place them in a level here.</div>`}
+
+  ${levels.length?`<div class="sec"><h2>Preview as a student</h2><span>What a student at this level can open</span></div>
+  <div class="panel"><label class="small muted">Level <select class="inline" id="pv-lvl">${lvlOpts(pv.id)}</select></label>
+  ${levelPieces(a,pv.id).length?`<div class="list" style="margin-top:6px">${levelPieces(a,pv.id).map(k=>{const c=comp(k);return c?compLi(c,`<button class="btn sm ghost" data-act="open" data-k="${esc(k)}">Open</button>`):"";}).join("")}</div>`:`<p class="note">Nothing released up to ${esc(pv.name)} yet.</p>`}</div>`:""}`;
+}
+
+function earnings(){
+  const rows=[];let tot=0;const by={listen:0,perform:0,teach:0,choreo:0};
+  for(const [buyer,l] of Object.entries(S.ledgers)){for(const it of ((l||{}).items||[])){
+    const c=comp(it.key);const owner=c?c.owner:String(it.key||"").split(":")[0];
+    let share=0,what="";
+    if(it.kind==="choreo"){if(it.seller===S.uid){share+=it.price*.7;what="Your choreography (70%)";}if(owner===S.uid){share+=it.price*.15;what=what?what+" + composition (15%)":"Choreography to your piece (15%)";}if(share)by.choreo+=share;}
+    else if(owner===S.uid){share=it.price*.8;what=KIND[it.kind].n+" licence (80%)";by[it.kind]+=share;}
+    if(share){tot+=share;rows.push({buyer,it,share,what,c});}
+  }}
+  rows.sort((a,b)=>b.it.at-a.it.at);return {tot,by,rows};
+}
+function vStudio(){
+  const p=me(),mine=(p.compositions||[]).map(c=>Object.assign({},c,{owner:S.uid,key:S.uid+":"+c.id})),chs=p.choreographies||[];const e=earnings();
+  const ac=Object.entries(S.profiles).filter(([pid,pp])=>pid!==S.uid&&pp.academy&&(pp.academy.levels||[]).some(l=>(l.pieces||[]).some(k=>k.startsWith(S.uid+":"))));
+  return `<p class="eyebrow">Studio</p><h1>Your work and earnings</h1><p class="lede">Publish compositions and choreographies, set your licence prices, and see what you've earned.</p>
+  <div class="hero" style="margin-top:20px"><span class="k">Earned to date</span><b class="big">${money(e.tot)}</b><p>${e.rows.length} sale${e.rows.length===1?"":"s"} · composers keep 80% of licences, choreographers 70% and the linked composer 15%. ${ac.length?`Taught in ${ac.length} academ${ac.length===1?"y":"ies"}.`:""}</p></div>
+  <div class="tiles"><div class="tile"><span>Listen licences</span><b>${money(e.by.listen)}</b></div><div class="tile"><span>Perform licences</span><b>${money(e.by.perform)}</b></div><div class="tile"><span>Teach licences</span><b>${money(e.by.teach)}</b></div><div class="tile"><span>Choreography</span><b>${money(e.by.choreo)}</b></div></div>
+  <div class="sec"><h2>Your compositions</h2><span class="row-actions"><button class="btn sm" data-act="comp-form">${I.plus}New composition</button></span></div>
+  ${mine.length?`<div class="panel list">${mine.map(c=>compLi(c,`<span class="row-actions"><span class="pill">${money((c.prices||{}).perform)} / ${money((c.prices||{}).teach)}</span><button class="btn sm ghost" data-act="comp-form" data-id="${esc(c.id)}">Edit</button></span>`)).join("")}</div>`
+   :`<div class="empty"><b>No compositions yet</b>Add your first composition with its taal, laya, bols and prices. To try the app quickly, you can also load six sample pieces into your own catalogue.<span class="row-actions"><button class="btn" data-act="comp-form">New composition</button><button class="btn ghost" data-act="samples">Add 6 sample compositions</button></span></div>`}
+  <div class="sec"><h2>Your choreographies</h2><span><button class="btn sm ghost" data-act="ch-form" ${allComps().length?"":"disabled"}>${I.plus}New choreography</button></span></div>
+  ${chs.length?`<div class="panel list">${chs.map(ch=>{const c=comp(ch.comp);return `<div class="li">${c?cover(c):""}<div class="meta"><b>${esc(ch.title)}</b><span>to ${c?esc(c.title)+" by "+esc(pname(c.owner)):"a removed composition"} · ${money(ch.price)}/event</span></div><button class="btn sm danger" data-act="ch-del" data-id="${esc(ch.id)}">${S.confirm==="ch:"+ch.id?"Confirm":"Remove"}</button></div>`;}).join("")}</div>`:`<div class="empty">Set a choreography to any published composition. When a dancer licenses it, you keep 70% and the composer earns 15%.</div>`}
+  <div class="sec"><h2>Recent sales</h2><span>Demo purchases, no money moves</span></div>
+  ${e.rows.length?`<div class="panel tbl"><table><thead><tr><th>Date</th><th>Composition</th><th>Buyer</th><th>Type</th><th class="n">Price</th><th class="n">Your share</th></tr></thead><tbody>${e.rows.slice(0,25).map(r=>`<tr><td>${esc(date(r.it.at))}</td><td>${esc(r.c?r.c.title:"Removed")}</td><td>${esc(pname(r.buyer))}</td><td>${esc(r.what)}</td><td class="n">${money(r.it.price)}</td><td class="n">${money(r.share)}</td></tr>`).join("")}</tbody></table></div>`:`<div class="empty">No sales yet. Sales appear here when someone licenses your work.</div>`}`;
+}
+
+function vProfile(){
+  const p=me();const nComp=(p.compositions||[]).length,nCh=(p.choreographies||[]).length,nLic=myItems().length;
+  return `<p class="eyebrow">Profile</p>
+  <div class="panel" style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap">${avatar(S.uid,72)}<div style="flex:1;min-width:220px"><h1 style="margin:0">${esc(p.name)}</h1><p class="muted" style="margin:2px 0 8px">${esc(p.city||"")}</p><div class="chips" style="margin:0">${(p.roles||[]).map(r=>`<span class="pill gold">${esc((ROLES.find(x=>x[0]===r)||[r,r])[1])}</span>`).join("")}</div><p style="margin:12px 0 0;max-width:62ch">${esc(p.bio||"")}</p></div><button class="btn ghost" data-act="prof-form">Edit profile</button></div>
+  <div class="tiles"><div class="tile"><span>Compositions published</span><b>${nComp}</b></div><div class="tile"><span>Choreographies</span><b>${nCh}</b></div><div class="tile"><span>Licences bought</span><b>${nLic}</b></div><div class="tile"><span>Academy</span><b style="font-size:15px">${p.academy?esc(p.academy.name):"None"}</b></div></div>
+  <div class="sec"><h2>About this prototype</h2></div>
+  <div class="panel small muted"><p style="margin:0 0 8px">You're signed in with your Claude account. Your profile, compositions and academy are visible to everyone who can open this app. Purchases are simulated: licences are recorded, but no payment is taken.</p><p style="margin:0">Licence levels: Teach includes Perform, and Perform includes Listen. Students get listen and practice access to every piece released up to their level.</p></div>`;
+}
+
+function vGate(){
+  if(S.gate==="loading")return `<div class="gate"><p class="muted">Loading Layakari…</p></div>`;
+  if(S.gate==="signin")return `<div class="gate"><div class="dlg narrow"><p class="eyebrow">Layakari</p><h1>Sign in to continue</h1><p class="lede">Layakari uses your Claude account to sign you in. Sign in to claude.ai and open this page again to create your profile.</p></div></div>`;
+  if(S.gate==="onboard")return `<div class="gate"><div class="dlg narrow"><p class="eyebrow">Welcome to Layakari</p><h1>Create your profile</h1><p class="lede">This is how other artists, students and gurus will see you.</p>${profileForm({})}</div></div>`;
+  return "";
+}
+function profileForm(p){return `<form data-form="profile"><label class="f">Stage or display name<input id="pf-name" required maxlength="60" value="${esc(p.name||"")}" placeholder="e.g. Priya Sharma"></label>
+  <div class="f">I am a…<div class="roles">${ROLES.map(([k,l])=>`<label><input type="checkbox" id="pf-r-${k}" ${(p.roles||[]).includes(k)?"checked":""}> ${l}</label>`).join("")}</div></div>
+  <label class="f">City<input id="pf-city" maxlength="60" value="${esc(p.city||"")}" placeholder="e.g. Oakville, Ontario"></label>
+  <label class="f">About you<textarea id="pf-bio" maxlength="600" style="font-family:var(--body)" placeholder="Gharana, training, what you teach or compose">${esc(p.bio||"")}</textarea></label>
+  <div class="form-foot">${p.name?`<button type="button" class="btn ghost" data-act="close">Cancel</button>`:""}<button class="btn" type="submit">${p.name?"Save profile":"Create profile"}</button></div></form>`;}
+
+/* ---------------- modals ---------------- */
+function mDetail(key){
+  const c=comp(key);if(!c)return `<p>This composition is no longer available.</p>`;
+  const tl=TAALS[c.taal]||TAALS.teentaal,own=c.owner===S.uid,r=rank(key),via=academyAccess(key),full=r>0||via;
+  const cols=tl.n>12?Math.ceil(tl.n/2):tl.n>8?Math.ceil(tl.n/2):tl.n;
+  const pr=c.prices||{};const chs=allChors().filter(ch=>ch.comp===key);
+  const lines=String(c.bols||"").split("\n");
+  return `<div class="det">${cover(c)}<div style="min-width:0"><p class="eyebrow">${esc(c.type)}</p><h2 style="font-size:30px">${esc(c.title)}</h2><p class="muted" style="margin:4px 0 0">by ${esc(pname(c.owner))}${S.profiles[c.owner]&&S.profiles[c.owner].city?" · "+esc(S.profiles[c.owner].city):""}</p>
+   <div class="meta-line"><span class="pill gold">${tl.name} · ${tl.n} matras</span><span class="pill">${esc(c.laya)} laya · ${c.bpm} bpm</span></div>
+   ${own?`<div class="access">${I.check} Your composition</div>`:r>0?`<div class="access">${I.check} You hold a ${r>=3?"Teach":r>=2?"Perform":"Listen"} licence</div>`:via?`<div class="access">${I.check} Released to you by ${esc(via)}</div>`:""}</div></div>
+  <div class="taal"><div class="taal-head"><b>Theka · ${tl.name}</b><span>X sam · 0 khali</span></div>
+   <div class="beats" style="grid-template-columns:repeat(${cols},minmax(0,1fr))">${tl.bols.map((b,i)=>`<div class="m ${tl.v[i]?"vs":""} ${i===0?"sam":""}" data-k="${esc(key)}" data-i="${i}"><small>${tl.v[i]||i+1}</small>${b}</div>`).join("")}</div>
+   <div class="ctrl"><button class="bigplay" data-act="play" data-k="${esc(key)}" aria-label="Play theka">${S.playing===key?I.pause:I.play}</button><label for="bpm">Laya <span id="bpmv">${bpmOf(c)} bpm</span><input type="range" id="bpm" min="40" max="180" value="${bpmOf(c)}"></label></div>
+   <div class="bols">${esc(full?c.bols:lines[0]||"")}</div>${full?"":`<p class="lock">Get any licence to see the full notation (${lines.length} lines).</p>`}</div>
+  ${own?`<div class="form-foot"><button class="btn ghost" data-act="comp-form" data-id="${esc(c.id)}">Edit composition</button></div>`:`
+  <div class="sec" style="margin-top:22px"><h3>Licence this composition</h3><span>${esc(pname(c.owner))} keeps 80%</span></div>
+  <div class="lic">${Object.entries(KIND).map(([k,K])=>{const has=r>=K.r;return `<button class="lic-opt ${has?"owned":""}" data-act="buy" data-k="${esc(key)}" data-kind="${k}" ${has||S.readOnly?"disabled":""}><b>${K.n}</b><span>${K.d}</span><em>${has?"Included":money(pr[k])}</em></button>`;}).join("")}</div>
+  <p class="note">Demo checkout: the licence is recorded and the artist's earnings update, but no payment is taken.</p>`}
+  ${chs.length?`<div class="sec"><h3>Choreographies to this piece</h3><span>dancer 70% · composer 15%</span></div><div class="list">${chs.map(ch=>{const has=myItems().some(i=>i.kind==="choreo"&&i.chor===ch.ckey);return `<div class="li">${avatar(ch.owner)}<div class="meta"><b>${esc(ch.title)}</b><span>${esc(pname(ch.owner))}${ch.about?" · "+esc(ch.about):""}</span></div>${ch.owner===S.uid?`<span class="pill">Yours</span>`:has?`<span class="pill teal">Licensed</span>`:`<button class="btn sm" data-act="buych" data-c="${esc(ch.ckey)}" ${S.readOnly?"disabled":""}>License · ${money(ch.price)}</button>`}</div>`;}).join("")}</div>`:""}`;
+}
+function mComp(id){
+  const p=me(),c=(p.compositions||[]).find(x=>x.id===id)||{taal:"teentaal",laya:"Madhya",bpm:90,type:"Paran",prices:{listen:2,perform:25,teach:99}};const pr=c.prices||{};
+  return `<p class="eyebrow">Studio</p><h2>${id?"Edit composition":"New composition"}</h2><form data-form="comp" data-id="${esc(id||"")}">
+  <label class="f">Title<input id="cf-title" required maxlength="80" value="${esc(c.title||"")}" placeholder="e.g. Sawan Ki Tihai"></label>
+  <div class="f2"><label class="f">Form<select id="cf-type">${TYPES.map(t=>`<option ${t===c.type?"selected":""}>${t}</option>`).join("")}</select></label>
+  <label class="f">Taal<select id="cf-taal">${Object.entries(TAALS).map(([k,t])=>`<option value="${k}" ${k===c.taal?"selected":""}>${t.name} (${t.n})</option>`).join("")}</select></label>
+  <label class="f">Laya<select id="cf-laya">${LAYAS.map(l=>`<option ${l===c.laya?"selected":""}>${l}</option>`).join("")}</select></label>
+  <label class="f">Tempo (bpm)<input id="cf-bpm" type="number" min="30" max="240" value="${esc(c.bpm||90)}"></label></div>
+  <label class="f">Bols / notation<textarea id="cf-bols" maxlength="4000" placeholder="One line per avartan">${esc(c.bols||"")}</textarea></label>
+  <div class="f2"><label class="f">Listen price ($)<input id="cf-pl" type="number" min="0" step="0.5" value="${esc(pr.listen??2)}"></label><label class="f">Perform price ($)<input id="cf-pp" type="number" min="0" step="1" value="${esc(pr.perform??25)}"></label><label class="f">Teach price ($/yr)<input id="cf-pt" type="number" min="0" step="1" value="${esc(pr.teach??99)}"></label></div>
+  <p class="note">The first line of notation is shown as a free preview. You keep 80% of every licence.</p>
+  <div class="form-foot">${id?`<button type="button" class="btn danger" data-act="comp-del" data-id="${esc(id)}">${S.confirm==="comp:"+id?"Confirm delete":"Delete"}</button>`:""}<span style="flex:1"></span><button type="button" class="btn ghost" data-act="close">Cancel</button><button class="btn" type="submit">${id?"Save":"Publish"}</button></div></form>`;
+}
+function mChor(){const cs=allComps();return `<p class="eyebrow">Studio</p><h2>New choreography</h2><form data-form="chor">
+  <label class="f">Title<input id="ch-title" required maxlength="80" placeholder="e.g. Varsha, a monsoon solo"></label>
+  <label class="f">Set to composition<select id="ch-comp">${cs.map(c=>`<option value="${esc(c.key)}">${esc(c.title)} · ${esc(pname(c.owner))}</option>`).join("")}</select></label>
+  <div class="f2"><label class="f">Licence price per event ($)<input id="ch-price" type="number" min="0" value="49"></label></div>
+  <label class="f">Description<input id="ch-about" maxlength="140" placeholder="Length, style, number of dancers"></label>
+  <p class="note">You keep 70% of each sale and the composer earns 15%. The licence includes the right to perform the composition.</p>
+  <div class="form-foot"><button type="button" class="btn ghost" data-act="close">Cancel</button><button class="btn" type="submit">Publish</button></div></form>`;}
+function mAcad(){const a=me().academy||{};return `<p class="eyebrow">Academy</p><h2>${a.name?"Edit academy":"Start your academy"}</h2><form data-form="acad">
+  <label class="f">Academy name<input id="ac-name" required maxlength="80" value="${esc(a.name||"")}" placeholder="e.g. Nritya Sadhana Academy"></label>
+  <label class="f">About<textarea id="ac-about" maxlength="600" style="font-family:var(--body)" placeholder="Gharana, what you teach, class times">${esc(a.about||"")}</textarea></label>
+  <div class="f2"><label class="f">Monthly fee per student ($)<input id="ac-fee" type="number" min="0" value="${esc(a.fee??40)}"></label></div>
+  ${a.name?"":`<p class="note">We'll start you with three levels: Prarambhik, Madhyama and Visharad. You can rename or add levels.</p>`}
+  <p class="note">Fees are shown to students; billing isn't connected in this prototype.</p>
+  <div class="form-foot"><button type="button" class="btn ghost" data-act="close">Cancel</button><button class="btn" type="submit">${a.name?"Save":"Create academy"}</button></div></form>`;}
+function mLevel(id){const l=((me().academy||{}).levels||[]).find(x=>x.id===id)||{};return `<p class="eyebrow">Academy</p><h2>${id?"Rename level":"Add a level"}</h2><form data-form="level" data-id="${esc(id||"")}"><label class="f">Level name<input id="lv-name" required maxlength="40" value="${esc(l.name||"")}" placeholder="e.g. Praveen"></label><div class="form-foot"><button type="button" class="btn ghost" data-act="close">Cancel</button><button class="btn" type="submit">Save</button></div></form>`;}
+
+function openModal(kind,arg){S.modal={kind,arg};S.confirm=null;renderModal();const f=$("#modal input:not([type=range]),#modal button.bigplay");if(f)f.focus();}
+function closeModal(){S.modal=null;S.confirm=null;renderModal();}
+function renderModal(){const m=$("#modal");if(!S.modal){m.hidden=true;m.innerHTML="";return;}
+  const k=S.modal.kind,a=S.modal.arg;
+  const body=k==="detail"?mDetail(a):k==="comp"?mComp(a):k==="chor"?mChor():k==="acad"?mAcad():k==="level"?mLevel(a):k==="profile"?profileForm(me()):"";
+  m.hidden=false;m.innerHTML=`<div class="modal" data-act="backdrop"><div class="dlg ${k==="detail"?"":"narrow"}" role="dialog" aria-modal="true"><button class="x" data-act="close" aria-label="Close">${I.x}</button>${body}</div></div>`;
+  syncPlay();paint();
+  const r=$("#bpm");if(r)r.oninput=e=>{S.bpm[a]=+e.target.value;$("#bpmv").textContent=e.target.value+" bpm";retempo(a);};
+}
+
+/* ---------------- render ---------------- */
+function render(){
+  const side=$("#side"),main=$("#main");
+  $("#app").classList.toggle("gated",!!S.gate);
+  if(S.gate){side.hidden=true;if(S.gate==="onboard"&&$("#pf-name"))return;main.innerHTML=vGate();return;}
+  side.hidden=false;
+  const p=me();
+  side.innerHTML=`<div class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="3.5" r="1.8" fill="currentColor"/></svg>Layakari</div>`+
+    NAV.map(([k,l])=>`<button class="nav" data-act="nav" data-v="${k}" ${S.view===k?'aria-current="page"':""}>${I[k]}${l}</button>`).join("")+
+    `<div class="me">${avatar(S.uid,32)}<div style="min-width:0"><b>${esc(p.name)}</b><span>${esc(((p.roles||[]).map(r=>(ROLES.find(x=>x[0]===r)||[r,r])[1])).slice(0,2).join(" · "))}</span></div></div>`;
+  const ae=document.activeElement,fid=ae&&ae.id,sel=ae&&ae.selectionStart!=null?[ae.selectionStart,ae.selectionEnd]:null;
+  const v={discover:vDiscover,library:vLibrary,academy:vAcademy,studio:vStudio,profile:vProfile}[S.view]();
+  main.innerHTML=`<div class="wrap">${S.readOnly?`<p class="note" style="margin-top:0">You can browse, but changes can't be saved with your access level.</p>`:""}${v}</div>`;
+  if(fid){const el=document.getElementById(fid);if(el&&main.contains(el)){el.focus();if(sel&&el.setSelectionRange)try{el.setSelectionRange(sel[0],sel[1]);}catch(e){}}}
+  const qi=$("#q");if(qi)qi.oninput=e=>{S.q=e.target.value;render();};
+  const pv=$("#pv-lvl");if(pv)pv.onchange=e=>{S.pvLvl=e.target.value;render();};
+  paint();syncPlay();
+}
+
+/* ---------------- actions ---------------- */
+function confirmOnce(tag){if(S.confirm===tag){S.confirm=null;return true;}S.confirm=tag;return false;}
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-act]");if(!t)return;const d=t.dataset,act=d.act;
+  if(act==="backdrop"){if(e.target===t)closeModal();return;}
+  if(act==="close"){closeModal();return;}
+  if(act==="nav"){S.view=d.v;S.confirm=null;closeModal();render();window.scrollTo(0,0);return;}
+  if(act==="taal"){S.taal=d.t;render();return;}
+  if(act==="open"){openModal("detail",d.k);return;}
+  if(act==="play"){e.stopPropagation();play(d.k);return;}
+  if(act==="buy"){const c=comp(d.k);if(!c)return;const price=num((c.prices||{})[d.kind],0);
+    saveLedger(l=>l.items.push({id:rid(),key:c.key,kind:d.kind,seller:c.owner,price,at:Date.now()})).then(()=>{if(S.modal)renderModal();});
+    toast(`${KIND[d.kind].n} licence added for ${c.title}. Demo: no payment taken.`);renderModal();return;}
+  if(act==="buych"){const ch=allChors().find(x=>x.ckey===d.c);if(!ch)return;
+    saveLedger(l=>l.items.push({id:rid(),key:ch.comp,kind:"choreo",chor:ch.ckey,seller:ch.owner,price:num(ch.price,0),at:Date.now()}));
+    toast(`Licensed "${ch.title}". Demo: no payment taken.`);renderModal();return;}
+  if(act==="join"){saveEnroll(en=>{en.req[d.g]={at:Date.now()};});toast("Request sent. The guru will place you in a level.");return;}
+  if(act==="leave"){saveEnroll(en=>{delete en.req[d.g];});toast("Removed.");return;}
+  if(act==="acad-form"){openModal("acad");return;}
+  if(act==="acad-open"){saveMe(p=>{p.academy.open=p.academy.open===false;});return;}
+  if(act==="lvl"){S.selLvl=d.l;S.confirm=null;render();return;}
+  if(act==="lvl-form"){openModal("level",d.l);return;}
+  if(act==="lvl-del"){if(!confirmOnce("lvl:"+d.l)){render();return;}saveMe(p=>{const a=p.academy;a.levels=a.levels.filter(l=>l.id!==d.l);for(const s in (a.roster||{}))if(a.roster[s]===d.l)a.roster[s]=a.levels[0]?a.levels[0].id:null;});toast("Level deleted. Its students moved to the first level.");return;}
+  if(act==="piece"){saveMe(p=>{const l=p.academy.levels.find(x=>x.id===S.selLvl);if(!l)return;l.pieces=l.pieces||[];const i=l.pieces.indexOf(d.k);if(i>-1)l.pieces.splice(i,1);else l.pieces.push(d.k);});return;}
+  if(act==="approve"){const s=$("#ap-"+CSS.escape(d.s));const lv=s&&s.value;if(!lv)return;saveMe(p=>{p.academy.roster=p.academy.roster||{};p.academy.roster[d.s]=lv;if(p.academy.declined)delete p.academy.declined[d.s];});toast(`${pname(d.s)} joined your academy.`);return;}
+  if(act==="decline"){saveMe(p=>{p.academy.declined=p.academy.declined||{};p.academy.declined[d.s]=true;});return;}
+  if(act==="remove"){if(!confirmOnce("rm:"+d.s)){render();return;}saveMe(p=>{delete p.academy.roster[d.s];});toast(`${pname(d.s)} removed.`);return;}
+  if(act==="comp-form"){openModal("comp",d.id);return;}
+  if(act==="comp-del"){if(!confirmOnce("comp:"+d.id)){renderModal();return;}const key=S.uid+":"+d.id;if(S.playing===key)stop();
+    saveMe(p=>{p.compositions=(p.compositions||[]).filter(c=>c.id!==d.id);if(p.academy)(p.academy.levels||[]).forEach(l=>{l.pieces=(l.pieces||[]).filter(k=>k!==key);});});closeModal();toast("Composition deleted.");return;}
+  if(act==="samples"){saveMe(p=>{p.compositions=p.compositions||[];SAMPLES.forEach((s,i)=>p.compositions.push(Object.assign({},s,{id:rid(),created:Date.now()-i*1000,prices:{listen:2,perform:[25,20,15,25,15,10][i],teach:[99,79,69,99,69,49][i]}})));});toast("Six sample compositions added to your catalogue.");return;}
+  if(act==="ch-form"){openModal("chor");return;}
+  if(act==="ch-del"){if(!confirmOnce("ch:"+d.id)){render();return;}saveMe(p=>{p.choreographies=(p.choreographies||[]).filter(c=>c.id!==d.id);});return;}
+  if(act==="prof-form"){openModal("profile");return;}
+});
+document.addEventListener("change",e=>{const t=e.target;if(t.dataset&&t.dataset.act==="move"){const sid=t.dataset.s,v=t.value;saveMe(p=>{p.academy.roster[sid]=v;});toast(`${pname(sid)} moved to a new level.`);}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&S.modal)closeModal();});
+document.addEventListener("submit",e=>{
+  const f=e.target;if(!f.dataset||!f.dataset.form)return;e.preventDefault();const v=id=>{const el=document.getElementById(id);return el?el.value.trim():"";};
+  const kind=f.dataset.form;
+  if(kind==="profile"){const prof={name:v("pf-name"),city:v("pf-city"),bio:v("pf-bio"),roles:ROLES.map(r=>r[0]).filter(k=>document.getElementById("pf-r-"+k).checked)};if(!prof.name)return;
+    if(S.gate==="onboard"){const p=Object.assign({compositions:[],choreographies:[],created:Date.now()},prof);S.profiles[S.uid]=p;S.gate=null;S.view=prof.roles.includes("composer")?"studio":prof.roles.includes("guru")?"academy":"discover";render();queue(()=>S.db.doc("profiles/"+S.uid).set(p));toast("Profile created. Welcome to Layakari.");return;}
+    saveMe(p=>Object.assign(p,prof));closeModal();toast("Profile saved.");return;}
+  if(kind==="comp"){const id=f.dataset.id;const data={title:v("cf-title"),type:v("cf-type"),taal:v("cf-taal"),laya:v("cf-laya"),bpm:Math.min(240,Math.max(30,parseInt(v("cf-bpm"))||90)),bols:document.getElementById("cf-bols").value.replace(/\s+$/,""),prices:{listen:num(v("cf-pl"),2),perform:num(v("cf-pp"),25),teach:num(v("cf-pt"),99)}};if(!data.title)return;
+    saveMe(p=>{p.compositions=p.compositions||[];if(id){const c=p.compositions.find(x=>x.id===id);if(c)Object.assign(c,data);}else p.compositions.unshift(Object.assign({id:rid(),created:Date.now()},data));});closeModal();toast(id?"Composition saved.":"Composition published.");return;}
+  if(kind==="chor"){const data={id:rid(),title:v("ch-title"),comp:v("ch-comp"),price:num(v("ch-price"),49),about:v("ch-about"),created:Date.now()};if(!data.title||!data.comp)return;saveMe(p=>{(p.choreographies=p.choreographies||[]).push(data);});closeModal();toast("Choreography published and linked.");return;}
+  if(kind==="acad"){const data={name:v("ac-name"),about:v("ac-about"),fee:num(v("ac-fee"),0)};if(!data.name)return;
+    saveMe(p=>{if(p.academy)Object.assign(p.academy,data);else p.academy=Object.assign({open:true,created:Date.now(),roster:{},declined:{},levels:["Prarambhik","Madhyama","Visharad"].map(n=>({id:rid(),name:n,pieces:[]}))},data);
+      if(!(p.roles||[]).includes("guru"))(p.roles=p.roles||[]).push("guru");});closeModal();toast(data.name+" is ready.");return;}
+  if(kind==="level"){const id=f.dataset.id,name=v("lv-name");if(!name)return;saveMe(p=>{const ls=p.academy.levels=p.academy.levels||[];if(id){const l=ls.find(x=>x.id===id);if(l)l.name=name;}else{const nl={id:rid(),name,pieces:[]};ls.push(nl);S.selLvl=nl.id;}});closeModal();return;}
+});
+
+/* ---------------- boot ---------------- */
+function maybeReady(){
+  if(!(S.loaded.p&&S.loaded.l&&S.loaded.e))return;
+  if(!S.profiles[S.uid]){if(S.gate!=="onboard"){S.gate="onboard";render();}return;}
+  if(S.gate)S.gate=null;
+  render();if(S.modal&&S.modal.kind==="detail")renderModal();
+}
+async function boot(){
+  render();
+  const use=window.claude&&window.claude.use;
+  if(!use){S.gate="signin";render();return;}
+  let db=null,user=null;
+  try{[db,user]=await Promise.all([window.claude.use("db"),window.claude.use("user")]);}catch(e){}
+  if(!db||!user){S.gate="signin";render();return;}
+  const uid=await user.id();
+  if(!uid){S.gate="signin";render();return;}
+  S.db=db;S.user=user;S.uid=uid;
+  try{const w=await user.can("data.write");if(w===false)S.readOnly=true;}catch(e){}
+  const toMap=snap=>{const o={};snap.docs.forEach(d=>{if(d.exists)o[d.id]=d.data();});return o;};
+  const onErr=e=>{if(e&&e.code==="revoked"){S.gate="signin";render();}};
+  db.collection("profiles").onSnapshot(s=>{S.profiles=toMap(s);S.loaded.p=true;maybeReady();},onErr);
+  db.collection("ledger").onSnapshot(s=>{S.ledgers=toMap(s);S.loaded.l=true;maybeReady();},onErr);
+  db.collection("enroll").onSnapshot(s=>{S.enrolls=toMap(s);S.loaded.e=true;maybeReady();},onErr);
+}
+boot();
+})();
+</script>
