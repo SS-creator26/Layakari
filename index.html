@@ -3,7 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Layakari</title>
+<title>Layakari · Kathak and tabla compositions, academies and practice</title>
+<meta name="description" content="A home for Kathak and tabla artists. Composers publish and license their work, gurus run their academies, and students practise every piece with full notation and a live theka.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Layakari">
+<meta property="og:title" content="Layakari · Every composition finds its sam">
+<meta property="og:description" content="Publish, license, teach and practise Kathak and tabla compositions, with notation and a live theka.">
+<meta property="og:url" content="https://layakari.ca">
+<meta name="theme-color" content="#2A1B33">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232A1B33'/%3E%3Ccircle cx='16' cy='17' r='9' fill='none' stroke='%23E8A33D' stroke-width='2.4'/%3E%3Ccircle cx='16' cy='8' r='3' fill='%23E8A33D'/%3E%3C/svg%3E">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Mukta:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -203,6 +211,44 @@ form .f textarea{min-height:96px;font-family:var(--mono);font-size:13px}
   .land-feats{background:var(--hero1);padding-top:28px}
 }
 @media (prefers-reduced-motion: reduce){.land-ring circle.d{animation:none}}
+.land{min-height:calc(100vh - 40px)}
+.land-auth .reassure{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;margin:12px 0 0;padding:0;list-style:none;font-size:12.5px;color:var(--muted)}
+.land-auth .reassure li::before{content:"✓ ";color:var(--teal);font-weight:700}
+.more{padding:clamp(40px,7vw,88px) clamp(16px,5vw,64px);max-width:1180px;margin:0 auto}
+.more + .more{padding-top:0}
+.more h2.sh{font:400 clamp(28px,3.4vw,40px)/1.1 var(--display);margin:0 0 8px;text-wrap:balance}
+.more .sl{color:var(--muted);margin:0 0 26px;max-width:60ch}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px;counter-reset:st;margin:0;padding:0;list-style:none}
+.steps li{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;counter-increment:st}
+.steps li::before{content:counter(st);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--gold-soft);color:var(--gold);font:400 18px var(--display);margin-bottom:12px}
+.steps b{display:block;font-size:16px;margin-bottom:4px}
+.steps span{color:var(--muted);font-size:14px}
+.demo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(20px,4vw,48px);align-items:center}
+@media (max-width:820px){.demo{grid-template-columns:minmax(0,1fr)}}
+.demo-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow)}
+.demo-top{display:flex;gap:14px;align-items:center}
+.demo-top .cover{width:72px;flex:none;border-radius:12px}
+.demo-top h3{font:400 22px/1.15 var(--display);margin:2px 0 0}
+.demo-card .taal{margin-top:16px}
+.demo-card .bols{margin-top:10px}
+.demo-points{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px}
+.demo-points li{display:flex;gap:12px;align-items:flex-start}
+.demo-points li svg{width:20px;height:20px;color:var(--teal);flex:none;margin-top:2px}
+.demo-points b{display:block}
+.demo-points span{color:var(--muted);font-size:14px}
+.faq{display:flex;flex-direction:column;gap:10px;max-width:820px}
+.faq details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px 18px}
+.faq summary{cursor:pointer;font-weight:600;padding:12px 0;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font:400 22px/1 var(--display);color:var(--gold)}
+.faq details[open] summary::after{content:"–"}
+.faq p{margin:0 0 14px;color:var(--muted)}
+.cta-band{border-radius:24px;padding:clamp(24px,4vw,44px);background:radial-gradient(120% 120% at 100% 0%,var(--hero2) 0%,var(--hero1) 60%);color:var(--on-hero);display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+.cta-band h2{font:400 clamp(24px,3vw,34px)/1.15 var(--display);margin:0;color:var(--on-hero)}
+.cta-band p{margin:4px 0 0;color:var(--on-hero-mut)}
+.cta-band .btn{background:var(--beat);color:var(--beat-ink);padding:11px 18px}
+.foot{border-top:1px solid var(--line);padding:22px clamp(16px,5vw,64px) 36px;display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between;color:var(--muted);font-size:13px;max-width:1180px;margin:0 auto}
+.foot b{font:400 18px var(--display);color:var(--ink)}
 /* player + toast */
 .player{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));width:min(560px,calc(100% - 32px));background:var(--hero1);color:var(--on-hero);border-radius:16px;display:flex;align-items:center;gap:12px;padding:8px 10px;box-shadow:var(--shadow);z-index:30}
 @media (max-width:760px){.player{bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
@@ -472,6 +518,40 @@ function vProfile(){
   <div class="panel small muted"><p style="margin:0 0 8px">Your profile, compositions and academy are visible to everyone who can open this app. Purchases are simulated: licences are recorded, but no payment is taken.</p><p style="margin:0">Licence levels: Teach includes Perform, and Perform includes Listen. Students get listen and practice access to every piece released up to their level.</p></div>`;
 }
 
+function landingMore(){
+  const c=Object.assign({key:"demo:megh",title:SAMPLES[0].title},SAMPLES[0]);const tl=TAALS[c.taal];
+  const cols=Math.ceil(tl.n/2);const first=String(c.bols).split("\n")[0];
+  const tick=I.check.replace('stroke-width="2.4"','stroke-width="2.4" aria-hidden="true"');
+  return `<section class="more" aria-labelledby="how-h"><h2 class="sh" id="how-h">How Layakari works</h2><p class="sl">Three steps, whatever your role.</p>
+   <ol class="steps"><li><b>Create your profile</b><span>Tell people whether you compose, dance, play tabla, teach or are learning.</span></li>
+   <li><b>Publish or find compositions</b><span>Composers share pieces with their taal, laya and bols. Everyone else browses by taal and form.</span></li>
+   <li><b>Practise, perform and teach</b><span>Licence a piece to listen, perform or teach, or join a guru's academy to get pieces for your level.</span></li></ol></section>
+  <section class="more" aria-labelledby="demo-h"><div class="demo">
+   <div><h2 class="sh" id="demo-h">Hear it before you sign up</h2><p class="sl">This is what every composition looks like inside Layakari. Press play to hear the theka.</p>
+    <ul class="demo-points"><li>${tick}<div><b>A live theka at your laya</b><span>Slow it down to learn, speed it up to perform.</span></div></li>
+    <li>${tick}<div><b>Sam and khali marked on every matra</b><span>So you always know where you are in the cycle.</span></div></li>
+    <li>${tick}<div><b>Full bols once you hold a licence</b><span>The first line is always free to preview.</span></div></li></ul></div>
+   <div class="demo-card"><div class="demo-top">${cover(c)}<div style="min-width:0"><p class="eyebrow" style="margin:0">${esc(c.type)} · sample</p><h3>${esc(c.title)}</h3><div class="meta-line" style="margin-top:6px"><span class="pill gold">${tl.name} · ${tl.n} matras</span><span class="pill">${esc(c.laya)} · ${c.bpm} bpm</span></div></div></div>
+    <div class="taal"><div class="taal-head"><b>Theka · ${tl.name}</b><span>X sam · 0 khali</span></div>
+     <div class="beats" style="grid-template-columns:repeat(${cols},minmax(0,1fr))">${tl.bols.map((b,i)=>`<div class="m ${tl.v[i]?"vs":""} ${i===0?"sam":""}" data-demo-i="${i}"><small>${tl.v[i]||i+1}</small>${b}</div>`).join("")}</div>
+     <div class="ctrl"><button class="bigplay" data-act="demo-play" aria-label="Play theka">${I.play}</button><span class="small" style="color:var(--on-hero-mut)">Tap play to hear Teentaal at ${c.bpm} bpm</span></div>
+     <div class="bols">${esc(first)}</div><p class="lock">The full notation unlocks with a Listen licence.</p></div></div>
+  </div></section>
+  <section class="more" aria-labelledby="faq-h"><h2 class="sh" id="faq-h">Questions</h2><div class="faq">
+   <details><summary>Is Layakari free?</summary><p>Yes. Creating an account, setting up your profile and browsing compositions are free. You pay only when you choose to license a composition or join an academy.</p></details>
+   <details><summary>How do composers get paid?</summary><p>Composers keep 80% of every licence. Choreographers keep 70% of theirs, with 15% going to the composer of the piece it's set to. Card payments are being added now; until then, licences are recorded for testing and no money changes hands.</p></details>
+   <details><summary>What's the difference between Listen, Perform and Teach?</summary><p>Listen lets you stream the theka and read the full notation. Perform adds one public performance. Teach lets you teach the piece, including in your own academy, for a year. Each level includes the ones before it.</p></details>
+   <details><summary>How do academies work?</summary><p>A guru creates an academy with levels, such as Prarambhik, Madhyama and Visharad. Students ask to join, the guru places them in a level, and they get every piece released up to that level.</p></details>
+   <details><summary>Which taals are supported?</summary><p>Teentaal, Jhaptaal, Rupak, Ektaal and Dhamar today, with more to come.</p></details>
+  </div></section>
+  <section class="more"><div class="cta-band"><div><h2>Ready to find your sam?</h2><p>Free to join. Set up your profile in a minute.</p></div><button class="btn" data-act="to-signup">Create your account</button></div></section>
+  <footer class="foot"><b>Layakari</b><span>Made in Canada for Kathak and tabla artists · © ${new Date().getFullYear()} Layakari</span></footer>`;
+}
+let demoTimer=null,demoBeat=-1;
+function demoStop(){clearInterval(demoTimer);demoTimer=null;demoBeat=-1;document.querySelectorAll("[data-demo-i]").forEach(el=>el.classList.remove("on"));const b=document.querySelector("[data-act=demo-play]");if(b){b.innerHTML=I.play;b.setAttribute("aria-label","Play theka");}}
+function demoPlay(){if(demoTimer){demoStop();return;}ctx();const tl=TAALS.teentaal,bpm=SAMPLES[0].bpm;
+  const t=()=>{demoBeat=(demoBeat+1)%tl.n;strike(tl.bols[demoBeat],ctx().currentTime+.02,60/bpm);document.querySelectorAll("[data-demo-i]").forEach(el=>el.classList.toggle("on",+el.dataset.demoI===demoBeat));};
+  t();demoTimer=setInterval(t,60000/bpm);const b=document.querySelector("[data-act=demo-play]");if(b){b.innerHTML=I.pause;b.setAttribute("aria-label","Pause theka");}}
 function vGate(){
   if(S.gate==="loading")return `<div class="gate"><p class="muted">Loading Layakari…</p></div>`;
   if(S.gate==="signin"){const up=S.authMode==="up";
@@ -494,6 +574,7 @@ function vGate(){
      <label class="f">Password<input id="au-pass" type="password" required minlength="8" autocomplete="${up?"new-password":"current-password"}" placeholder="At least 8 characters"></label>
      ${S.authMsg?`<p class="note" role="status" style="color:var(--ink)">${esc(S.authMsg)}</p>`:""}
      <div class="form-foot"><button class="btn" type="submit" style="width:100%;padding:11px 14px" ${S.authBusy?"disabled":""}>${up?"Create account":"Sign in"}</button></div></form>
+     ${up?`<ul class="reassure"><li>Free to join</li><li>No card needed</li><li>Browse and practise right away</li></ul>`:""}
      <p class="fine">${up?"Already have an account?":"New to Layakari?"} <button type="button" class="btn ghost sm" data-act="auth-mode">${up?"Sign in":"Create an account"}</button></p>
    </div></section>
    <ul class="land-feats">
@@ -501,7 +582,8 @@ function vGate(){
      <li><span class="tag">Dancers &amp; students</span><b>Practise at your laya</b>Open every piece you hold with the full bols and a theka you can slow down or speed up.</li>
      <li><span class="tag">Gurus</span><b>Run your academy</b>Organise students into levels and release compositions to each level as they grow.</li>
    </ul>
- </div>`;}
+ </div>
+ ${landingMore()}`;}
   if(S.gate==="onboard")return `<div class="gate"><div class="dlg narrow"><p class="eyebrow">Welcome to Layakari</p><h1>Create your profile</h1><p class="lede">This is how other artists, students and gurus will see you.</p>${profileForm({})}</div></div>`;
   return "";
 }
@@ -594,7 +676,9 @@ function confirmOnce(tag){if(S.confirm===tag){S.confirm=null;return true;}S.conf
 document.addEventListener("click",e=>{
   const t=e.target.closest("[data-act]");if(!t)return;const d=t.dataset,act=d.act;
   if(act==="backdrop"){if(e.target===t)closeModal();return;}
-  if(act==="auth-mode"){S.authMode=S.authMode==="up"?"in":"up";S.authMsg="";render();return;}
+  if(act==="demo-play"){demoPlay();return;}
+  if(act==="to-signup"){if(S.authMode!=="up"){S.authMode="up";S.authMsg="";demoStop();render();}window.scrollTo({top:0,behavior:"smooth"});setTimeout(()=>{const el=document.getElementById("au-email");if(el)el.focus({preventScroll:true});},300);return;}
+  if(act==="auth-mode"){demoStop();S.authMode=S.authMode==="up"?"in":"up";S.authMsg="";render();return;}
   if(act==="signout"){stop();sb.auth.signOut().finally(()=>location.reload());return;}
   if(act==="close"){closeModal();return;}
   if(act==="nav"){S.view=d.v;S.confirm=null;closeModal();render();window.scrollTo(0,0);return;}
@@ -662,7 +746,7 @@ function maybeReady(){
 let started=false;
 function start(session){
   if(!session){S.gate="signin";render();return;}
-  if(started)return;started=true;
+  if(started)return;started=true;demoStop();
   S.db=makeDb();S.user=session.user;S.uid=session.user.id;S.gate="loading";render();
   const toMap=snap=>{const o={};snap.docs.forEach(d=>{if(d.exists)o[d.id]=d.data();});return o;};
   const onErr=e=>{console.error(e);toast("Couldn't load data. Check your connection and refresh.");};
