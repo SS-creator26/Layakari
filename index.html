@@ -175,7 +175,7 @@ form .f textarea{min-height:96px;font-family:var(--mono);font-size:13px}
 .app.gated .gate{min-height:100vh}
 /* landing */
 .land{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);grid-template-rows:auto 1fr;grid-template-areas:"copy auth" "feats auth";min-height:100vh;isolation:isolate}
-.land::before{content:"";position:absolute;top:0;bottom:0;left:0;width:52.38%;z-index:-1;background:radial-gradient(90% 70% at 100% 0%,var(--hero2) 0%,transparent 70%),radial-gradient(70% 60% at 0% 100%,#3E2443 0%,transparent 70%),var(--hero1)}
+.land::before{content:"";position:absolute;top:0;left:0;right:0;bottom:-160px;z-index:-1;background:radial-gradient(60% 55% at 85% 35%,rgba(232,163,61,.10) 0%,transparent 60%),radial-gradient(70% 70% at 55% 0%,var(--hero2) 0%,transparent 70%),radial-gradient(60% 60% at 0% 90%,#3E2443 0%,transparent 70%),var(--hero1);-webkit-mask-image:linear-gradient(to bottom,#000 0,#000 calc(100% - 170px),transparent 100%);mask-image:linear-gradient(to bottom,#000 0,#000 calc(100% - 170px),transparent 100%)}
 .land-copy{grid-area:copy;color:var(--on-hero);padding:clamp(28px,5vw,64px) clamp(20px,5vw,64px) 0;display:flex;flex-direction:column;gap:18px}
 .land-brand{display:flex;align-items:center;gap:10px;font:400 26px var(--display);color:var(--on-hero)}
 .land-brand svg{width:28px;height:28px;color:var(--beat)}
@@ -204,14 +204,13 @@ form .f textarea{min-height:96px;font-family:var(--mono);font-size:13px}
 .land-auth .fine{font-size:12px;color:var(--muted);margin:14px 0 0;text-align:center}
 @media (max-width:900px){
   .land{grid-template-columns:minmax(0,1fr);grid-template-rows:auto;grid-template-areas:"copy" "auth" "feats"}
-  .land::before{width:100%;bottom:auto;height:var(--land-top,0px);display:none}
-  .land-copy{background:radial-gradient(90% 70% at 100% 0%,var(--hero2) 0%,transparent 70%),var(--hero1);padding-bottom:28px}
+  .land-copy{padding-bottom:20px}
   .land-copy .k{margin-top:4px}
   .land-auth{padding:20px 16px;margin-top:-1px}
-  .land-feats{background:var(--hero1);padding-top:28px}
+  .land-feats{padding-top:20px}
 }
 @media (prefers-reduced-motion: reduce){.land-ring circle.d{animation:none}}
-.land{min-height:calc(100vh - 40px)}
+.land{min-height:calc(100vh - 64px)}
 .land-auth .reassure{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;margin:12px 0 0;padding:0;list-style:none;font-size:12.5px;color:var(--muted)}
 .land-auth .reassure li::before{content:"✓ ";color:var(--teal);font-weight:700}
 .more{padding:clamp(40px,7vw,88px) clamp(16px,5vw,64px);max-width:1180px;margin:0 auto}
@@ -249,6 +248,21 @@ form .f textarea{min-height:96px;font-family:var(--mono);font-size:13px}
 .cta-band .btn{background:var(--beat);color:var(--beat-ink);padding:11px 18px}
 .foot{border-top:1px solid var(--line);padding:22px clamp(16px,5vw,64px) 36px;display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between;color:var(--muted);font-size:13px;max-width:1180px;margin:0 auto}
 .foot b{font:400 18px var(--display);color:var(--ink)}
+.more:first-of-type{padding-top:clamp(120px,11vw,160px)}
+.cue{position:fixed;left:76%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:15;display:flex;flex-direction:column;align-items:center;gap:1px;background:rgba(42,27,51,.62);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(246,239,248,.2);color:var(--on-hero);border-radius:999px;padding:8px 18px 6px;font-size:12.5px;font-weight:500;letter-spacing:.01em;transition:opacity .35s ease,transform .35s ease}
+.cue svg{width:18px;height:18px;color:var(--beat)}
+.cue:hover{border-color:var(--beat)}
+.cue.gone{opacity:0;pointer-events:none;transform:translate(-50%,12px)}
+@media (max-width:900px){.cue{display:none}}
+@keyframes cuebob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+@keyframes cueglow{0%{box-shadow:0 0 0 0 rgba(232,163,61,.45)}70%,100%{box-shadow:0 0 0 12px rgba(232,163,61,0)}}
+@media (prefers-reduced-motion: no-preference){
+  html{scroll-behavior:smooth}
+  .cue svg{animation:cuebob 1.6s ease-in-out infinite}
+  .cue{animation:cueglow 2.4s ease-out infinite}
+  .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+  .rv.in{opacity:1;transform:none}
+}
 /* player + toast */
 .player{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));width:min(560px,calc(100% - 32px));background:var(--hero1);color:var(--on-hero);border-radius:16px;display:flex;align-items:center;gap:12px;padding:8px 10px;box-shadow:var(--shadow);z-index:30}
 @media (max-width:760px){.player{bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
@@ -522,11 +536,11 @@ function landingMore(){
   const c=Object.assign({key:"demo:megh",title:SAMPLES[0].title},SAMPLES[0]);const tl=TAALS[c.taal];
   const cols=Math.ceil(tl.n/2);const first=String(c.bols).split("\n")[0];
   const tick=I.check.replace('stroke-width="2.4"','stroke-width="2.4" aria-hidden="true"');
-  return `<section class="more" aria-labelledby="how-h"><h2 class="sh" id="how-h">How Layakari works</h2><p class="sl">Three steps, whatever your role.</p>
-   <ol class="steps"><li><b>Create your profile</b><span>Tell people whether you compose, dance, play tabla, teach or are learning.</span></li>
-   <li><b>Publish or find compositions</b><span>Composers share pieces with their taal, laya and bols. Everyone else browses by taal and form.</span></li>
-   <li><b>Practise, perform and teach</b><span>Licence a piece to listen, perform or teach, or join a guru's academy to get pieces for your level.</span></li></ol></section>
-  <section class="more" aria-labelledby="demo-h"><div class="demo">
+  return `<section class="more rv" id="how" aria-labelledby="how-h"><h2 class="sh" id="how-h">How Layakari works</h2><p class="sl">Three steps, whatever your role.</p>
+   <ol class="steps"><li class="rv"><b>Create your profile</b><span>Tell people whether you compose, dance, play tabla, teach or are learning.</span></li>
+   <li class="rv" style="transition-delay:.12s"><b>Publish or find compositions</b><span>Composers share pieces with their taal, laya and bols. Everyone else browses by taal and form.</span></li>
+   <li class="rv" style="transition-delay:.24s"><b>Practise, perform and teach</b><span>Licence a piece to listen, perform or teach, or join a guru's academy to get pieces for your level.</span></li></ol></section>
+  <section class="more rv" aria-labelledby="demo-h"><div class="demo">
    <div><h2 class="sh" id="demo-h">Hear it before you sign up</h2><p class="sl">This is what every composition looks like inside Layakari. Press play to hear the theka.</p>
     <ul class="demo-points"><li>${tick}<div><b>A live theka at your laya</b><span>Slow it down to learn, speed it up to perform.</span></div></li>
     <li>${tick}<div><b>Sam and khali marked on every matra</b><span>So you always know where you are in the cycle.</span></div></li>
@@ -537,17 +551,27 @@ function landingMore(){
      <div class="ctrl"><button class="bigplay" data-act="demo-play" aria-label="Play theka">${I.play}</button><span class="small" style="color:var(--on-hero-mut)">Tap play to hear Teentaal at ${c.bpm} bpm</span></div>
      <div class="bols">${esc(first)}</div><p class="lock">The full notation unlocks with a Listen licence.</p></div></div>
   </div></section>
-  <section class="more" aria-labelledby="faq-h"><h2 class="sh" id="faq-h">Questions</h2><div class="faq">
+  <section class="more rv" aria-labelledby="faq-h"><h2 class="sh" id="faq-h">Questions</h2><div class="faq">
    <details><summary>Is Layakari free?</summary><p>Yes. Creating an account, setting up your profile and browsing compositions are free. You pay only when you choose to license a composition or join an academy.</p></details>
    <details><summary>How do composers get paid?</summary><p>Composers keep 80% of every licence. Choreographers keep 70% of theirs, with 15% going to the composer of the piece it's set to. Card payments are being added now; until then, licences are recorded for testing and no money changes hands.</p></details>
    <details><summary>What's the difference between Listen, Perform and Teach?</summary><p>Listen lets you stream the theka and read the full notation. Perform adds one public performance. Teach lets you teach the piece, including in your own academy, for a year. Each level includes the ones before it.</p></details>
    <details><summary>How do academies work?</summary><p>A guru creates an academy with levels, such as Prarambhik, Madhyama and Visharad. Students ask to join, the guru places them in a level, and they get every piece released up to that level.</p></details>
    <details><summary>Which taals are supported?</summary><p>Teentaal, Jhaptaal, Rupak, Ektaal and Dhamar today, with more to come.</p></details>
   </div></section>
-  <section class="more"><div class="cta-band"><div><h2>Ready to find your sam?</h2><p>Free to join. Set up your profile in a minute.</p></div><button class="btn" data-act="to-signup">Create your account</button></div></section>
+  <section class="more rv"><div class="cta-band"><div><h2>Ready to find your sam?</h2><p>Free to join. Set up your profile in a minute.</p></div><button class="btn" data-act="to-signup">Create your account</button></div></section>
   <footer class="foot"><b>Layakari</b><span>Made in Canada for Kathak and tabla artists · © ${new Date().getFullYear()} Layakari</span></footer>`;
 }
-let demoTimer=null,demoBeat=-1;
+let demoTimer=null,demoBeat=-1,landIO=null;
+function onLandScroll(){const c=document.getElementById("scroll-cue");if(c)c.classList.toggle("gone",window.scrollY>60);}
+window.addEventListener("scroll",onLandScroll,{passive:true});
+function setupLanding(){
+  onLandScroll();
+  if(landIO)landIO.disconnect();
+  const els=document.querySelectorAll(".rv:not(.in)");
+  if(!("IntersectionObserver" in window)){els.forEach(e=>e.classList.add("in"));return;}
+  landIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");landIO.unobserve(e.target);}}),{rootMargin:"0px 0px -8% 0px",threshold:.05});
+  els.forEach(e=>landIO.observe(e));
+}
 function demoStop(){clearInterval(demoTimer);demoTimer=null;demoBeat=-1;document.querySelectorAll("[data-demo-i]").forEach(el=>el.classList.remove("on"));const b=document.querySelector("[data-act=demo-play]");if(b){b.innerHTML=I.play;b.setAttribute("aria-label","Play theka");}}
 function demoPlay(){if(demoTimer){demoStop();return;}ctx();const tl=TAALS.teentaal,bpm=SAMPLES[0].bpm;
   const t=()=>{demoBeat=(demoBeat+1)%tl.n;strike(tl.bols[demoBeat],ctx().currentTime+.02,60/bpm);document.querySelectorAll("[data-demo-i]").forEach(el=>el.classList.toggle("on",+el.dataset.demoI===demoBeat));};
@@ -583,6 +607,7 @@ function vGate(){
      <li><span class="tag">Gurus</span><b>Run your academy</b>Organise students into levels and release compositions to each level as they grow.</li>
    </ul>
  </div>
+ <button id="scroll-cue" class="cue" data-act="to-how" aria-label="Scroll down to see how Layakari works"><span>See how it works</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
  ${landingMore()}`;}
   if(S.gate==="onboard")return `<div class="gate"><div class="dlg narrow"><p class="eyebrow">Welcome to Layakari</p><h1>Create your profile</h1><p class="lede">This is how other artists, students and gurus will see you.</p>${profileForm({})}</div></div>`;
   return "";
@@ -656,7 +681,7 @@ function renderModal(){const m=$("#modal");if(!S.modal){m.hidden=true;m.innerHTM
 function render(){
   const side=$("#side"),main=$("#main");
   $("#app").classList.toggle("gated",!!S.gate);
-  if(S.gate){side.hidden=true;if(S.gate==="onboard"&&$("#pf-name"))return;main.innerHTML=vGate();return;}
+  if(S.gate){side.hidden=true;if(S.gate==="onboard"&&$("#pf-name"))return;main.innerHTML=vGate();if(S.gate==="signin")setupLanding();return;}
   side.hidden=false;
   const p=me();
   side.innerHTML=`<div class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="3.5" r="1.8" fill="currentColor"/></svg>Layakari</div>`+
@@ -677,6 +702,7 @@ document.addEventListener("click",e=>{
   const t=e.target.closest("[data-act]");if(!t)return;const d=t.dataset,act=d.act;
   if(act==="backdrop"){if(e.target===t)closeModal();return;}
   if(act==="demo-play"){demoPlay();return;}
+  if(act==="to-how"){const h=document.getElementById("how");if(h)h.scrollIntoView({block:"start"});return;}
   if(act==="to-signup"){if(S.authMode!=="up"){S.authMode="up";S.authMsg="";demoStop();render();}window.scrollTo({top:0,behavior:"smooth"});setTimeout(()=>{const el=document.getElementById("au-email");if(el)el.focus({preventScroll:true});},300);return;}
   if(act==="auth-mode"){demoStop();S.authMode=S.authMode==="up"?"in":"up";S.authMsg="";render();return;}
   if(act==="signout"){stop();sb.auth.signOut().finally(()=>location.reload());return;}
