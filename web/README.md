@@ -68,8 +68,10 @@ These steps need accounts and credentials, so they are left for the owner.
    are missing, so it does nothing to a copy of the live data.
 2. **Auth settings.** In the staging project's Auth settings, add `https://<preview-domain>/auth/callback` to the
    redirect allow list, and set the Site URL.
-3. **Vercel.** Import the repository, set the root directory to `web`, and add the three environment variables
-   pointing at staging. Every pull request then gets a preview link.
+3. **Vercel.** Add a second Vercel project from this repository (leave the existing one, which serves the old site,
+   as it is). Type `web` into its Root Directory setting: the folder picker only lists folders on `main`, so it won't
+   offer `web` until this work is merged. Add the environment variables pointing at staging. Every pull request
+   then gets a preview link.
 
 ## Cutover checklist (owner, not done yet)
 
