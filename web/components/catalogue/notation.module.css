@@ -1,0 +1,35 @@
+.heading {
+  margin: 24px 0 10px;
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--on-hero-2);
+}
+.bols {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  line-height: 1.8;
+  background: rgba(0, 0, 0, 0.28);
+  border-radius: 14px;
+  padding: 14px 16px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: var(--on-hero);
+}
+.blur {
+  filter: blur(5px);
+  user-select: none;
+  color: var(--on-hero-muted);
+}
+.lock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: var(--text-sm);
+  color: var(--on-hero-2);
+}
+.lock svg {
+  color: var(--beat);
+  flex: none;
+}

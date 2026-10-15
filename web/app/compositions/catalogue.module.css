@@ -1,0 +1,168 @@
+.hero {
+  background: radial-gradient(120% 140% at 100% 0%, var(--hero-2) 0%, var(--hero-1) 62%);
+  color: var(--on-hero);
+  margin-top: -1px;
+}
+.heroInner {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: clamp(28px, 5vw, 48px) var(--gutter) clamp(32px, 5vw, 56px);
+}
+.title {
+  font: 400 var(--text-hero) / 1.05 var(--font-display);
+  max-width: 18ch;
+  color: var(--on-hero);
+}
+.lede {
+  margin-top: 16px;
+  max-width: 60ch;
+  color: var(--on-hero-2);
+  font-size: var(--text-lg);
+}
+.search {
+  margin-top: 32px;
+  max-width: 760px;
+}
+.searchLabel {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--on-hero-2);
+  margin-bottom: 8px;
+}
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  color: #22182a;
+  border-radius: 14px;
+  padding: 6px 6px 6px 18px;
+  box-shadow: 0 18px 50px -20px rgba(0, 0, 0, 0.6);
+}
+.searchBox svg {
+  color: #6b5e74;
+  flex: none;
+}
+.searchBox input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: none;
+  color: #22182a;
+  font-size: var(--text-lg);
+  padding: 10px 0;
+}
+.searchBox:focus-within {
+  outline: 2px solid var(--beat);
+  outline-offset: 2px;
+}
+.searchBox button {
+  background: #a4580f;
+  color: #fff;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+.chip {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0 16px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid rgba(246, 239, 248, 0.35);
+  color: var(--on-hero);
+}
+.chip:hover {
+  color: var(--beat);
+  border-color: var(--beat);
+}
+.chip[aria-current="true"] {
+  background: var(--beat);
+  border-color: var(--beat);
+  color: var(--beat-ink);
+}
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 28px;
+  border-bottom: 1px solid var(--line);
+}
+.tab {
+  min-height: var(--tap);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--muted);
+  box-shadow: inset 0 -3px 0 transparent;
+}
+.tab:hover {
+  color: var(--ink);
+}
+.tab[aria-current="page"] {
+  color: var(--ink);
+  box-shadow: inset 0 -3px 0 var(--gold);
+}
+.count {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+.segmented {
+  display: flex;
+  flex-wrap: wrap;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 4px;
+  gap: 2px;
+}
+.segmented a {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 14px;
+  border-radius: 9px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--ink-2);
+  text-decoration: none;
+}
+.segmented a:hover {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+.segmented a[aria-current="true"] {
+  background: var(--hero-1);
+  color: var(--on-hero);
+}
+.band {
+  margin-top: 72px;
+  border-radius: var(--radius-xl);
+  padding: clamp(24px, 4vw, 36px);
+  background: var(--hero-1);
+  color: var(--on-hero);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+.band h2 {
+  font-size: clamp(24px, 3vw, 30px);
+  color: var(--on-hero);
+}
+.band p {
+  margin-top: 8px;
+  color: var(--on-hero-2);
+  max-width: 56ch;
+}
