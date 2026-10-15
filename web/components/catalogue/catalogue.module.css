@@ -1,0 +1,119 @@
+.plain {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cover {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 16px;
+  margin-bottom: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover .cover,
+.card:focus-within .cover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.cardTitle {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  line-height: 1.25;
+}
+.cardLink {
+  color: var(--ink);
+  text-decoration: none;
+}
+/* The whole card is clickable through the title link. */
+.cardLink::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+}
+.cardLink:hover {
+  color: var(--gold);
+}
+.cardLink:focus-visible {
+  outline: none;
+}
+.cardLink:focus-visible::after {
+  outline: 2px solid var(--beat);
+  outline-offset: 4px;
+}
+.cardBy {
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+.cardMeta {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+.cardPrice {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--teal);
+  margin-top: 2px;
+}
+
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 4px 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  min-width: 0;
+  flex-wrap: wrap;
+}
+.row:last-child {
+  border-bottom: 0;
+}
+.rowCover {
+  width: 52px;
+  height: 52px;
+  flex: none;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.rowMeta {
+  flex: 1 1 180px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.rowTitle {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rowTitle:hover {
+  color: var(--gold);
+}
+.rowSub {
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+.rowActions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-left: auto;
+}

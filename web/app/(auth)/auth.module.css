@@ -1,0 +1,42 @@
+.wrap {
+  min-height: calc(100vh - 160px);
+  display: grid;
+  place-items: center;
+  padding: var(--space-6) var(--gutter);
+  background: radial-gradient(70% 60% at 50% 0%, var(--surface-2) 0%, transparent 70%);
+}
+.card {
+  width: min(460px, 100%);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+  padding: clamp(20px, 4vw, 32px);
+}
+.card h1 {
+  font-size: var(--text-2xl);
+}
+.alt {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+.reassure {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  justify-content: center;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+.reassure li::before {
+  content: "✓ ";
+  color: var(--teal);
+  font-weight: 700;
+}

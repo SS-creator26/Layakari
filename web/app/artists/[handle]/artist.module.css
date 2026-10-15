@@ -1,0 +1,40 @@
+.head {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.headText {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+.roles {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.bio {
+  margin-top: 16px;
+  max-width: 62ch;
+  color: var(--ink-2);
+  font-size: var(--text-lg);
+}
+.chor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.chor:last-child {
+  border-bottom: 0;
+}
+.chor > div {
+  display: flex;
+  flex-direction: column;
+}

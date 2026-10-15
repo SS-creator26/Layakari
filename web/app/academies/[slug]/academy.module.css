@@ -1,0 +1,87 @@
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-top: 22px;
+  align-items: flex-start;
+}
+.headText {
+  flex: 999 1 480px;
+  min-width: 0;
+}
+.facts {
+  flex: 1 1 280px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.guru {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.guru > div {
+  display: flex;
+  flex-direction: column;
+}
+.guruName {
+  font: 400 var(--text-xl) / 1.15 var(--font-display);
+  color: var(--ink);
+  text-decoration: none;
+}
+.guruName:hover {
+  color: var(--gold);
+}
+.dl {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 0;
+}
+.dl div {
+  background: var(--surface-2);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+.dl dt {
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+.dl dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+.levels {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.levelHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.levelNum {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--gold-soft);
+  color: var(--gold);
+  font: 400 16px var(--font-display);
+}
+.level[data-mine="true"] .levelNum {
+  background: var(--teal);
+  color: #fff;
+}
