@@ -6,8 +6,9 @@ import type { Database, MemberRow } from "./database.types";
 import { supabaseEnv } from "./env";
 
 export async function createClient() {
-  const { url, key } = supabaseEnv();
+  // Read cookies first: it marks every page that touches Supabase as per-request, so a build never needs the database.
   const store = await cookies();
+  const { url, key } = supabaseEnv();
   return createServerClient<Database>(url, key, {
     cookies: {
       getAll: () => store.getAll(),
