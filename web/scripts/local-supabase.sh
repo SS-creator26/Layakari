@@ -60,9 +60,12 @@ down() {
 }
 
 up() {
+  down # restart cleanly if it's already running
   fetch_bins
   mkdir -p "$STATE"
+  local fresh=0
   if [ ! -d "$STATE/data" ]; then
+    fresh=1
     [ "$(id -u)" = 0 ] && chown postgres "$STATE"
     as_pg "'$PG_BIN/initdb' -D '$STATE/data' -U postgres --auth=trust" >/dev/null
   fi
@@ -81,8 +84,11 @@ up() {
     "$CACHE/auth/auth"
   wait_for "http://127.0.0.1:$AUTH_PORT/health"
 
-  for f in "$HERE"/supabase/migrations/*.sql; do "${PSQL[@]}" -f "$f"; done
-  if [ "${SEED:-1}" = 1 ]; then "${PSQL[@]}" -f "$HERE/supabase/seed.sql"; fi
+  # Migrations and seed run once, on a new database. `reset` starts again from scratch.
+  if [ "$fresh" = 1 ]; then
+    for f in "$HERE"/supabase/migrations/*.sql; do "${PSQL[@]}" -f "$f"; done
+    if [ "${SEED:-1}" = 1 ]; then "${PSQL[@]}" -f "$HERE/supabase/seed.sql"; fi
+  fi
 
   cat >"$STATE/postgrest.conf" <<EOF
 db-uri = "postgres://authenticator:authenticator@127.0.0.1:$PG_PORT/postgres"
