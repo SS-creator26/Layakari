@@ -128,6 +128,12 @@ create policy enrollments_delete on public.enrollments for delete to authenticat
 create policy licences_read on public.licences for select to authenticated
   using (buyer_id = auth.uid() or seller_id = auth.uid() or composer_id = auth.uid());
 
+-- Table access for the API roles. Rows are still limited by the policies above. Newer Supabase projects no longer
+-- grant this automatically, so it is spelled out here.
+grant usage on schema public to anon, authenticated;
+grant select, insert, update, delete on public.members, public.compositions, public.composition_notation,
+  public.choreographies, public.academies, public.academy_levels, public.level_pieces, public.enrollments,
+  public.licences to anon, authenticated;
 revoke insert, update, delete on public.licences from anon, authenticated;
 revoke all on public.enrollments, public.composition_notation from anon;
 

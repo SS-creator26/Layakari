@@ -15,8 +15,9 @@ create schema if not exists auth authorization supabase_auth_admin;
 grant usage on schema auth to anon, authenticated, service_role, postgres;
 alter role supabase_auth_admin set search_path = auth;
 
--- Hosted Supabase grants table privileges to the API roles by default and relies on RLS to restrict rows.
+-- Newer hosted projects don't grant table access to the API roles automatically, so the migrations grant it
+-- themselves. Only service_role gets it by default here, to match.
 grant usage on schema public to anon, authenticated, service_role;
-alter default privileges in schema public grant all on tables to anon, authenticated, service_role;
+alter default privileges in schema public grant all on tables to service_role;
 alter default privileges in schema public grant all on functions to anon, authenticated, service_role;
 alter default privileges in schema public grant all on sequences to anon, authenticated, service_role;
