@@ -65,6 +65,10 @@ h3{font-size:17.5px;margin:0;font-weight:600}
 .small{font-size:14.5px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid transparent;border-radius:10px;padding:8px 14px;font-weight:600;font-size:15.5px;background:var(--gold);color:var(--gold-ink);white-space:nowrap}
 .btn.ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+a.btn{text-decoration:none}
+.land-abhyas{margin:0;color:var(--on-hero-mut);font-size:16px}
+.land-abhyas a{color:var(--beat);font-weight:600;text-underline-offset:3px}
+.foot a{color:inherit;text-underline-offset:3px}
 .btn.ghost:hover{background:var(--surface2)}
 .btn.sm{padding:5px 10px;font-size:14.5px;border-radius:8px}
 .btn.danger{background:transparent;border-color:var(--danger);color:var(--danger)}
@@ -758,6 +762,7 @@ function vDiscover(){
   const req=((S.enrolls[S.uid]||{}).req)||{};
   const chors=allChors();
   return `<p class="eyebrow">Discover</p><h1>Namaste, ${esc(p.name.split(" ")[0])}</h1><p class="lede">Compositions published by Kathak and tabla artists, academies taking students, and choreographies set to these pieces.</p>
+  <p style="margin:12px 0 0"><a class="btn ghost sm" href="/abhyas/">Practise in Abhyas</a></p>
   <label class="search">${I.search}<input id="q" type="search" placeholder="Search compositions, composers, forms" value="${esc(S.q)}" aria-label="Search"></label>
   <div class="chips">${[["all","All taals"]].concat(Object.entries(TAALS).map(([k,t])=>[k,`${t.name} · ${t.n}`])).map(([k,l])=>`<button class="chip" data-act="taal" data-t="${k}" aria-pressed="${S.taal===k}">${l}</button>`).join("")}</div>
   <div class="sec"><h2>Compositions</h2><span>${comps.length} ${S.q||S.taal!=="all"?"matching":"published"}</span></div>
@@ -900,7 +905,7 @@ function landingMore(){
    <details><summary>Which taals are supported?</summary><p>Teentaal, Jhaptaal, Rupak, Ektaal and Dhamar today, with more to come.</p></details>
   </div></section>
   <section class="more rv"><div class="cta-band"><div><h2>Ready to find your sam?</h2><p>Free to join. Set up your profile in a minute.</p></div><button class="btn" data-act="to-signup">Create your account</button></div></section>
-  <footer class="foot"><b>Layakari</b><span>Made in Canada for Kathak and tabla artists · © ${new Date().getFullYear()} Layakari</span></footer>`;
+  <footer class="foot"><b>Layakari</b><a href="/abhyas/">Abhyas, the free practice room</a><span>Made in Canada for Kathak and tabla artists · © ${new Date().getFullYear()} Layakari</span></footer>`;
 }
 let demoTimer=null,demoBeat=-1,landIO=null;
 function onLandScroll(){const c=document.getElementById("scroll-cue");if(c)c.classList.toggle("gone",window.scrollY>60);}
@@ -930,6 +935,7 @@ function vGate(){
      <p class="k">Kathak · Tabla · Taal</p>
      <h1 id="land-h">Every composition finds its <em>sam</em>.</h1>
      <p class="lede">A home for Kathak and tabla artists. Composers publish and license their work, gurus run their academies, and students practise every piece with full notation and a live theka.</p>
+     <p class="land-abhyas"><a href="/abhyas/">Practise now in Abhyas</a>, our free practice room. No sign-up needed.</p>
      <div class="land-row"><svg class="land-ring" viewBox="0 0 120 120" role="img" aria-label="Teentaal, 16 matras, cycling to sam"><circle cx="60" cy="60" r="46" fill="none" stroke="rgba(246,239,248,.14)" stroke-width=".8"/>${ring}<text x="60" y="62" text-anchor="middle">16</text><text class="bol" x="60" y="76" text-anchor="middle">TEENTAAL</text></svg>
        <div class="land-legend"><b>Dha Dhin Dhin Dha</b><br>Dha Dhin Dhin Dha<br>Dha Tin Tin Ta<br>Ta Dhin Dhin Dha</div></div>
    </section>
