@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Abhyas · free Kathak taal practice | Layakari</title>
+<meta name="description" content="Abhyas is a free practice room for Kathak. Pick a taal, set your laya and practise tatkar, padhant and tihais to a live theka. No sign-up needed.">
+<link rel="canonical" href="https://layakari.ca/abhyas/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Layakari">
+<meta property="og:title" content="Abhyas · free Kathak taal practice">
+<meta property="og:description" content="Practise tatkar, padhant and tihais to a live theka at any laya. Free, in your browser, no sign-up.">
+<meta property="og:url" content="https://layakari.ca/abhyas/">
+<meta name="theme-color" content="#1C1222">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232A1B33'/%3E%3Ccircle cx='16' cy='17' r='9' fill='none' stroke='%23E8A33D' stroke-width='2.4'/%3E%3Ccircle cx='16' cy='8' r='3' fill='%23E8A33D'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Mukta:wght@400;500;600;700&display=swap">
+<style>
+/* Abhyas: a night-time practice room. One bold thing, the laya ring, readable from across the room while dancing.
+   Sam is the big saffron bead, tali beads are filled, khali beads are hollow and moon-coloured, vibhags are separate arcs. */
+:root{
+  --raat:#1C1222; --mehfil:#2A1C33; --mehfil2:#3A2848; --diya:#F2A93B; --diya-ink:#2A1606;
+  --chandan:#F4E7D4; --dhuan:#B9A8C4; --chandni:#A99BE6; --line:rgba(244,231,212,.14);
+  --display:"Rozha One",Georgia,serif; --body:"Mukta",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:radial-gradient(120% 70% at 50% -10%,#3A2546 0%,var(--raat) 55%) fixed,var(--raat);color:var(--chandan);font:400 17px/1.55 var(--body);min-height:100vh}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--diya);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+
+/* top bar */
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0 8px}
+.mark{display:flex;align-items:center;gap:9px;text-decoration:none;font:400 24px var(--display)}
+.mark svg{width:24px;height:24px;color:var(--diya)}
+.join{display:inline-flex;align-items:center;padding:8px 16px;border-radius:999px;border:1px solid var(--line);text-decoration:none;font-weight:600;font-size:15px;color:var(--chandan)}
+.join:hover{border-color:var(--diya);color:var(--diya)}
+
+/* stage: ring on the left, controls on the right; stacked on phones */
+.stage{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);grid-template-areas:"ring intro" "ring panel";column-gap:clamp(20px,4vw,56px);row-gap:24px;padding:clamp(12px,3vw,32px) 0 8px}
+.intro{grid-area:intro;align-self:end}
+.ringbox{grid-area:ring;align-self:center}
+.panel{grid-area:panel;align-self:start}
+@media (min-width:881px){.ringbox{align-self:start;position:sticky;top:16px}}
+@media (max-width:880px){.stage{grid-template-columns:minmax(0,1fr);grid-template-areas:"intro" "ring" "panel";row-gap:14px}}
+.intro h1{margin:0;font:400 clamp(52px,7vw,84px)/1.05 var(--display)}
+.intro .latin{display:block;margin-top:6px;font:600 19px/1.3 var(--body);color:var(--chandan)}
+.intro p{margin:10px 0 0;color:var(--dhuan);max-width:44ch}
+@media (max-width:880px){.intro h1{font-size:52px}.intro p{font-size:16px}}
+
+.ringbox{position:relative;width:min(100%,520px);margin:0 auto;aspect-ratio:1}
+.ringbox::before{content:"";position:absolute;inset:12%;border-radius:50%;background:radial-gradient(circle,rgba(242,169,59,.30) 0%,rgba(242,169,59,0) 65%);opacity:.25;transition:opacity .6s ease}
+body.sam .ringbox::before{opacity:1;transition:opacity .06s}
+.ringbox svg{position:relative;display:block;width:100%;height:100%}
+.arc{fill:none;stroke:rgba(244,231,212,.16);stroke-width:2}
+.bd{fill:rgba(244,231,212,.38)}
+.bd.tali{fill:var(--chandan)}
+.bd.khali{fill:var(--raat);stroke:var(--chandni);stroke-width:3}
+.bd.sam{fill:var(--diya)}
+.bd.on{fill:var(--diya);stroke:var(--diya)}
+.bd.sam.khali{fill:var(--raat);stroke:var(--diya);stroke-width:4}
+.bd.sam.khali.on{fill:var(--diya)}
+.halo{fill:var(--diya);opacity:0;transition:opacity .08s}
+.halo.on{opacity:.3}
+.mk{font:500 17px var(--body);fill:var(--dhuan);text-anchor:middle;dominant-baseline:middle}
+.mk.x{fill:var(--diya);font-weight:700}
+.cbol{font-family:var(--display);fill:var(--chandan);text-anchor:middle;dominant-baseline:middle}
+.cbol.dim{fill:var(--dhuan)}
+.csub{font:500 18px var(--body);fill:var(--dhuan);text-anchor:middle}
+.csub2{font:400 15px var(--body);fill:var(--dhuan);text-anchor:middle;opacity:.8}
+
+/* controls */
+.panel{display:flex;flex-direction:column;gap:22px}
+.row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.lbl{display:block;font-size:14.5px;color:var(--dhuan);margin-bottom:8px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{border:1px solid var(--line);background:transparent;border-radius:999px;padding:7px 14px;font-weight:600;font-size:15.5px;color:var(--chandan)}
+.seg button small{font-weight:400;color:var(--dhuan);margin-left:5px}
+.seg button[aria-pressed="true"]{background:var(--chandan);color:var(--raat);border-color:var(--chandan)}
+.seg button[aria-pressed="true"] small{color:#5b4a63}
+.play{width:76px;height:76px;border-radius:50%;border:0;background:var(--diya);color:var(--diya-ink);display:grid;place-items:center;flex:none;box-shadow:0 10px 30px -10px rgba(242,169,59,.6)}
+.play svg{width:30px;height:30px}
+.play:active{transform:scale(.97)}
+.bpm{display:flex;flex-direction:column;gap:2px}
+.bpm b{font:400 52px/1 var(--display);font-variant-numeric:tabular-nums}
+.bpm span{color:var(--dhuan);font-size:15px}
+.tap{margin-left:auto;border:1px solid var(--line);background:var(--mehfil);border-radius:14px;padding:10px 16px;font-weight:600;min-width:84px}
+.tap.hit{border-color:var(--diya);color:var(--diya)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:999px;background:linear-gradient(90deg,var(--diya) var(--fill,40%),var(--mehfil2) var(--fill,40%));outline-offset:6px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:var(--chandan);border:0;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:var(--chandan);border:0}
+.sw-row{display:flex;flex-direction:column;gap:12px}
+.sw{display:flex;align-items:center;justify-content:space-between;gap:14px;background:none;border:0;padding:0;text-align:left;width:100%}
+.sw .t b{display:block;font-weight:600;font-size:16px}
+.sw .t span{display:block;font-size:14px;color:var(--dhuan)}
+.sw i{flex:none;width:46px;height:28px;border-radius:999px;background:var(--mehfil2);position:relative;transition:background .15s}
+.sw i::after{content:"";position:absolute;top:4px;left:4px;width:20px;height:20px;border-radius:50%;background:var(--dhuan);transition:transform .15s,background .15s}
+.sw[aria-checked="true"] i{background:var(--diya)}
+.sw[aria-checked="true"] i::after{transform:translateX(18px);background:var(--diya-ink)}
+.stats{display:flex;gap:28px}
+.stats div span{display:block;font-size:14px;color:var(--dhuan)}
+.stats div b{font:400 28px/1.1 var(--display);font-variant-numeric:tabular-nums}
+.hint{font-size:14px;color:var(--dhuan);margin:0}
+@media (hover:none){.hint.keys{display:none}}
+
+/* bols for the loop, laid out by vibhag with X 2 0 3 beneath */
+.sec{padding:clamp(28px,5vw,56px) 0 0}
+.sec h2{margin:0 0 4px;font:400 clamp(26px,3vw,34px)/1.15 var(--display)}
+.sec .sub{margin:0 0 16px;color:var(--dhuan)}
+.nota{display:flex;flex-direction:column;gap:12px;background:var(--mehfil);border:1px solid var(--line);border-radius:22px;padding:18px}
+.avt{display:flex;flex-wrap:wrap;gap:8px 16px}
+.vb{display:flex;flex-direction:column;gap:4px}
+.cs{display:flex;gap:5px}
+.pm{min-width:52px;min-height:44px;padding:10px 8px 8px;border-radius:12px;background:rgba(244,231,212,.06);text-align:center;font-weight:600;font-size:16px;line-height:1.2;transition:background .06s,color .06s}
+.pm.none{background:transparent;box-shadow:inset 0 0 0 1px rgba(244,231,212,.08);color:var(--dhuan)}
+.pm.sam{box-shadow:inset 0 0 0 1.5px var(--diya)}
+.pm.th{color:var(--dhuan);font-weight:500}
+.pm.on{background:var(--diya);color:var(--diya-ink)}
+.vb .m{font-size:13.5px;color:var(--dhuan);padding-left:6px}
+.vb .m.x{color:var(--diya);font-weight:700}
+@media (max-width:600px){.pm{min-width:40px;padding:9px 4px 7px;font-size:14.5px}.avt{gap:8px 10px}}
+
+/* ways to practise: three ideas side by side, not a sequence */
+.ways{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(18px,3vw,36px)}
+@media (max-width:820px){.ways{grid-template-columns:minmax(0,1fr)}}
+.ways div{border-top:1px solid var(--line);padding-top:14px}
+.ways b{display:block;font:400 21px/1.25 var(--display);margin-bottom:6px}
+.ways p{margin:0;color:var(--dhuan);max-width:52ch}
+
+.join-band{margin:clamp(36px,6vw,72px) 0 0;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;padding:clamp(22px,4vw,36px);border-radius:28px;background:var(--mehfil);border:1px solid var(--line)}
+.join-band h2{margin:0;font:400 clamp(26px,3vw,34px)/1.15 var(--display)}
+.join-band p{margin:6px 0 0;color:var(--dhuan);max-width:56ch}
+.cta{display:inline-flex;align-items:center;padding:13px 22px;border-radius:999px;background:var(--diya);color:var(--diya-ink);font-weight:700;text-decoration:none}
+footer{padding:36px 0 48px;color:var(--dhuan);font-size:14.5px;display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}.ringbox::before{opacity:.25!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="mark" href="/" aria-label="Layakari home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="3.5" r="1.8" fill="currentColor"/></svg>Layakari</a>
+    <a class="join" href="/">Join free</a>
+  </header>
+
+  <main>
+    <section class="stage" aria-label="Practice">
+      <div class="intro">
+        <h1 lang="hi">अभ्यास</h1>
+        <span class="latin">Abhyas, a free practice room for Kathak</span>
+        <p>Pick a taal, set your laya, and practise to a live theka. Nothing to install and no sign-up.</p>
+      </div>
+      <div class="ringbox"><svg id="ring" viewBox="0 0 440 440" role="img" aria-label="Taal cycle"></svg></div>
+      <div class="panel">
+        <div class="row">
+          <button class="play" id="play" aria-label="Start"></button>
+          <div class="bpm"><b id="bpmv">90</b><span id="laya">bpm, madhya laya</span></div>
+          <button class="tap" id="tap" type="button">Tap</button>
+        </div>
+        <div><label class="lbl" for="tempo">Laya</label><input type="range" id="tempo" min="30" max="320" value="90"></div>
+        <div><span class="lbl" id="taal-l">Taal</span><div class="seg" id="taals" role="group" aria-labelledby="taal-l"></div></div>
+        <div><span class="lbl" id="mode-l">Practise</span><div class="seg" id="modes" role="group" aria-labelledby="mode-l"></div></div>
+        <div class="sw-row" id="sws"></div>
+        <div class="row" style="justify-content:space-between">
+          <div class="stats"><div><span>Session</span><b id="time">0:00</b></div><div><span>Avartans</span><b id="avs">0</b></div></div>
+          <p class="hint keys">Space starts and stops</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" aria-labelledby="bols-h">
+      <h2 id="bols-h">Theka of Teentaal</h2>
+      <p class="sub" id="bols-sub"></p>
+      <div class="nota" id="nota"></div>
+    </section>
+
+    <section class="sec" aria-labelledby="ways-h">
+      <h2 id="ways-h">Ways to practise</h2>
+      <p class="sub">Your screen stays on while the theka plays, so you can prop your phone up and dance.</p>
+      <div class="ways">
+        <div><b>Tatkar to the theka</b><p>Choose Tatkar and start slow. Keep your footwork even and land each Thei on the beat. Raise the laya only when a whole avartan feels steady.</p></div>
+        <div><b>Padhant with tali and khali</b><p>Recite the bols aloud, clap on each tali and wave on khali. Turn on Tali claps to check your hands against the cycle.</p></div>
+        <div><b>Land on sam</b><p>Choose Tihai. The phrase runs three times, and the last Thei should fall on the bright bead at the top of the ring.</p></div>
+      </div>
+    </section>
+
+    <section class="join-band" aria-labelledby="join-h">
+      <div><h2 id="join-h">Practise real compositions</h2><p>On Layakari, gurus and composers publish parans, tihais and kavitts with full notation, and students practise them at any laya.</p></div>
+      <a class="cta" href="/">Create your free account</a>
+    </section>
+  </main>
+
+  <footer><span>Abhyas is part of Layakari, made in Canada for Kathak and tabla artists.</span><a href="/">layakari.ca</a></footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+/* ---------- taals: theka bols per matra, and the vibhag marks (X sam, 0 khali, numbers tali) ---------- */
+const TAALS={
+  teentaal:{name:"Teentaal",n:16,bols:["Dha","Dhin","Dhin","Dha","Dha","Dhin","Dhin","Dha","Dha","Tin","Tin","Ta","Ta","Dhin","Dhin","Dha"],v:{0:"X",4:"2",8:"0",12:"3"}},
+  jhaptaal:{name:"Jhaptaal",n:10,bols:["Dhi","Na","Dhi","Dhi","Na","Ti","Na","Dhi","Dhi","Na"],v:{0:"X",2:"2",5:"0",7:"3"}},
+  rupak:{name:"Rupak",n:7,bols:["Tin","Tin","Na","Dhi","Na","Dhi","Na"],v:{0:"0",3:"1",5:"2"}},
+  ektaal:{name:"Ektaal",n:12,bols:["Dhin","Dhin","DhaGe","Tirakita","Tu","Na","Kat","Ta","DhaGe","Tirakita","Dhi","Na"],v:{0:"X",2:"0",4:"2",6:"0",8:"3",10:"4"}},
+  dhamar:{name:"Dhamar",n:14,bols:["Ka","Dhi","Ta","Dhi","Ta","Dha","–","Ga","Ti","Ta","Ti","Ta","Ta","–"],v:{0:"X",5:"2",7:"0",10:"3"}}
+};
+const MODES=[["theka","Theka"],["tatkar","Tatkar"],["tihai","Tihai"]];
+const TATKAR=["Ta","Thei","Thei","Tat","Aa","Thei","Thei","Tat"];
+const TIHAI=["Tigda","Dig","Dig","Thei","–","Tigda","Dig","Dig","Thei","–","Tigda","Dig","Dig","Thei"];
+const I={play:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>',pause:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>'};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+/* ---------- settings, remembered on this device ---------- */
+const st={taal:"teentaal",mode:"theka",bpm:90,theka:true,claps:false,tick:false};
+try{const s=JSON.parse(localStorage.getItem("abhyas")||"{}");for(const k in st)if(k in s&&typeof s[k]===typeof st[k])st[k]=s[k];}catch(e){}
+if(!TAALS[st.taal])st.taal="teentaal";if(!MODES.some(m=>m[0]===st.mode))st.mode="theka";st.bpm=Math.min(320,Math.max(30,Math.round(st.bpm)||90));
+function save(){try{localStorage.setItem("abhyas",JSON.stringify(st));}catch(e){}}
+
+/* ---------- the loop: one entry per matra; theka plays every matra, padhant bols on top in Tatkar and Tihai ---------- */
+let loop=[],tihaiStart=0;
+function vibhagStarts(tl){return Object.keys(tl.v).map(Number).sort((a,b)=>a-b);}
+function buildLoop(){
+  const tl=TAALS[st.taal],n=tl.n;
+  if(st.mode==="tihai"){ // start the 14-matra tihai so its last Thei lands on sam; the loop runs round to sam again
+    tihaiStart=((n-13)%n+n)%n;const L=13+tihaiStart;loop=[];
+    for(let j=0;j<L;j++)loop.push({pos:j%n,bols:[]});
+    TIHAI.forEach((b,k)=>{loop[(tihaiStart+k)%L].bols=[b];});
+  }else loop=Array.from({length:n},(_,j)=>({pos:j,bols:st.mode==="tatkar"?[TATKAR[j%8]]:[]}));
+}
+
+/* ---------- sound: synthesised tabla for the theka, footfall and ghungroo for dance bols ---------- */
+let ac=null,master=null,noise=null;
+function audio(){
+  if(!ac){try{if(navigator.audioSession)navigator.audioSession.type="playback";}catch(e){}
+    ac=new (window.AudioContext||window.webkitAudioContext)();master=ac.createGain();master.gain.value=.9;master.connect(ac.destination);
+    const b=ac.createBuffer(1,Math.floor(ac.sampleRate*.25),ac.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;noise=b;}
+  if(ac.state==="suspended")ac.resume();return ac;
+}
+function env(g,t,p,d){g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(Math.max(.0002,p),t+.004);g.gain.exponentialRampToValueAtTime(.0001,t+Math.max(.02,d));}
+function osc(t,f0,f1,dec,p,type){const o=ac.createOscillator(),g=ac.createGain();o.type=type||"sine";o.frequency.setValueAtTime(f0,t);if(f1)o.frequency.exponentialRampToValueAtTime(f1,t+dec*.5);env(g,t,p,dec);o.connect(g).connect(master);o.start(t);o.stop(t+dec+.05);}
+function nz(t,f,type,p,dec,q){const s=ac.createBufferSource(),fl=ac.createBiquadFilter(),g=ac.createGain();s.buffer=noise;fl.type=type;fl.frequency.value=f;if(q)fl.Q.value=q;env(g,t,p,dec);s.connect(fl).connect(g).connect(master);s.start(t);s.stop(t+dec+.05);}
+const bayan=(t,v)=>osc(t,130,68,.55,.55*v);
+const dayan=(t,f,d,v)=>{[[1,.32],[2.01,.16],[3.02,.08],[4.1,.05]].forEach(([m,a])=>osc(t,f*m,0,d/m*1.4,a*v));nz(t,3200,"bandpass",.12*v,.05);};
+const click=(t,v,f)=>nz(t,f||1800,"bandpass",v,.05);
+function strike(bol,t,beat,v){const b=bol.toLowerCase();
+  if(b==="–")return;
+  if(b==="tirakita"){[0,.25,.5,.75].forEach((k,i)=>i%2?dayan(t+k*beat,470,.12,.6*v):click(t+k*beat,.35*v,1500));return;}
+  if(b==="dhage"){bayan(t,v);dayan(t,440,.3,.8*v);bayan(t+beat/2,.7*v);return;}
+  if(/^dh/.test(b)){bayan(t,v);dayan(t,440,/in|dhi/.test(b)?.55:.3,.9*v);return;}
+  if(/^tin|^ti$|^tu/.test(b)){dayan(t,466,.6,.8*v);return;}
+  if(/^kat|^ka|^ke/.test(b)){click(t,.5*v,1200);return;}
+  if(/^g/.test(b)){bayan(t,.7*v);return;}
+  dayan(t,440,.25,v);}
+const thud=(t,v)=>osc(t,120,55,.3,.6*v);
+const ghung=(t,v,len)=>{[0,.011,.024].forEach((dt,i)=>nz(t+dt,5200+i*900,"highpass",.22*v,(len||.12)-dt*2));};
+function dance(b,t,v){b=b.toLowerCase();
+  if(b==="–")return;
+  if(b==="thei"){thud(t,v);ghung(t,.9*v);return;}
+  if(b==="tat"){click(t,.45*v,2600);ghung(t,.7*v);return;}
+  if(b==="aa"){ghung(t,.5*v,.3);return;}
+  if(b==="dig"){thud(t,.8*v);ghung(t+.02,.6*v);return;}
+  if(b==="tigda"){thud(t,.6*v);ghung(t,.5*v);thud(t+.09,.5*v);return;}
+  thud(t,.6*v);ghung(t,.6*v);}
+const clap=(t,v)=>{[0,.009,.019].forEach(dt=>nz(t+dt,1150,"bandpass",.55*v,.07,.9));};
+const tick=(t,sam)=>osc(t,sam?1760:1250,0,.04,sam?.12:.06);
+
+/* ---------- steady timing: a worker wakes every 25 ms and schedules each matra a little ahead on the audio clock ---------- */
+const st2={playing:false,step:0,next:0,first:true,avs:0,ran:0,since:0};
+const queue=[];let ticker=null,raf=0,lock=null;
+function scheduler(){
+  if(!st2.playing||!ac)return;
+  const ahead=document.hidden?1.5:.12,tl=TAALS[st.taal];
+  while(st2.next<ac.currentTime+ahead){
+    const j=st2.step%loop.length,m=loop[j],t=st2.next,beat=60/st.bpm,mk=tl.v[m.pos];
+    if(st.theka)strike(tl.bols[m.pos],t,beat,st.mode==="theka"?1:.55);
+    const mute=st2.first&&st.mode==="tihai"&&j===0; // the very first sam has no tihai landing on it yet
+    if(st.mode!=="theka"&&!mute)m.bols.forEach((b,k)=>dance(b,t+k*beat/m.bols.length,1));
+    if(st.claps&&mk!=null&&mk!=="0")clap(t,m.pos===0?1:.7);
+    if(st.tick)tick(t,m.pos===0);
+    queue.push({t,j,pos:m.pos,mute});
+    st2.next+=beat;st2.step++;st2.first=false;
+  }
+}
+function makeTicker(){
+  try{const w=new Worker(URL.createObjectURL(new Blob(["let i=0;onmessage=e=>{clearInterval(i);if(e.data==='go')i=setInterval(()=>postMessage(0),25);};"],{type:"text/javascript"})));
+    w.onmessage=scheduler;return {go:()=>w.postMessage("go"),halt:()=>w.postMessage("halt")};}
+  catch(e){let i=0;return {go:()=>{clearInterval(i);i=setInterval(scheduler,25);},halt:()=>clearInterval(i)};}
+}
+async function keepAwake(on){
+  try{if(on&&"wakeLock" in navigator&&!lock){lock=await navigator.wakeLock.request("screen");lock.addEventListener("release",()=>{lock=null;});}
+    else if(!on&&lock){await lock.release();lock=null;}}catch(e){lock=null;}
+}
+function start(){
+  audio();buildLoop();if(!ticker)ticker=makeTicker();
+  Object.assign(st2,{playing:true,step:0,next:ac.currentTime+.08,first:true,avs:0,since:performance.now()});
+  queue.length=0;ticker.go();scheduler();cancelAnimationFrame(raf);raf=requestAnimationFrame(frame);keepAwake(true);syncPlay();
+}
+function stop(){
+  if(!st2.playing)return;st2.playing=false;ticker&&ticker.halt();cancelAnimationFrame(raf);queue.length=0;
+  st2.ran+=performance.now()-st2.since;keepAwake(false);show(null);syncPlay();
+}
+function restartIfPlaying(){if(st2.playing){stop();start();}}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&st2.playing)keepAwake(true);});
+
+/* ---------- drawing: the ring is redrawn when the taal changes; each frame only moves the highlight ---------- */
+let beads=[],cells=[],cur=-1;
+const CX=220,CY=220,R=168;
+function angleOf(n,vs,i){const vi=vs.filter(v=>v<=i).length-1,G=.7,unit=2*Math.PI/(n+G*vs.length);return -Math.PI/2+unit*(i+G*vi);}
+function drawRing(){
+  const tl=TAALS[st.taal],n=tl.n,vs=vibhagStarts(tl);let h="";
+  vs.forEach((v0,vi)=>{const v1=(vs[vi+1]??n)-1,a0=angleOf(n,vs,v0),a1=angleOf(n,vs,v1),big=a1-a0>Math.PI?1:0;
+    if(v1>v0)h+=`<path class="arc" d="M${(CX+R*Math.cos(a0)).toFixed(1)} ${(CY+R*Math.sin(a0)).toFixed(1)} A${R} ${R} 0 ${big} 1 ${(CX+R*Math.cos(a1)).toFixed(1)} ${(CY+R*Math.sin(a1)).toFixed(1)}"/>`;});
+  for(let i=0;i<n;i++){const a=angleOf(n,vs,i),x=CX+R*Math.cos(a),y=CY+R*Math.sin(a),m=tl.v[i];
+    const r=i===0?15:m!=null?11:6.5,cls=i===0?(m==="0"?"sam khali":"sam"):m==="0"?"khali":m!=null?"tali":"";
+    h+=`<circle class="halo" data-i="${i}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r+11}"/><circle class="bd ${cls}" data-i="${i}" data-c="${cls}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}"/>`;
+    if(m!=null){const lx=CX+(R+36)*Math.cos(a),ly=CY+(R+36)*Math.sin(a);h+=`<text class="mk${i===0?" x":""}" x="${lx.toFixed(1)}" y="${ly.toFixed(1)}">${esc(m)}</text>`;}}
+  h+=`<text class="cbol dim" id="cbol" x="${CX}" y="${CY-6}" font-size="64">${esc(tl.name)}</text><text class="csub" id="csub" x="${CX}" y="${CY+46}">${n} matras</text><text class="csub2" id="csub2" x="${CX}" y="${CY+72}">Press play to start</text>`;
+  $("#ring").innerHTML=h;$("#ring").setAttribute("aria-label",`${tl.name}, ${n} matras`);
+  beads=[...document.querySelectorAll("#ring .bd")];cur=-1;
+}
+function cellHTML(b,cls,j){return `<div class="pm ${cls}" data-j="${j}">${esc(b)}</div>`;}
+function drawBols(){ // one row per avartan, cells grouped by vibhag with the marks beneath
+  const tl=TAALS[st.taal],n=tl.n,vs=vibhagStarts(tl),rows=[];
+  const put=(row,pos,html)=>{(rows[row]=rows[row]||{})[pos]=html;};
+  let title,sub;
+  if(st.mode==="theka"){title=`Theka of ${tl.name}`;sub="The tabla cycle you practise against.";
+    tl.bols.forEach((b,i)=>put(0,i,cellHTML(b,i===0?"sam":"",i)));}
+  else if(st.mode==="tatkar"){title=`Tatkar in ${tl.name}`;sub="Footwork bols, one on each matra, over a softer theka.";
+    loop.forEach((m,j)=>put(0,j,cellHTML(m.bols[0],j===0?"sam":"",j)));}
+  else{const L=loop.length;title="Tihai";sub=`Starts on matra ${tihaiStart+1} and lands on sam. The theka keeps going between repeats.`;
+    TIHAI.forEach((b,k)=>{const a=tihaiStart+k,j=a%L;put(Math.floor(a/n),a%n,cellHTML(b,a%n===0?"sam":"",j));});
+    for(let p=1;p<tihaiStart;p++)put(0,p,cellHTML(tl.bols[p],"th",p));}
+  $("#bols-h").textContent=title;$("#bols-sub").textContent=sub;
+  let h="";const last=rows.length-1;
+  rows.forEach((r,ri)=>{h+=`<div class="avt">`;
+    vs.forEach((v0,vi)=>{const v1=vs[vi+1]??n;if(ri===last&&ri>0&&!Object.keys(r).some(p=>+p>=v0))return;let cs="";
+      for(let p=v0;p<v1;p++)cs+=r[p]||`<div class="pm none" aria-hidden="true"></div>`;
+      h+=`<div class="vb"><div class="cs">${cs}</div><span class="m${v0===0&&tl.v[0]==="X"?" x":""}">${esc(tl.v[v0])}</span></div>`;});
+    h+=`</div>`;});
+  $("#nota").innerHTML=h;cells=[...document.querySelectorAll("#nota .pm[data-j]")];
+}
+function show(ev){
+  const tl=TAALS[st.taal];
+  if(cur>=0&&beads[cur]){beads[cur].classList.remove("on");const h=document.querySelector(`#ring .halo[data-i="${cur}"]`);h&&h.classList.remove("on");}
+  cells.forEach(c=>c.classList.remove("on"));
+  const cb=$("#cbol"),cs=$("#csub"),c2=$("#csub2");
+  if(!ev){cur=-1;cb.textContent=tl.name;cb.setAttribute("font-size","64");cb.classList.add("dim");cs.textContent=`${tl.n} matras`;c2.textContent=st2.ran?"Paused":"Press play to start";document.body.classList.remove("sam");return;}
+  cur=ev.pos;beads[cur].classList.add("on");const h=document.querySelector(`#ring .halo[data-i="${cur}"]`);h&&h.classList.add("on");
+  if(!ev.mute)cells.forEach(c=>{if(+c.dataset.j===ev.j)c.classList.add("on");});
+  const m=loop[ev.j],pad=st.mode!=="theka"&&m.bols.length&&m.bols[0]!=="–"&&!ev.mute;
+  const word=pad?m.bols[0]:tl.bols[ev.pos];
+  cb.textContent=word;cb.setAttribute("font-size",word.length<=4?"92":word.length<=6?"74":"58");cb.classList.toggle("dim",st.mode!=="theka"&&!pad);
+  cs.textContent=`matra ${ev.pos+1} of ${tl.n}`;
+  if(ev.pos===0){st2.avs++;$("#avs").textContent=st2.avs;document.body.classList.add("sam");setTimeout(()=>document.body.classList.remove("sam"),140);}
+  c2.textContent=tl.v[ev.pos]==="0"?"khali":tl.v[ev.pos]!=null?(ev.pos===0?"sam":"tali"):"";
+}
+let lastClock="";
+function frame(){
+  if(!st2.playing)return;
+  const now=ac.currentTime-((ac.outputLatency||0)+(ac.baseLatency||0)); // light up what you hear, even over Bluetooth
+  let ev=null;while(queue.length&&queue[0].t<=now){ev=queue.shift();}
+  if(ev)show(ev);
+  const secs=Math.floor((st2.ran+performance.now()-st2.since)/1000),txt=`${Math.floor(secs/60)}:${String(secs%60).padStart(2,"0")}`;
+  if(txt!==lastClock){lastClock=txt;$("#time").textContent=txt;}
+  raf=requestAnimationFrame(frame);
+}
+
+/* ---------- controls ---------- */
+function layaName(b){return b<70?"vilambit laya":b<=140?"madhya laya":"drut laya";}
+function setBpm(b){st.bpm=Math.min(320,Math.max(30,Math.round(b)));const r=$("#tempo");r.value=st.bpm;r.style.setProperty("--fill",((st.bpm-30)/290*100).toFixed(1)+"%");$("#bpmv").textContent=st.bpm;$("#laya").textContent="bpm, "+layaName(st.bpm);save();}
+function syncPlay(){const p=$("#play");p.innerHTML=st2.playing?I.pause:I.play;p.setAttribute("aria-label",st2.playing?"Stop":"Start");}
+function drawSegs(){
+  $("#taals").innerHTML=Object.entries(TAALS).map(([k,t])=>`<button type="button" data-taal="${k}" aria-pressed="${st.taal===k}">${t.name}<small>${t.n}</small></button>`).join("");
+  $("#modes").innerHTML=MODES.map(([k,l])=>`<button type="button" data-mode="${k}" aria-pressed="${st.mode===k}">${l}</button>`).join("");
+}
+const SW=[["theka","Tabla","The theka underneath"],["claps","Tali claps","A clap on each tali, nothing on khali"],["tick","Matra tick","A soft click on every matra"]];
+function drawSws(){$("#sws").innerHTML=SW.map(([k,l,d])=>`<button type="button" class="sw" role="switch" data-sw="${k}" aria-checked="${st[k]}"><span class="t"><b>${l}</b><span>${d}</span></span><i aria-hidden="true"></i></button>`).join("");}
+function redraw(){buildLoop();drawSegs();drawRing();drawBols();show(null);}
+let taps=[];
+document.addEventListener("click",e=>{
+  const b=e.target.closest("button");if(!b)return;
+  if(b.id==="play"){st2.playing?stop():start();return;}
+  if(b.id==="tap"){const now=performance.now();if(taps.length&&now-taps[taps.length-1]>2000)taps=[];taps.push(now);taps=taps.slice(-5);
+    if(taps.length>=2){const gaps=taps.slice(1).map((t,i)=>t-taps[i]);setBpm(60000/(gaps.reduce((a,c)=>a+c,0)/gaps.length));}
+    b.classList.add("hit");setTimeout(()=>b.classList.remove("hit"),120);return;}
+  if(b.dataset.taal){st.taal=b.dataset.taal;save();const was=st2.playing;if(was)stop();redraw();if(was)start();return;}
+  if(b.dataset.mode){st.mode=b.dataset.mode;save();const was=st2.playing;if(was)stop();redraw();if(was)start();return;}
+  if(b.dataset.sw){st[b.dataset.sw]=!st[b.dataset.sw];b.setAttribute("aria-checked",st[b.dataset.sw]);save();}
+});
+$("#tempo").addEventListener("input",e=>setBpm(+e.target.value));
+document.addEventListener("keydown",e=>{
+  if(e.code!=="Space"||e.repeat)return;const t=e.target;
+  if(t&&(t.tagName==="INPUT"||t.tagName==="TEXTAREA"||t.tagName==="SELECT"||t.tagName==="BUTTON"||t.isContentEditable))return;
+  e.preventDefault();st2.playing?stop():start();
+});
+
+function init(){drawSws();redraw();setBpm(st.bpm);syncPlay();}
+init();
+})();
+</script>
+</body>
+</html>
