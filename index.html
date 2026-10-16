@@ -91,6 +91,13 @@ h3{font-size:17.5px;margin:0;font-weight:600}
 .li .meta b{display:block;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .li .meta span{font-size:14px;color:var(--muted)}
 .li button.meta{background:none;border:0;padding:0;text-align:left}
+.li .meta .prog{display:block;font-family:var(--mono);font-size:12.5px;color:var(--teal);margin-top:2px}
+.li .meta .prog.none{color:var(--muted)}
+.li .meta .passed{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+.li .meta .pill{font-size:12.5px}
+.li .meta .pill.teal{color:var(--teal)}
+@media (max-width:600px){.li.stu{flex-wrap:wrap}.li.stu .meta{flex-basis:calc(100% - 52px)}.li.stu>.row-actions{width:100%;justify-content:flex-end}}
+.prac{font-size:14.5px;color:var(--muted);margin:8px 0 0}
 .pill{display:inline-block;font-family:var(--mono);font-size:12.5px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
 .pill.gold{border-color:var(--gold);color:var(--gold)}
 .pill.teal{border-color:var(--teal);color:var(--teal)}
@@ -388,6 +395,24 @@ function rank(key){ // my licence rank for a composition
   let r=0;for(const it of myItems()){if(it.key!==key)continue;if(it.kind==="choreo")r=Math.max(r,2);else r=Math.max(r,(KIND[it.kind]||{}).r||0);}return r;
 }
 function academyAccess(key){for(const m of memberships()){if(m.status==="active"&&levelPieces(m.a,m.lvl).includes(key)){const l=(m.a.levels||[]).find(x=>x.id===m.lvl);return `${m.a.name} · ${l?l.name:""}`;}}return "";}
+/* Passing a level: the guru records it in academy.passed[student][level] = {at, name, pieces}, where pieces is
+   everything released up to that level. The student keeps those pieces even after leaving the academy. */
+function myEnroll(){return S.enrolls[S.uid]||{};}
+function passesFor(a,sid){return ((a&&a.passed)||{})[sid]||{};}
+function keptMap(){ // pieces I keep: my own saved copy, plus any pass a guru has recorded that isn't saved on my side yet
+  const out=Object.assign({},myEnroll().kept||{});
+  for(const a of academies())for(const p of Object.values(passesFor(a,S.uid)))for(const k of (p.pieces||[]))if(!out[k])out[k]={g:a.guru,a:a.name,l:p.name,at:p.at};
+  return out;
+}
+function keptInfo(key){return keptMap()[key]||null;}
+function canPractice(key){const c=comp(key);return !!c&&c.owner!==S.uid&&!!(rank(key)>0||academyAccess(key)||keptInfo(key));}
+/* Practice log: enroll.practice[key] = {s: seconds, days: distinct days, day: last day, last: timestamp} */
+const dayKey=t=>{const d=new Date(t);return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();};
+function pracOf(uid,key){return ((S.enrolls[uid]||{}).practice||{})[key]||null;}
+function pracSum(uid,keys){let s=0,last=0;for(const k of keys){const p=pracOf(uid,k);if(p){s+=p.s||0;last=Math.max(last,p.last||0);}}return {s,last};}
+function dur(s){s=Math.round(+s||0);if(s<60)return "under a minute";const m=Math.round(s/60);if(m<60)return m+" min";const h=Math.floor(m/60),r=m%60;return h+" h"+(r?" "+r+" min":"");}
+function pracText(p){return p&&p.s?`Practised ${dur(p.s)}${p.days>1?` over ${p.days} days`:""} · last ${date(p.last)}`:"Not practised yet";}
+function pracLine(uid,key,pre){const p=pracOf(uid,key);return `<span class="prog${p&&p.s?"":" none"}">${pre?esc(pre)+" · ":""}${esc(pracText(p))}</span>`;}
 
 /* ---------------- writes ---------------- */
 let q=Promise.resolve();
@@ -397,6 +422,12 @@ const clone=o=>JSON.parse(JSON.stringify(o||{}));
 function saveMe(mut){const p=clone(me());mut(p);p.updated=Date.now();S.profiles[S.uid]=p;render();const ref=S.db.doc("profiles/"+S.uid);return queue(()=>ref.set(p));}
 function saveLedger(mut){const l=clone(S.ledgers[S.uid]);l.items=l.items||[];mut(l);S.ledgers[S.uid]=l;render();const ref=S.db.doc("ledger/"+S.uid);return queue(()=>ref.set(l));}
 function saveEnroll(mut){const e=clone(S.enrolls[S.uid]);e.req=e.req||{};mut(e);S.enrolls[S.uid]=e;render();const ref=S.db.doc("enroll/"+S.uid);return queue(()=>ref.set(e));}
+function capturePasses(){ // copy pieces from levels a guru marked as passed into my own record, so they stay mine
+  if(S.readOnly||!S.uid)return;
+  const kept=myEnroll().kept||{},add={};
+  for(const a of academies())for(const p of Object.values(passesFor(a,S.uid)))for(const k of (p.pieces||[]))if(!kept[k]&&!add[k])add[k]={g:a.guru,a:a.name,l:p.name,at:p.at};
+  if(Object.keys(add).length)saveEnroll(e=>{e.kept=Object.assign(e.kept||{},add);});
+}
 
 /* ---------------- audio ---------------- */
 let ac,noise;
@@ -413,17 +444,29 @@ function strike(bol,t,beat){const b=bol.toLowerCase();
   if(/^tin|^ti$|^tu/.test(b)){dayan(t,466,.6,.8);return;}
   if(/^kat|^ka|^ke|^ga/.test(b)){b.startsWith("ga")?bayan(t,.7):click(t,.5,1200);return;}
   dayan(t,440,.25,1);}
+/* Practice time: while the theka plays for a piece you can practise, time is saved to your record every minute and on stop.
+   Runs shorter than 10 seconds in total aren't counted. */
+let pr=null;
+function logPractice(key,sec){if(sec<1||S.readOnly)return;
+  saveEnroll(e=>{const P=e.practice=e.practice||{},p=P[key]=P[key]||{s:0,days:0,day:"",last:0},now=Date.now(),d=dayKey(now);
+    p.s=Math.round((p.s||0)+sec);if(p.day!==d){p.days=(p.days||0)+1;p.day=d;}p.last=now;});
+  const el=$("#prac-stat");if(el&&el.dataset.k===key)el.textContent=pracText(pracOf(S.uid,key));}
+function practiceCheckpoint(force){if(!pr)return;const now=Date.now(),sec=(now-pr.since)/1000;if(!force&&sec<60)return;
+  if(pr.run+sec>=10){pr.run+=sec;pr.since=now;logPractice(pr.key,sec);}}
+function practiceEnd(){practiceCheckpoint(true);pr=null;}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")practiceCheckpoint(true);});
 let timer=null;
-function stop(){clearInterval(timer);timer=null;S.playing=null;S.beat=-1;paint();renderPlayer();syncPlay();}
+function stop(){practiceEnd();clearInterval(timer);timer=null;S.playing=null;S.beat=-1;paint();renderPlayer();syncPlay();}
 function bpmOf(c){return S.bpm[c.key]||c.bpm||90;}
 function play(key){
   if(S.playing===key){stop();return;}
   const c=comp(key);if(!c)return;stop();ctx();S.playing=key;
+  pr=canPractice(key)?{key,since:Date.now(),run:0}:null;
   const tl=TAALS[c.taal]||TAALS.teentaal;
-  const tick=()=>{const cc=comp(key)||c;S.beat=(S.beat+1)%tl.n;strike(tl.bols[S.beat],ctx().currentTime+.02,60/bpmOf(cc));paint();};
+  const tick=()=>{const cc=comp(key)||c;S.beat=(S.beat+1)%tl.n;strike(tl.bols[S.beat],ctx().currentTime+.02,60/bpmOf(cc));paint();practiceCheckpoint();};
   tick();timer=setInterval(tick,60000/bpmOf(c));renderPlayer();syncPlay();
 }
-function retempo(key){if(S.playing===key){const c=comp(key);clearInterval(timer);const tl=TAALS[c.taal]||TAALS.teentaal;timer=setInterval(()=>{S.beat=(S.beat+1)%tl.n;strike(tl.bols[S.beat],ctx().currentTime+.02,60/bpmOf(c));paint();},60000/bpmOf(c));}}
+function retempo(key){if(S.playing===key){const c=comp(key);clearInterval(timer);const tl=TAALS[c.taal]||TAALS.teentaal;timer=setInterval(()=>{S.beat=(S.beat+1)%tl.n;strike(tl.bols[S.beat],ctx().currentTime+.02,60/bpmOf(c));paint();practiceCheckpoint();},60000/bpmOf(c));}}
 function paint(){document.querySelectorAll(".m").forEach(el=>el.classList.toggle("on",S.playing===el.dataset.k&&+el.dataset.i===S.beat));const pb=$("#pbeat");if(pb&&S.playing){const c=comp(S.playing);if(c){const tl=TAALS[c.taal]||TAALS.teentaal;pb.textContent=`${tl.name} · matra ${S.beat+1}/${tl.n} · ${tl.bols[S.beat]}`;}}}
 function syncPlay(){document.querySelectorAll("[data-act=play]").forEach(b=>{const on=S.playing===b.dataset.k;b.innerHTML=on?I.pause:I.play;b.setAttribute("aria-label",on?"Pause theka":"Play theka");});}
 function renderPlayer(){const el=$("#player");if(!S.playing){el.innerHTML="";return;}const c=comp(S.playing);if(!c){stop();return;}
@@ -432,7 +475,7 @@ function renderPlayer(){const el=$("#player");if(!S.playing){el.innerHTML="";ret
 /* ---------------- views ---------------- */
 function compCard(c){const from=Math.min(...["listen","perform","teach"].map(k=>(c.prices||{})[k]??99));
   return `<button class="card" data-act="open" data-k="${esc(c.key)}">${cover(c)}<b>${esc(c.title)}</b><span>${esc(pname(c.owner))}</span><span>${esc((TAALS[c.taal]||{}).name||"")} · ${esc(c.type)} · from ${money(from)}</span></button>`;}
-function compLi(c,right){return `<div class="li">${cover(c)}<button class="meta" data-act="open" data-k="${esc(c.key)}"><b>${esc(c.title)}</b><span>${esc(pname(c.owner))} · ${esc((TAALS[c.taal]||{}).name||"")} · ${esc(c.type)}</span></button>${right||""}</div>`;}
+function compLi(c,right,sub){return `<div class="li">${cover(c)}<button class="meta" data-act="open" data-k="${esc(c.key)}"><b>${esc(c.title)}</b><span>${esc(pname(c.owner))} · ${esc((TAALS[c.taal]||{}).name||"")} · ${esc(c.type)}</span>${sub||""}</button>${right||""}</div>`;}
 
 function vDiscover(){
   const p=me(),qq=S.q.toLowerCase();
@@ -453,21 +496,28 @@ function vDiscover(){
 
 function vLibrary(){
   const items=myItems();const byKey={};items.forEach(it=>{(byKey[it.key]=byKey[it.key]||[]).push(it);});
-  const ms=memberships();
-  const lic=Object.entries(byKey).map(([k,its])=>{const c=comp(k);if(!c)return "";const kinds=[...new Set(its.map(i=>i.kind==="choreo"?"Choreography":KIND[i.kind].n))];
-    return compLi(c,`<span class="row-actions">${kinds.map(k=>`<span class="pill teal">${k}</span>`).join("")}<button class="btn sm ghost" data-act="play" data-k="${esc(k)}" aria-label="Play theka">${I.play}</button></span>`);}).join("");
-  return `<p class="eyebrow">Library</p><h1>Your compositions</h1><p class="lede">Everything you've licensed, plus what your gurus have released to you.</p>
+  const ms=memberships(),km=keptMap();
+  const lic=Object.entries(byKey).map(([k,its])=>{const c=comp(k);if(!c)return "";const kinds=[...new Set(its.map(i=>i.kind==="choreo"?"Choreography":KIND[i.kind].n))];const p=pracOf(S.uid,k);
+    return compLi(c,`<span class="row-actions">${kinds.map(k=>`<span class="pill teal">${k}</span>`).join("")}<button class="btn sm ghost" data-act="play" data-k="${esc(k)}" aria-label="Play theka">${I.play}</button></span>`,p&&p.s?pracLine(S.uid,k):"");}).join("");
+  const live=new Set();ms.forEach(m=>{if(m.status==="active")levelPieces(m.a,m.lvl).forEach(k=>live.add(k));});
+  const keptOnly=Object.entries(km).filter(([k])=>!live.has(k)&&!byKey[k]&&comp(k)).sort((x,y)=>(y[1].at||0)-(x[1].at||0));
+  return `<p class="eyebrow">Library</p><h1>Your compositions</h1><p class="lede">Everything you've licensed, what your gurus have released to you, and the pieces you keep from levels you've passed.</p>
   <div class="sec"><h2>Licensed by you</h2><span>${Object.keys(byKey).length}</span></div>
   ${lic?`<div class="panel list">${lic}</div>`:`<div class="empty"><b>No licences yet</b>Open a composition in Discover and choose Listen, Perform or Teach.<button class="btn" data-act="nav" data-v="discover">Browse compositions</button></div>`}
   <div class="sec"><h2>Your academies</h2><span>${ms.length}</span></div>
   ${ms.length?ms.map(m=>{const l=(m.a.levels||[]).find(x=>x.id===m.lvl);const keys=m.status==="active"?levelPieces(m.a,m.lvl):[];
+    const passed=Object.values(passesFor(m.a,S.uid)).sort((x,y)=>(x.at||0)-(y.at||0));
     return `<div class="panel" style="margin-bottom:14px"><div class="row-actions" style="justify-content:space-between"><div><h3>${esc(m.a.name)}</h3><span class="small muted">Guru ${esc(pname(m.a.guru))}${l&&m.status==="active"?` · Your level: <b>${esc(l.name)}</b>`:""}</span></div><span class="row-actions">${m.status==="active"?`<span class="pill teal">Enrolled</span>`:m.status==="declined"?`<span class="pill">Not accepted</span>`:`<span class="pill gold">Waiting for guru</span>`}<button class="btn sm ghost" data-act="leave" data-g="${esc(m.a.guru)}">${m.status==="active"?"Leave":"Withdraw"}</button></span></div>
-    ${m.status==="active"?(keys.length?`<div class="list" style="margin-top:6px">${keys.map(k=>{const c=comp(k);return c?compLi(c,`<button class="btn sm" data-act="open" data-k="${esc(k)}">Practice</button>`):"";}).join("")}</div>`:`<p class="note">Your guru hasn't released pieces for your level yet.</p>`):`<p class="note">${m.status==="declined"?"The guru didn't accept this request.":"Your guru will place you in a level, then pieces appear here."}</p>`}</div>`;}).join(""):`<div class="empty">You haven't joined an academy. Find one in Discover.</div>`}`;
+    ${passed.length?`<div class="row-actions" style="margin-top:10px">${passed.map(x=>`<span class="pill teal">✓ Passed ${esc(x.name)}</span>`).join("")}</div>`:""}
+    ${m.status==="active"?(keys.length?`<div class="list" style="margin-top:6px">${keys.map(k=>{const c=comp(k);return c?compLi(c,`<button class="btn sm" data-act="open" data-k="${esc(k)}">Practice</button>`,pracLine(S.uid,k,km[k]?"Kept":"")):"";}).join("")}</div>`:`<p class="note">Your guru hasn't released pieces for your level yet.</p>`):`<p class="note">${m.status==="declined"?"The guru didn't accept this request.":"Your guru will place you in a level, then pieces appear here."}</p>`}</div>`;}).join(""):`<div class="empty">You haven't joined an academy. Find one in Discover.</div>`}
+  ${keptOnly.length?`<div class="sec"><h2>Kept from levels you passed</h2><span>${keptOnly.length}</span></div>
+  <div class="panel list">${keptOnly.map(([k,v])=>compLi(comp(k),`<button class="btn sm" data-act="open" data-k="${esc(k)}">Practice</button>`,`<span class="prog none">Passed ${esc(v.l)} · ${esc(v.a)}</span>${pracLine(S.uid,k)}`)).join("")}</div>
+  <p class="note">These stay in your library even if you leave the academy.</p>`:""}`;
 }
 
 function vAcademy(){
   const p=me(),a=p.academy;
-  if(!a)return `<p class="eyebrow">Academy</p><h1>Teach on Layakari</h1><p class="lede">Run your own academy. Organise students into levels and release compositions to each level. Students practise with the full notation and theka, and the composers you teach are paid for every student.</p>
+  if(!a)return `<p class="eyebrow">Academy</p><h1>Teach on Layakari</h1><p class="lede">Run your own academy. Organise students into levels and release compositions to each level. Students practise with the full notation and theka, and the composers you teach are paid for every student. You see how much each student practises, and mark levels as passed when they're ready.</p>
    <div class="empty" style="margin-top:24px"><b>You don't have an academy yet</b>You can teach your own compositions, and any composition you hold a Teach licence for.<button class="btn" data-act="acad-form">Start your academy</button></div>`;
   const levels=a.levels||[];if(!levels.find(l=>l.id===S.selLvl))S.selLvl=levels[0]&&levels[0].id;
   const lvl=levels.find(l=>l.id===S.selLvl);
@@ -486,12 +536,18 @@ function vAcademy(){
 
   <div class="sec"><h2>Levels and syllabus</h2><span>Students see their level and every level below it</span></div>
   <div class="tabs">${levels.map(l=>`<button class="tab" data-act="lvl" data-l="${esc(l.id)}" aria-pressed="${l.id===S.selLvl}">${esc(l.name)}<small>${(l.pieces||[]).length}</small></button>`).join("")}<button class="btn sm ghost" data-act="lvl-form">${I.plus}Add level</button></div>
-  ${lvl?`<div class="panel" style="margin-top:12px"><div class="row-actions" style="justify-content:space-between"><h3>${esc(lvl.name)}: pieces released</h3><span class="row-actions"><button class="btn sm ghost" data-act="lvl-form" data-l="${esc(lvl.id)}">Rename</button><button class="btn sm danger" data-act="lvl-del" data-l="${esc(lvl.id)}">${S.confirm==="lvl:"+lvl.id?"Confirm delete":"Delete level"}</button></span></div>
+  ${lvl?`<div class="panel" style="margin-top:12px"><div class="row-actions" style="justify-content:space-between"><h3>${esc(lvl.name)}: pieces released</h3><span class="row-actions"><button class="btn sm ghost" data-act="lvl-mv" data-l="${esc(lvl.id)}" data-dir="-1" ${levels.indexOf(lvl)<1?"disabled":""} aria-label="Move ${esc(lvl.name)} one level earlier">◂ Earlier</button><button class="btn sm ghost" data-act="lvl-mv" data-l="${esc(lvl.id)}" data-dir="1" ${levels.indexOf(lvl)>=levels.length-1?"disabled":""} aria-label="Move ${esc(lvl.name)} one level later">Later ▸</button><button class="btn sm ghost" data-act="lvl-form" data-l="${esc(lvl.id)}">Rename</button><button class="btn sm danger" data-act="lvl-del" data-l="${esc(lvl.id)}">${S.confirm==="lvl:"+lvl.id?"Confirm delete":"Delete level"}</button></span></div>
     ${mine.length+licensed.length?`<div class="list">${mine.map(c=>pieceRow(c,true)).join("")}${licensed.map(c=>pieceRow(c,rank(c.key)>=3)).join("")}</div>`:`<div class="empty" style="margin-top:12px">No compositions to teach yet. Publish your own in Studio, or get a Teach licence for one in Discover.<span class="row-actions"><button class="btn sm" data-act="nav" data-v="studio">Open Studio</button><button class="btn sm ghost" data-act="nav" data-v="discover">Discover</button></span></div>`}</div>`:`<div class="empty" style="margin-top:12px">Add a level to start building your syllabus.</div>`}
 
   <div class="sec"><h2>Students</h2><span>${students.length} enrolled · ${reqs.length} waiting</span></div>
   ${reqs.length?`<div class="panel list" style="margin-bottom:14px">${reqs.map(([sid,e])=>`<div class="li">${avatar(sid)}<div class="meta"><b>${esc(pname(sid))}</b><span>Asked to join ${esc(date(e.req[S.uid].at))}</span></div><span class="row-actions"><select class="inline" id="ap-${esc(sid)}" aria-label="Level for ${esc(pname(sid))}">${lvlOpts(levels[0]&&levels[0].id)}</select><button class="btn sm" data-act="approve" data-s="${esc(sid)}" ${levels.length?"":"disabled"}>Accept</button><button class="btn sm ghost" data-act="decline" data-s="${esc(sid)}">Decline</button></span></div>`).join("")}</div>`:""}
-  ${students.length?`<div class="panel list">${students.map(sid=>`<div class="li">${avatar(sid)}<div class="meta"><b>${esc(pname(sid))}</b><span>${levelPieces(a,roster[sid]).length} pieces available</span></div><span class="row-actions"><select class="inline" data-act="move" data-s="${esc(sid)}" id="mv-${esc(sid)}" aria-label="Level for ${esc(pname(sid))}">${lvlOpts(roster[sid])}</select><button class="btn sm ghost" data-act="remove" data-s="${esc(sid)}">${S.confirm==="rm:"+sid?"Confirm":"Remove"}</button></span></div>`).join("")}</div>`:`<div class="empty">No students yet. Students find your academy in Discover and ask to join; you place them in a level here.</div>`}
+  ${students.length?`<div class="panel list">${students.map(sid=>{
+    const lid=roster[sid],li=levels.findIndex(l=>l.id===lid),L=levels[li],nx=levels[li+1];
+    const keys=levelPieces(a,lid),ps=pracSum(sid,keys),passed=passesFor(a,sid),done=L&&passed[L.id]&&!nx;
+    const pills=Object.values(passed).sort((x,y)=>(x.at||0)-(y.at||0)).map(x=>`<span class="pill teal">✓ ${esc(x.name)}</span>`).join("");
+    return `<div class="li stu">${avatar(sid)}<div class="meta"><b>${esc(pname(sid))}</b><span>${keys.length} piece${keys.length===1?"":"s"} · ${ps.s?`practised ${esc(dur(ps.s))} · last ${esc(date(ps.last))}`:"no practice logged yet"}</span>${pills?`<div class="passed">${pills}</div>`:""}</div>
+    <span class="row-actions"><select class="inline" data-act="move" data-s="${esc(sid)}" id="mv-${esc(sid)}" aria-label="Level for ${esc(pname(sid))}">${lvlOpts(lid)}</select>${L?(done?`<span class="pill teal">Completed</span>`:`<button class="btn sm" data-act="pass" data-s="${esc(sid)}" ${S.readOnly?"disabled":""}>${S.confirm==="pass:"+sid?"Confirm pass":`Pass ${esc(L.name)}`}</button>`):""}<button class="btn sm ghost" data-act="remove" data-s="${esc(sid)}">${S.confirm==="rm:"+sid?"Confirm":"Remove"}</button></span></div>`;}).join("")}</div>
+  <p class="note">Passing a level moves the student up one level. They keep every piece released to them up to that level, even if they later leave your academy.</p>`:`<div class="empty">No students yet. Students find your academy in Discover and ask to join; you place them in a level here.</div>`}
 
   ${levels.length?`<div class="sec"><h2>Preview as a student</h2><span>What a student at this level can open</span></div>
   <div class="panel"><label class="small muted">Level <select class="inline" id="pv-lvl">${lvlOpts(pv.id)}</select></label>
@@ -526,11 +582,21 @@ function vStudio(){
 
 function vProfile(){
   const p=me();const nComp=(p.compositions||[]).length,nCh=(p.choreographies||[]).length,nLic=myItems().length;
+  const ms=memberships().filter(m=>m.status==="active");
+  const nKept=Object.keys(keptMap()).filter(k=>comp(k)).length;
+  const pt=Object.values(myEnroll().practice||{}).reduce((t,x)=>t+(x.s||0),0);
+  const nPassed=academies().reduce((t,a)=>t+Object.keys(passesFor(a,S.uid)).length,0);
+  const acTile=p.academy?["Your academy",esc(p.academy.name)]:ms.length?["Learning at",ms.map(m=>esc(m.a.name)).join(", ")]:["Academy","None"];
   return `<p class="eyebrow">Profile</p>
   <div class="panel" style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap">${avatar(S.uid,72)}<div style="flex:1;min-width:220px"><h1 style="margin:0">${esc(p.name)}</h1><p class="muted" style="margin:2px 0 8px">${esc(p.city||"")}</p><div class="chips" style="margin:0">${(p.roles||[]).map(r=>`<span class="pill gold">${esc((ROLES.find(x=>x[0]===r)||[r,r])[1])}</span>`).join("")}</div><p style="margin:12px 0 0;max-width:62ch">${esc(p.bio||"")}</p></div><button class="btn ghost" data-act="prof-form">Edit profile</button></div>
-  <div class="tiles"><div class="tile"><span>Compositions published</span><b>${nComp}</b></div><div class="tile"><span>Choreographies</span><b>${nCh}</b></div><div class="tile"><span>Licences bought</span><b>${nLic}</b></div><div class="tile"><span>Academy</span><b style="font-size:17px">${p.academy?esc(p.academy.name):"None"}</b></div></div>
+  <div class="tiles"><div class="tile"><span>Compositions published</span><b>${nComp}</b></div><div class="tile"><span>Choreographies</span><b>${nCh}</b></div><div class="tile"><span>Licences bought</span><b>${nLic}</b></div><div class="tile"><span>${acTile[0]}</span><b style="font-size:17px">${acTile[1]}</b></div></div>
+  ${ms.length||nKept||pt?`<div class="sec"><h2>Learning</h2><button class="btn ghost sm" data-act="nav" data-v="library">Open your library</button></div>
+  <div class="tiles" style="margin-top:0"><div class="tile"><span>Practice logged</span><b>${pt?esc(dur(pt)):"None yet"}</b></div><div class="tile"><span>Levels passed</span><b>${nPassed}</b></div><div class="tile"><span>Pieces kept</span><b>${nKept}</b></div></div>
+  ${ms.length?`<div class="panel list" style="margin-top:14px">${ms.map(m=>{const L=(m.a.levels||[]).find(x=>x.id===m.lvl),keys=levelPieces(m.a,m.lvl),ps=pracSum(S.uid,keys);
+    const passed=Object.values(passesFor(m.a,S.uid)).sort((x,y)=>(x.at||0)-(y.at||0));
+    return `<div class="li">${avatar(m.a.guru)}<div class="meta"><b>${esc(m.a.name)}</b><span>Guru ${esc(pname(m.a.guru))} · level ${esc(L?L.name:"")} · ${keys.length} piece${keys.length===1?"":"s"}${ps.s?` · practised ${esc(dur(ps.s))}`:""}</span>${passed.length?`<div class="passed">${passed.map(x=>`<span class="pill teal">✓ ${esc(x.name)}</span>`).join("")}</div>`:""}</div></div>`;}).join("")}</div>`:""}`:""}
   <div class="sec"><h2>About this prototype</h2><button class="btn ghost sm" data-act="signout">Sign out</button></div>
-  <div class="panel small muted"><p style="margin:0 0 8px">Your profile, compositions and academy are visible to everyone who can open this app. Purchases are simulated: licences are recorded, but no payment is taken.</p><p style="margin:0">Licence levels: Teach includes Perform, and Perform includes Listen. Students get listen and practice access to every piece released up to their level.</p></div>`;
+  <div class="panel small muted"><p style="margin:0 0 8px">Your profile, compositions and academy are visible to everyone who can open this app. Purchases are simulated: licences are recorded, but no payment is taken.</p><p style="margin:0">Licence levels: Teach includes Perform, and Perform includes Listen. Students get listen and practice access to every piece released up to their level, and keep those pieces once their guru marks the level as passed. Practice time is logged while the theka plays, and your guru can see it.</p></div>`;
 }
 
 function landingMore(){
@@ -622,13 +688,15 @@ function profileForm(p){return `<form data-form="profile"><label class="f">Stage
 /* ---------------- modals ---------------- */
 function mDetail(key){
   const c=comp(key);if(!c)return `<p>This composition is no longer available.</p>`;
-  const tl=TAALS[c.taal]||TAALS.teentaal,own=c.owner===S.uid,r=rank(key),via=academyAccess(key),full=r>0||via;
+  const tl=TAALS[c.taal]||TAALS.teentaal,own=c.owner===S.uid,r=rank(key),via=academyAccess(key),kept=keptInfo(key),full=r>0||via||kept;
+  const cp=canPractice(key),pp=cp?pracOf(S.uid,key):null;
   const cols=tl.n>12?Math.ceil(tl.n/2):tl.n>8?Math.ceil(tl.n/2):tl.n;
   const pr=c.prices||{};const chs=allChors().filter(ch=>ch.comp===key);
   const lines=String(c.bols||"").split("\n");
   return `<div class="det">${cover(c)}<div style="min-width:0"><p class="eyebrow">${esc(c.type)}</p><h2 style="font-size:30px">${esc(c.title)}</h2><p class="muted" style="margin:4px 0 0">by ${esc(pname(c.owner))}${S.profiles[c.owner]&&S.profiles[c.owner].city?" · "+esc(S.profiles[c.owner].city):""}</p>
    <div class="meta-line"><span class="pill gold">${tl.name} · ${tl.n} matras</span><span class="pill">${esc(c.laya)} laya · ${c.bpm} bpm</span></div>
-   ${own?`<div class="access">${I.check} Your composition</div>`:r>0?`<div class="access">${I.check} You hold a ${r>=3?"Teach":r>=2?"Perform":"Listen"} licence</div>`:via?`<div class="access">${I.check} Released to you by ${esc(via)}</div>`:""}</div></div>
+   ${own?`<div class="access">${I.check} Your composition</div>`:r>0?`<div class="access">${I.check} You hold a ${r>=3?"Teach":r>=2?"Perform":"Listen"} licence</div>`:via?`<div class="access">${I.check} Released to you by ${esc(via)}${kept?" · yours to keep":""}</div>`:kept?`<div class="access">${I.check} Yours to keep: you passed ${esc(kept.l)} at ${esc(kept.a)}</div>`:""}
+   ${cp?`<p class="prac" id="prac-stat" data-k="${esc(key)}">${esc(pp&&pp.s?pracText(pp):"Play the theka to start logging practice time.")}</p>`:""}</div></div>
   <div class="taal"><div class="taal-head"><b>Theka · ${tl.name}</b><span>X sam · 0 khali</span></div>
    <div class="beats" style="grid-template-columns:repeat(${cols},minmax(0,1fr))">${tl.bols.map((b,i)=>`<div class="m ${tl.v[i]?"vs":""} ${i===0?"sam":""}" data-k="${esc(key)}" data-i="${i}"><small>${tl.v[i]||i+1}</small>${b}</div>`).join("")}</div>
    <div class="ctrl"><button class="bigplay" data-act="play" data-k="${esc(key)}" aria-label="Play theka">${S.playing===key?I.pause:I.play}</button><label for="bpm">Laya <span id="bpmv">${bpmOf(c)} bpm</span><input type="range" id="bpm" min="40" max="180" value="${bpmOf(c)}"></label></div>
@@ -722,7 +790,7 @@ document.addEventListener("click",e=>{
   if(act==="to-how"){const h=document.getElementById("how");if(h)h.scrollIntoView({block:"start"});return;}
   if(act==="to-signup"){if(S.authMode!=="up"){S.authMode="up";S.authMsg="";demoStop();render();}window.scrollTo({top:0,behavior:"smooth"});setTimeout(()=>{const el=document.getElementById("au-email");if(el)el.focus({preventScroll:true});},300);return;}
   if(act==="auth-mode"){demoStop();S.authMode=S.authMode==="up"?"in":"up";S.authMsg="";render();return;}
-  if(act==="signout"){stop();sb.auth.signOut().finally(()=>location.reload());return;}
+  if(act==="signout"){stop();q.then(()=>sb.auth.signOut()).finally(()=>location.reload());return;}
   if(act==="close"){closeModal();return;}
   if(act==="nav"){S.view=d.v;S.confirm=null;closeModal();render();window.scrollTo(0,0);return;}
   if(act==="taal"){S.taal=d.t;render();return;}
@@ -735,11 +803,18 @@ document.addEventListener("click",e=>{
     saveLedger(l=>l.items.push({id:rid(),key:ch.comp,kind:"choreo",chor:ch.ckey,seller:ch.owner,price:num(ch.price,0),at:Date.now()}));
     toast(`Licensed "${ch.title}". Demo: no payment taken.`);renderModal();return;}
   if(act==="join"){saveEnroll(en=>{en.req[d.g]={at:Date.now()};});toast("Request sent. The guru will place you in a level.");return;}
-  if(act==="leave"){saveEnroll(en=>{delete en.req[d.g];});toast("Removed.");return;}
+  if(act==="leave"){const ac=academies().find(x=>x.guru===d.g),keeps=ac&&Object.keys(passesFor(ac,S.uid)).length;
+    saveEnroll(en=>{delete en.req[d.g];});toast(keeps?"You've left the academy. Pieces from levels you passed stay in your library.":"Removed.");return;}
   if(act==="acad-form"){openModal("acad");return;}
   if(act==="acad-open"){saveMe(p=>{p.academy.open=p.academy.open===false;});return;}
   if(act==="lvl"){S.selLvl=d.l;S.confirm=null;render();return;}
   if(act==="lvl-form"){openModal("level",d.l);return;}
+  if(act==="lvl-mv"){saveMe(p=>{const ls=p.academy.levels||[],i=ls.findIndex(l=>l.id===d.l),j=i+(+d.dir);if(i<0||j<0||j>=ls.length)return;[ls[i],ls[j]]=[ls[j],ls[i]];});return;}
+  if(act==="pass"){if(!confirmOnce("pass:"+d.s)){render();return;}
+    const A=me().academy;if(!A)return;const ls=A.levels||[],cur=(A.roster||{})[d.s],i=ls.findIndex(l=>l.id===cur);if(i<0)return;
+    const L=ls[i],nx=ls[i+1],pieces=levelPieces(A,cur);
+    saveMe(p=>{const a=p.academy;a.passed=a.passed||{};(a.passed[d.s]=a.passed[d.s]||{})[cur]={at:Date.now(),name:L.name,pieces};if(nx)a.roster[d.s]=nx.id;});
+    toast(nx?`${pname(d.s)} passed ${L.name} and moved up to ${nx.name}.`:`${pname(d.s)} passed ${L.name}, your top level.`);return;}
   if(act==="lvl-del"){if(!confirmOnce("lvl:"+d.l)){render();return;}saveMe(p=>{const a=p.academy;a.levels=a.levels.filter(l=>l.id!==d.l);for(const s in (a.roster||{}))if(a.roster[s]===d.l)a.roster[s]=a.levels[0]?a.levels[0].id:null;});toast("Level deleted. Its students moved to the first level.");return;}
   if(act==="piece"){saveMe(p=>{const l=p.academy.levels.find(x=>x.id===S.selLvl);if(!l)return;l.pieces=l.pieces||[];const i=l.pieces.indexOf(d.k);if(i>-1)l.pieces.splice(i,1);else l.pieces.push(d.k);});return;}
   if(act==="approve"){const s=$("#ap-"+CSS.escape(d.s));const lv=s&&s.value;if(!lv)return;saveMe(p=>{p.academy.roster=p.academy.roster||{};p.academy.roster[d.s]=lv;if(p.academy.declined)delete p.academy.declined[d.s];});toast(`${pname(d.s)} joined your academy.`);return;}
@@ -792,6 +867,7 @@ function maybeReady(){
   if(!(S.loaded.p&&S.loaded.l&&S.loaded.e))return;
   if(!S.profiles[S.uid]){if(S.gate!=="onboard"){S.gate="onboard";render();}return;}
   if(S.gate)S.gate=null;
+  capturePasses();
   render();if(S.modal&&S.modal.kind==="detail")renderModal();
 }
 let started=false;
