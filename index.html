@@ -271,6 +271,40 @@ form .f textarea{min-height:96px;font-family:var(--mono);font-size:14.5px}
   .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
   .rv.in{opacity:1;transform:none}
 }
+/* padhant notation: one row per avartan, cells grouped by vibhag with X 2 0 3 beneath; dark inside the theka panel, light in forms */
+.pad-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;padding-top:12px;border-top:1px solid rgba(255,255,255,.12)}
+.pad-head b{display:block;font-size:15px}
+.pad-head span{font-family:var(--mono);font-size:12.5px;color:var(--on-hero-mut)}
+.nota{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.nota .avt{display:flex;flex-wrap:wrap;gap:6px 12px}
+.nota .vb{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:0}
+.nota .cs{display:flex;gap:4px}
+.nota .pm{min-width:40px;min-height:34px;padding:8px 6px 6px;border-radius:8px;background:rgba(255,255,255,.07);text-align:center;font-family:var(--mono);font-size:13.5px;line-height:1.2;overflow-wrap:anywhere}
+.nota .pm.sam{box-shadow:inset 0 0 0 1px var(--beat)}
+.nota .pm.none{background:transparent;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.nota .pm.on{background:var(--beat);color:var(--beat-ink)}
+.nota .mk{font-family:var(--mono);font-size:11.5px;color:var(--beat);padding-left:4px;min-height:14px}
+.nota .grp{display:inline-block;padding:0 2px 3px;border-bottom:1.5px solid currentColor;border-radius:0 0 9px 9px}
+.nota .rs{font-style:normal;opacity:.55}
+.nota em{font-family:var(--body);font-style:italic}
+.nota u{text-decoration:underline wavy var(--danger);text-underline-offset:3px}
+.nota .qm{color:var(--beat)}
+.nota.light .pm{background:var(--surface2);color:var(--ink)}
+.nota.light .pm.sam{box-shadow:inset 0 0 0 1px var(--gold)}
+.nota.light .pm.none{background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
+.nota.light .mk,.nota.light .qm{color:var(--gold)}
+@media (max-width:600px){.nota .pm{min-width:30px;padding:7px 3px 5px;font-size:12.5px}.nota .avt{gap:6px 8px}}
+.nota-tools{margin-top:8px}
+.nota-sum{display:flex;flex-wrap:wrap;gap:2px 12px;font-size:14px;color:var(--muted);margin-top:12px}
+.nota-sum b{color:var(--ink)}
+.nota-sum .warn{color:var(--danger)}
+.rec-ctl{margin-top:4px}
+.rec-strip{display:block;width:100%;height:26px;margin-top:8px;background:var(--surface2);border-radius:6px}
+.rec-strip line{vector-effect:non-scaling-stroke}
+.rec-strip .g{stroke:var(--line);stroke-width:1}
+.rec-strip .o{stroke:var(--teal);stroke-width:2}
+details.asw{margin-top:10px}
+details.asw summary{cursor:pointer;font-size:14px;color:var(--on-hero-mut)}
 /* player + toast */
 .player{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));width:min(560px,calc(100% - 32px));background:var(--hero1);color:var(--on-hero);border-radius:16px;display:flex;align-items:center;gap:12px;padding:8px 10px;box-shadow:var(--shadow);z-index:30}
 @media (max-width:760px){.player{bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
@@ -355,7 +389,7 @@ const NAV=[["discover","Discover"],["library","Library"],["academy","Academy"],[
 
 /* ---------------- state ---------------- */
 const S={view:"discover",gate:"loading",uid:null,db:null,user:null,profiles:{},ledgers:{},enrolls:{},loaded:{p:false,l:false,e:false},
-  q:"",taal:"all",selLvl:null,pvLvl:"",playing:null,beat:-1,bpm:{},modal:null,confirm:null,readOnly:false,avatar:"",authMode:"up",authMsg:"",authBusy:false};
+  q:"",taal:"all",selLvl:null,pvLvl:"",playing:null,pmode:"theka",beat:-1,pbeat:-1,pbol:"",bpm:{},modal:null,confirm:null,readOnly:false,avatar:"",authMode:"up",authMsg:"",authBusy:false};
 
 /* ---------------- helpers ---------------- */
 const $=s=>document.querySelector(s);
@@ -413,6 +447,207 @@ function pracSum(uid,keys){let s=0,last=0;for(const k of keys){const p=pracOf(ui
 function dur(s){s=Math.round(+s||0);if(s<60)return "under a minute";const m=Math.round(s/60);if(m<60)return m+" min";const h=Math.floor(m/60),r=m%60;return h+" h"+(r?" "+r+" min":"");}
 function pracText(p){return p&&p.s?`Practised ${dur(p.s)}${p.days>1?` over ${p.days} days`:""} · last ${date(p.last)}`:"Not practised yet";}
 function pracLine(uid,key,pre){const p=pracOf(uid,key);return `<span class="prog${p&&p.s?"":" none"}">${pre?esc(pre)+" · ":""}${esc(pracText(p))}</span>`;}
+function hasFull(key){const c=comp(key);return !!c&&(c.owner===S.uid||rank(key)>0||!!academyAccess(key)||!!keptInfo(key));}
+const firstLine=t=>String(t||"").split(/\r?\n/).find(l=>l.trim())||"";
+
+/* ---------------- notation (padhant) ----------------
+   Standard written format: one matra per space, bols in the same matra joined by hyphens (Dha-ge), "–", S or ऽ for a held
+   matra, "|" optional (vibhag bars are worked out from the taal), "(×3)" at the end of a line repeats it. A line starting
+   with #, wrapped in brackets, or containing ":" is a note. Matras are counted from the composition's start matra (1 = sam).
+   Bol vocabulary: a built-in copy, merged with the Supabase bols / bol_aliases / bol_components tables when readable.
+   Rows: [canonical, category t=tabla/pakhawaj n=natwari p=parmelu, Devanagari, aliases, component bols] */
+const BOL_BASE=[
+ ["Dha","t","धा",["dhaa"]],["Dhi","t","धि",["dhee"]],["Dhin","t","धिं",["dhinn"]],["Dhit","t","धित्",[]],["Dhum","t","धुम",["dhoom"]],
+ ["Na","t","ना",["naa"]],["Ti","t","ति",["tee"]],["Tin","t","तिं",["tinn"]],["Tu","t","तू",["too","tun"]],["Te","t","टे",[]],["Ra","t","र",[]],
+ ["Ke","t","के",[]],["Ka","t","क",[]],["Kat","t","कत्",["katt"]],["Ga","t","ग",[]],["Ge","t","गे",[]],["Ghe","t","घे",[]],["Di","t","दि",[]],
+ ["Kran","t","क्रान",["kraan"]],["Dhage","t","धागे",["dhaage"],["Dha","Ge"]],
+ ["Tirakita","t","तिरकिट",["tirkit","tirakit","tirikita","tiraktit","tirkita"],["Ti","Ra","Ki","Ta"]],
+ ["Kitataka","t","किटतक",["kitatak","kittak"],["Ki","Ta","Ta","Ka"]],["Dhirdhir","t","धिरधिर",["dhiradhira"],["Dhi","Ra","Dhi","Ra"]],
+ ["Tita","t","तिट",["tit"],["Ti","Ta"]],["Tira","t","तिर",[],["Ti","Ra"]],["Kita","t","किट",["kit"],["Ki","Ta"]],["Taka","t","तक",["tak"],["Ta","Ka"]],
+ ["Gadi","t","गदि",[],["Ga","Di"]],["Gana","t","गन",[],["Ga","Na"]],["Tete","t","तेटे",[],["Te","Te"]],
+ ["Ta","n","ता",["taa"]],["Thei","n","थेई",["thai","tei","theyi","they","thay"]],["Tat","n","तत्",["tatt"]],["Aa","n","आ",["aah"]],
+ ["Dig","n","दिग्",[]],["Thun","n","थुन",[]],["Ki","n","कि",["kee"]],["Takita","n","तकिट",["takit"],["Ta","Ki","Ta"]],
+ ["Tigda","n","तिगदा",["tigdha","tigada"]],["Jhanak","p","झनक",[]],["Dhilang","p","धिलांग",[]],["Kidnag","p","किड़नग",["kirnag","kidanag"]]
+];
+let BOLMAP={};
+function buildBolMap(extra){
+  const by={};
+  for(const [c,cat,dev,al,parts] of BOL_BASE.concat(extra||[])){const k=c.toLowerCase(),o=by[k],pp=parts&&parts.length?parts:null;
+    by[k]=o?{c:o.c,cat:cat||o.cat,dev:dev||o.dev,al:[...new Set(o.al.concat(al||[]))],parts:pp||o.parts}:{c,cat:cat||"t",dev:dev||"",al:(al||[]).slice(),parts:pp};}
+  const m={};
+  for(const e of Object.values(by)){m[e.c.toLowerCase()]=e;if(e.dev&&!m[e.dev])m[e.dev]=e;}
+  // canonical names win over aliases, so a stray alias can't swallow a real bol
+  for(const e of Object.values(by))for(const a of e.al){const k=String(a).toLowerCase().trim();if(k&&!m[k])m[k]=e;}
+  BOLMAP=m;
+}
+buildBolMap();
+const BOL_CAT={natwari:"n",tabla_pakhawaj:"t",parmelu:"p"};
+async function loadBolDb(){
+  try{
+    const [b,a,k]=await Promise.all([sb.from("bols").select("id,canonical,devanagari,category,status"),sb.from("bol_aliases").select("bol_id,alias"),sb.from("bol_components").select("compound_id,component_id,position")]);
+    if(!b||b.error||!Array.isArray(b.data)||!b.data.length)return;
+    const byId={},al={},pt={};b.data.forEach(r=>{byId[r.id]=r;});
+    if(a&&!a.error&&Array.isArray(a.data))a.data.forEach(r=>{(al[r.bol_id]=al[r.bol_id]||[]).push(r.alias);});
+    if(k&&!k.error&&Array.isArray(k.data))k.data.slice().sort((x,y)=>x.position-y.position).forEach(r=>{const p=byId[r.component_id];if(p&&r.component_id!==r.compound_id)(pt[r.compound_id]=pt[r.compound_id]||[]).push(p.canonical);});
+    buildBolMap(b.data.filter(r=>r.canonical&&!/\s/.test(r.canonical)&&(!r.status||r.status==="approved")).map(r=>[r.canonical,BOL_CAT[r.category]||"t",r.devanagari||"",al[r.id]||[],pt[r.id]||null]));
+    if(S.gate)return;
+    if(S.modal&&S.modal.kind==="detail")renderModal();else updatePrev();
+  }catch(e){}
+}
+const RESTS=new Set(["–","—","-","s","ऽ","_"]);
+const isMark=t=>/^(x|\+|\d+|\|+|।|॥)$/i.test(t);
+function canon(raw){
+  if(raw==="?")return {t:"?",q:1};
+  const s=String(raw).replace(/^[.,;:!"'“”‘’()[\]{}]+|[.,;:!"'“”‘’()[\]{}]+$/g,"");if(!s)return null;
+  const k=s.toLowerCase();if(RESTS.has(k))return {t:"–",r:1};
+  const e=BOLMAP[k];return e?{t:e.c,e,o:s}:{t:s,u:1};
+}
+function parseNota(text,tk,start,type){
+  const tl=TAALS[tk]||TAALS.teentaal,n=tl.n,st=Math.min(n,Math.max(1,parseInt(start)||1))-1;
+  const cells=[],notes=[],lines=[],unknown=new Set(),fixes=new Map();let i=0,q=0;
+  for(const raw0 of String(text||"").split(/\r?\n/)){
+    const raw=raw0.trim();let s=raw;if(!s)continue;
+    if(/^(#|\/\/)/.test(s)||/^[([].*[)\]]$/.test(s)||s.includes(":")){notes.push(s.replace(/^(#|\/\/)\s*/,""));lines.push({k:"note",raw});continue;}
+    let rep=1;const rm=s.match(/[([]?\s*[×x*]\s*([2-9])\s*[)\]]?$/i);if(rm&&rm.index>0){rep=+rm[1];s=s.slice(0,rm.index).trim();}
+    let tail="";const cm=s.match(/\(([^()]*)\)$/);if(cm&&cm.index>0){tail=cm[1].trim();s=s.slice(0,cm.index).trim();}
+    const toks=s.split(/\s+/).filter(t=>t&&!/^[|।॥]+$/.test(t));
+    if(!toks.length||toks.every(isMark))continue;
+    const mats=toks.map(t=>(t.length>1?t.split("-").filter(Boolean):[t]).map(canon).filter(Boolean)).filter(m=>m.length);
+    if(!mats.length)continue;
+    let known=0,unk=0;mats.forEach(m=>m.forEach(b=>{if(b.e)known++;else if(b.u)unk++;}));
+    const words=unk>known;
+    if(words&&!known&&type!=="Kavitt"){notes.push(s);lines.push({k:"note",raw});continue;}
+    mats.forEach(m=>m.forEach(b=>{if(b.u){if(words){b.w=1;delete b.u;}else unknown.add(b.t);}if(b.q)q++;if(b.e&&b.o.toLowerCase()!==b.e.c.toLowerCase())fixes.set(b.o,b.e.c);}));
+    const first=[];
+    for(let r=0;r<rep;r++)mats.forEach(m=>{const c={i,pos:(st+i)%n,av:Math.floor((st+i)/n),bols:m,w:words};cells.push(c);if(!r)first.push(c);i++;});
+    lines.push({k:words?"words":"bols",mats,rep,first,tail,raw});
+  }
+  const last=cells[cells.length-1];
+  return {tl,n,st,cells,notes,lines,unknown:[...unknown],fixes:[...fixes],q,count:cells.length,avs:last?last.av+1:0,end:last?last.pos:-1,sam:!!last&&cells.length>1&&last.pos===0};
+}
+function tidyNota(text,tk,start,type){ // the same composition, rewritten in the standard format with standard spellings
+  const N=parseNota(text,tk,start,type);
+  return N.lines.map(L=>{if(L.k!=="bols")return L.raw;
+    const parts=L.mats.map((m,j)=>(j&&N.tl.v[L.first[j].pos]!=null?"| ":"")+m.map(b=>b.t).join("-"));
+    return parts.join(" ")+(L.tail?` (${L.tail})`:"")+(L.rep>1?` (×${L.rep})`:"");}).join("\n");
+}
+function notaSum(N){return `${N.count} matra${N.count===1?"":"s"}${N.st?` · starts on matra ${N.st+1}`:""} · ${N.sam?"lands on sam":`ends on matra ${N.end+1}`}`;}
+function cellHTML(c){const one=b=>b.r?`<i class="rs">–</i>`:b.q?`<b class="qm">?</b>`:b.u?`<u title="Not in the bol list">${esc(b.t)}</u>`:c.w?`<em>${esc(b.t)}</em>`:esc(b.t);
+  return c.bols.length>1?`<span class="grp">${c.bols.map(one).join(" ")}</span>`:one(c.bols[0]);}
+function notaHTML(N,key,light){ // Bhatkhande-style: one row per avartan, cells grouped by vibhag, X 2 0 3 under each vibhag
+  const vs=Object.keys(N.tl.v).map(Number).sort((a,b)=>a-b),at={};N.cells.forEach(c=>{(at[c.av]=at[c.av]||{})[c.pos]=c;});
+  let h=`<div class="nota${light?" light":""}" role="group" aria-label="Padhant notation">`;
+  const endV=vs.filter(v=>v<=N.end).length-1; // the last avartan stops after the vibhag where the composition ends
+  for(let av=0;av<N.avs;av++){h+=`<div class="avt">`;
+    vs.forEach((v0,vi)=>{if(av===N.avs-1&&vi>endV)return;const v1=vs[vi+1]??N.n;let cs="";
+      for(let p=v0;p<v1;p++){const c=(at[av]||{})[p];
+        cs+=c?`<div class="pm${p===0?" sam":""}" title="Matra ${p+1}"${key?` data-k="${esc(key)}" data-pi="${c.i}"`:""}>${cellHTML(c)}</div>`:`<div class="pm none" aria-hidden="true"></div>`;}
+      h+=`<div class="vb"><div class="cs">${cs}</div><span class="mk">${esc(N.tl.v[v0])}</span></div>`;});
+    h+=`</div>`;}
+  return h+`</div>`;
+}
+function padSeq(N){ // one playback loop: the composition, then empty matras until the cycle comes back round to its start
+  const seq=N.cells.map(c=>({pos:c.pos,pi:c.i,bols:c.bols,w:c.w}));if(!seq.length)return seq;
+  let p=(N.cells[N.cells.length-1].pos+1)%N.n;while(p!==N.st){seq.push({pos:p,pi:-1,bols:[]});p=(p+1)%N.n;}
+  return seq;
+}
+function strokeSyls(text,tk,start,type){ // every spoken syllable in order (compounds split into their parts), for lining up with a recording
+  const N=parseNota(text,tk,start,type),out=[];
+  const add=(b,d)=>{if(!b||b.r)return;if(b.e&&b.e.parts&&d<3){b.e.parts.forEach(p=>{const pe=BOLMAP[p.toLowerCase()];add(pe?{t:pe.c,e:pe}:{t:p},d+1);});return;}out.push(b.t);};
+  N.cells.forEach(c=>c.bols.forEach(b=>add(b,0)));return out;
+}
+
+/* ---------------- Studio: bring bols in (typed, photo, recording) ---------------- */
+let notaUndo=null,recCache=null,prevT=null;
+function formVals(){const g=id=>{const el=document.getElementById(id);return el?el.value:"";};return {text:g("cf-bols"),tk:g("cf-taal")||"teentaal",start:g("cf-start")||1,type:g("cf-type")};}
+function notaPrev(text,tk,start,type){const N=parseNota(text,tk,start,type);
+  if(!N.count)return String(text||"").trim()?`<p class="note">No bols found yet. Check the spelling, or start a line with # if it's a note.</p>`:"";
+  const warn=N.unknown.length?`<span class="warn">Not in the bol list: ${esc(N.unknown.slice(0,6).join(", "))}${N.unknown.length>6?"…":""}</span>`:"";
+  const q=N.q?`<span class="warn">${N.q} bol${N.q===1?"":"s"} to fill in at the ? marks</span>`:"";
+  const fix=N.fixes.length?`<span>${N.fixes.length} spelling${N.fixes.length===1?"":"s"} to standardise with Tidy up</span>`:"";
+  return `<div class="nota-sum"><b>Preview</b><span>${esc(notaSum(N))}</span>${q}${warn}${fix}</div>${notaHTML(N,"",true)}`;}
+function updatePrev(){const el=$("#nota-prev");if(!el)return;const f=formVals();el.innerHTML=notaPrev(f.text,f.tk,f.start,f.type);}
+function notaMsg(html,extra){const m=$("#nota-msg");if(m)m.innerHTML=html?`<p class="note" role="status">${html}</p>${extra||""}`:"";}
+const undoBtn=`<button type="button" class="btn sm ghost" data-act="nota-undo">Undo</button>`;
+function notaSet(text,msg){const ta=$("#cf-bols");if(!ta)return;notaUndo={text:ta.value,bpm:($("#cf-bpm")||{}).value};recCache=null;ta.value=text;updatePrev();notaMsg(esc(msg)+" "+undoBtn);}
+/* Photo: text recognition runs in the browser with Tesseract.js, loaded only when first needed */
+let tessP=null;
+function loadTess(){if(window.Tesseract)return Promise.resolve(window.Tesseract);
+  return tessP||(tessP=new Promise((res,rej)=>{const s=document.createElement("script");s.src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";
+    s.onload=()=>window.Tesseract?res(window.Tesseract):rej(new Error("Tesseract missing"));s.onerror=()=>{tessP=null;s.remove();rej(new Error("Tesseract failed to load"));};document.head.appendChild(s);}));}
+function cleanOcr(t){return String(t||"").replace(/[—―]/g,"–").split(/\r?\n/).map(l=>l.replace(/[ \t]+/g," ").trim().split(" ").map(w=>/^[Il!]$/.test(w)?"|":w).join(" ")).filter(l=>/[A-Za-zऀ-ॿ]/.test(l)).join("\n");}
+async function readPhoto(f){
+  if(!f)return;
+  if(!/^image\//.test(f.type||"")&&!/\.(png|jpe?g|webp|gif|bmp)$/i.test(f.name||"")){notaMsg("Choose a photo or an image file.");return;}
+  const lang=($("#nota-lang")||{}).value==="hin"?"hin":"eng";let w=null;
+  notaMsg("Reading the photo… the first time takes a little longer.");
+  try{const T=await loadTess();
+    w=await T.createWorker(lang,1,{logger:m=>{if(m&&m.status==="recognizing text"&&typeof m.progress==="number")notaMsg(`Reading the photo… ${Math.round(m.progress*100)}%`);}});
+    const r=await w.recognize(f);const text=cleanOcr(r&&r.data&&r.data.text);
+    if(!$("#cf-bols"))return;
+    if(!text){notaMsg("Couldn't find any text in that photo. Try a sharper, well-lit photo of printed or neatly written bols.");return;}
+    notaSet(text,"Read from the photo. Check it against the photo and fix any mistakes, then tap Tidy up.");
+  }catch(e){console.warn(e);notaMsg("Couldn't read the photo. Check your connection and try again.");}
+  finally{if(w)try{await w.terminate();}catch(e){}}
+}
+/* Recording: decode the audio (or a video's soundtrack), find each stroke or spoken syllable as a jump in loudness,
+   then work out the gap between strokes, how many fall in a matra, and the laya. Rests show up as missing strokes. */
+function decodeFile(f){return f.arrayBuffer().then(ab=>new Promise((res,rej)=>{const p=ctx().decodeAudioData(ab,res,rej);if(p&&typeof p.then==="function")p.then(res,rej);}));}
+function findStrokes(buf){
+  const sr=buf.sampleRate,N=Math.min(buf.length,Math.floor(sr*180)),ch=buf.numberOfChannels,x=new Float32Array(N);
+  for(let c=0;c<ch;c++){const d=buf.getChannelData(c);for(let i=0;i<N;i++)x[i]+=d[i]/ch;}
+  const hop=Math.max(1,Math.round(sr*.005)),win=hop*2,F=Math.floor((N-win)/hop),dur=N/sr,fs=hop/sr;
+  if(F<20)return {on:[],dur};
+  // two loudness curves: plain (voices) and high-passed (sharp strokes); a stroke is a quick rise in either
+  const L=new Float32Array(F),Lp=new Float32Array(F);
+  for(let f=0;f<F;f++){let s=0,sp=0;const o=f*hop;for(let i=o;i<o+win;i++){const v=x[i],w=v-(i?.97*x[i-1]:0);s+=v*v;sp+=w*w;}L[f]=10*Math.log10(1e-12+s/win);Lp[f]=10*Math.log10(1e-12+sp/win);}
+  const srt=Array.from(L).sort((a,b)=>a-b),gate=Math.max(srt[Math.floor(F*.1)]+10,srt[Math.floor(F*.99)]-35);
+  const D=new Float32Array(F);for(let f=4;f<F;f++)D[f]=Math.max(0,L[f]-Math.min(L[f-2],L[f-3],L[f-4]),Lp[f]-Math.min(Lp[f-2],Lp[f-3],Lp[f-4]));
+  const on=[],wnd=Math.round(.03/fs),gap=Math.round(.07/fs),look=Math.round(.05/fs);let last=-1e9;
+  for(let f=4;f<F-1;f++){if(D[f]<5||f-last<gap)continue;
+    let pk=true;for(let j=Math.max(0,f-wnd);j<=Math.min(F-1,f+wnd);j++)if(D[j]>D[f]||(D[j]===D[f]&&j<f)){pk=false;break;}
+    if(!pk)continue;let mx=-1e9;for(let j=f;j<Math.min(F,f+look);j++)mx=Math.max(mx,L[j]);if(mx<gate)continue;
+    on.push(f*fs);last=f;}
+  if(on.length<4)return {on,dur};
+  const ioi=[];for(let k=1;k<on.length;k++)ioi.push(on[k]-on[k-1]);
+  const med=a=>{const s=a.slice().sort((p,q)=>p-q);return s[Math.floor(s.length/2)];};
+  const srtI=ioi.slice().sort((a,b)=>a-b);let T=srtI[Math.floor(srtI.length*.25)];const near=ioi.filter(v=>v>T*.7&&v<T*1.3);if(near.length)T=med(near);
+  const slots=[0];for(let k=1;k<on.length;k++)slots.push(slots[k-1]+Math.max(1,Math.round(ioi[k-1]/T)));
+  let sx=0,sy=0,sxx=0,sxy=0;const n=on.length;for(let k=0;k<n;k++){sx+=slots[k];sy+=on[k];sxx+=slots[k]*slots[k];sxy+=slots[k]*on[k];}
+  const den=n*sxx-sx*sx;if(den>0){const sl=(n*sxy-sx*sy)/den;if(sl>T*.8&&sl<T*1.2)T=sl;}
+  return {on,dur,T,slots};
+}
+function bestSub(T,target){let best=0,bd=1e9;
+  for(const strict of [true,false]){for(const k of [1,2,3,4]){const bpm=60/(T*k);if(strict&&(bpm<40||bpm>200))continue;const d=Math.abs(Math.log(bpm/target))+(k===3?.15:0);if(d<bd){bd=d;best=k;}}if(best)break;}
+  return best||1;}
+function recSvg(r,sub){const W=600,H=26,d=Math.max(r.dur,.1),x=t=>(t/d*W).toFixed(1),mw=r.T*sub;let s="";
+  for(let t=r.on[0];t<=r.on[r.on.length-1]+1e-6&&mw>0;t+=mw)s+=`<line x1="${x(t)}" x2="${x(t)}" y1="0" y2="${H}" class="g"/>`;
+  r.on.forEach(t=>{s+=`<line x1="${x(t)}" x2="${x(t)}" y1="5" y2="${H-5}" class="o"/>`;});
+  return `<svg class="rec-strip" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Strokes found in the recording, with matra lines">${s}</svg>`;}
+async function readRecording(f){
+  if(!f)return;
+  if(f.size>80*1024*1024){notaMsg("That file is over 80 MB. Trim it to just the composition, or use an audio recording, and try again.");return;}
+  notaMsg("Listening to the recording…");
+  try{const buf=await decodeFile(f),r=findStrokes(buf),ta=$("#cf-bols");if(!ta)return;
+    if(r.on.length<4){notaMsg("Couldn't hear clear, separate bols in this recording. Try one with a single voice or instrument and little background noise.");return;}
+    notaUndo={text:ta.value,bpm:($("#cf-bpm")||{}).value};recCache=r;applyRec(0);
+  }catch(e){console.warn(e);notaMsg("Couldn't read the audio in this file. Try an audio file (m4a, mp3 or wav), or a different video.");}
+}
+function applyRec(sub){
+  const r=recCache,ta=$("#cf-bols"),bi=$("#cf-bpm");if(!r||!ta)return;
+  const f=formVals(),tl=TAALS[f.tk]||TAALS.teentaal,n=tl.n,st=Math.min(n,Math.max(1,parseInt(f.start)||1))-1;
+  sub=sub||bestSub(r.T,+(bi&&bi.value)||90);r.sub=sub;
+  const syl=strokeSyls(ta.value,f.tk,f.start,f.type),real=syl.filter(s=>s!=="?").length,use=syl.length===r.on.length&&real>0;
+  const nm=Math.ceil((r.slots[r.slots.length-1]+1)/sub),mats=[];for(let m=0;m<nm;m++)mats.push(Array(sub).fill(""));
+  r.slots.forEach((s,k)=>{mats[Math.floor(s/sub)][s%sub]=use?syl[k]:"?";});
+  const toks=mats.map(m=>m.every(b=>!b)?"–":m.slice(1).every(b=>!b)?m[0]:m.map(b=>b||"–").join("-"));
+  const out=[];let cur=[];toks.forEach((t,j)=>{if(j&&(st+j)%n===0){out.push(cur.join(" "));cur=[];}cur.push(t);});if(cur.length)out.push(cur.join(" "));
+  const bpm=Math.min(240,Math.max(30,Math.round(60/(r.T*sub))));if(bi)bi.value=bpm;
+  ta.value=tidyNota(out.join("\n"),f.tk,f.start,f.type);updatePrev();
+  const lab=use?" Your bols are lined up with the recording.":real?` Your notation has ${syl.length} bols but the recording has ${r.on.length}, so they couldn't be lined up. Replace each ? with the bol you hear, or fix your bols and tap Re-align.`:" Replace each ? with the bol you hear.";
+  notaMsg(esc(`Heard ${r.on.length} strokes in ${r.dur.toFixed(1)} s: about ${bpm} bpm, ${sub} bol${sub>1?"s":""} per matra, ${nm} matras.`+lab)+" "+undoBtn,
+    `<div class="rec-ctl row-actions"><label class="small muted">Bols per matra <select class="inline" id="rec-sub">${[1,2,3,4].map(k=>`<option ${k===sub?"selected":""}>${k}</option>`).join("")}</select></label><button type="button" class="btn sm ghost" data-act="rec-realign">Re-align</button></div>${recSvg(r,sub)}`);
+}
 
 /* ---------------- writes ---------------- */
 let q=Promise.resolve();
@@ -455,22 +690,61 @@ function practiceCheckpoint(force){if(!pr)return;const now=Date.now(),sec=(now-p
   if(pr.run+sec>=10){pr.run+=sec;pr.since=now;logPractice(pr.key,sec);}}
 function practiceEnd(){practiceCheckpoint(true);pr=null;}
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")practiceCheckpoint(true);});
-let timer=null;
-function stop(){practiceEnd();clearInterval(timer);timer=null;S.playing=null;S.beat=-1;paint();renderPlayer();syncPlay();}
+/* Padhant sounds: tabla bols use the tabla strokes above; natwari (dance) bols a footfall and ghungroo; words and
+   unrecognised bols a soft wood tick; a quiet metronome marks every matra (brightest on sam, lowest on khali). */
+function thud(t,v){const a=ctx(),o=a.createOscillator(),g=a.createGain();o.frequency.setValueAtTime(120,t);o.frequency.exponentialRampToValueAtTime(55,t+.18);env(g,t,.6*v,.28);o.connect(g).connect(a.destination);o.start(t);o.stop(t+.32);}
+function ghung(t,v,len){const a=ctx();[0,.011,.024].forEach((dt,i)=>{const s=a.createBufferSource(),hp=a.createBiquadFilter(),g=a.createGain();s.buffer=noise;hp.type="highpass";hp.frequency.value=5200+i*900;env(g,t+dt,.22*v,Math.max(.05,(len||.12)-dt*2));s.connect(hp).connect(g).connect(a.destination);s.start(t+dt);s.stop(t+dt+.2);});}
+function wood(t,v){const a=ctx(),o=a.createOscillator(),g=a.createGain();o.type="triangle";o.frequency.value=820;env(g,t,.18*v,.07);o.connect(g).connect(a.destination);o.start(t);o.stop(t+.1);}
+function metro(t,pos,tl){const a=ctx(),o=a.createOscillator(),g=a.createGain(),m=tl.v[pos];o.frequency.value=pos===0?1760:m==="0"?880:m?1320:1100;env(g,t,pos===0?.12:m?.07:.04,.04);o.connect(g).connect(a.destination);o.start(t);o.stop(t+.06);}
+function dance(nm,t,d){const b=nm.toLowerCase();
+  if(b==="thei"){thud(t,1);ghung(t,.9);return;}
+  if(b==="tat"){click(t,.45,2600);ghung(t,.7);return;}
+  if(b==="aa"){ghung(t,.5,Math.min(.35,d));return;}
+  if(b==="dig"){thud(t,.8);ghung(t+.02,.6);return;}
+  if(b==="thun"){thud(t,.9);return;}
+  if(b==="ki"){ghung(t,.55);return;}
+  thud(t,.6);ghung(t,.6);}
+function tabla(nm,t,d){const b=nm.toLowerCase();
+  if(/^g/.test(b)){bayan(t,.75);return;}
+  if(b==="kran"){click(t,.4,1300);dayan(t+Math.min(.05,d/3),440,.25,.85);return;}
+  if(b==="ra"||b==="te"){dayan(t,520,.12,.6);return;}
+  strike(nm,t,d);}
+const TABLA_FORMS=new Set(["Paran","Kaida","Rela","Peshkar"]);
+function bolSound(b,t,d,tab,word,depth){
+  if(!b||b.r)return;
+  if(word||b.u||b.q||!b.e){wood(t,.7);return;}
+  const e=b.e;
+  if(e.parts&&(depth||0)<3){const dd=d/e.parts.length;e.parts.forEach((p,j)=>{const pe=BOLMAP[p.toLowerCase()];bolSound(pe?{t:pe.c,e:pe}:{t:p,u:1},t+j*dd,dd,tab||e.cat==="t",false,(depth||0)+1);});return;}
+  if(e.cat==="p"){ghung(t,.8,.2);return;}
+  if(e.cat==="n"&&!tab){dance(e.c,t,d);return;}
+  tabla(e.c,t,d);}
+let timer=null,curTick=null;
+function stop(){practiceEnd();clearInterval(timer);timer=null;curTick=null;S.playing=null;S.pmode="theka";S.beat=-1;S.pbeat=-1;S.pbol="";paint();renderPlayer();syncPlay();}
 function bpmOf(c){return S.bpm[c.key]||c.bpm||90;}
-function play(key){
-  if(S.playing===key){stop();return;}
-  const c=comp(key);if(!c)return;stop();ctx();S.playing=key;
+function play(key,mode){
+  mode=mode==="padhant"?"padhant":"theka";
+  if(S.playing===key&&S.pmode===mode){stop();return;}
+  const c=comp(key);if(!c)return;
+  let seq=null;
+  if(mode==="padhant"){seq=padSeq(parseNota(hasFull(key)?c.bols:firstLine(c.bols),c.taal,c.start,c.type));if(!seq.length)return;}
+  stop();ctx();S.playing=key;S.pmode=mode;
   pr=canPractice(key)?{key,since:Date.now(),run:0}:null;
-  const tl=TAALS[c.taal]||TAALS.teentaal;
-  const tick=()=>{const cc=comp(key)||c;S.beat=(S.beat+1)%tl.n;strike(tl.bols[S.beat],ctx().currentTime+.02,60/bpmOf(cc));paint();practiceCheckpoint();};
-  tick();timer=setInterval(tick,60000/bpmOf(c));renderPlayer();syncPlay();
+  const tl=TAALS[c.taal]||TAALS.teentaal,tab=TABLA_FORMS.has(c.type);let k=-1;
+  curTick=seq?()=>{const cc=comp(key)||c,beat=60/bpmOf(cc),t=ctx().currentTime+.02;k=(k+1)%seq.length;const m=seq[k];
+      S.beat=m.pos;S.pbeat=m.pi;S.pbol=m.bols.map(b=>b.t).join("-");metro(t,m.pos,tl);
+      const dd=beat/(m.bols.length||1);m.bols.forEach((b,j)=>bolSound(b,t+j*dd,dd,tab,m.w));paint();practiceCheckpoint();}
+    :()=>{const cc=comp(key)||c;S.beat=(S.beat+1)%tl.n;strike(tl.bols[S.beat],ctx().currentTime+.02,60/bpmOf(cc));paint();practiceCheckpoint();};
+  renderPlayer();curTick();timer=setInterval(curTick,60000/bpmOf(c));syncPlay();
 }
-function retempo(key){if(S.playing===key){const c=comp(key);clearInterval(timer);const tl=TAALS[c.taal]||TAALS.teentaal;timer=setInterval(()=>{S.beat=(S.beat+1)%tl.n;strike(tl.bols[S.beat],ctx().currentTime+.02,60/bpmOf(c));paint();practiceCheckpoint();},60000/bpmOf(c));}}
-function paint(){document.querySelectorAll(".m").forEach(el=>el.classList.toggle("on",S.playing===el.dataset.k&&+el.dataset.i===S.beat));const pb=$("#pbeat");if(pb&&S.playing){const c=comp(S.playing);if(c){const tl=TAALS[c.taal]||TAALS.teentaal;pb.textContent=`${tl.name} · matra ${S.beat+1}/${tl.n} · ${tl.bols[S.beat]}`;}}}
-function syncPlay(){document.querySelectorAll("[data-act=play]").forEach(b=>{const on=S.playing===b.dataset.k;b.innerHTML=on?I.pause:I.play;b.setAttribute("aria-label",on?"Pause theka":"Play theka");});}
+function retempo(key){if(S.playing===key&&curTick){const c=comp(key);if(!c)return;clearInterval(timer);timer=setInterval(curTick,60000/bpmOf(c));}}
+function paint(){
+  document.querySelectorAll(".m").forEach(el=>el.classList.toggle("on",S.playing===el.dataset.k&&+el.dataset.i===S.beat));
+  document.querySelectorAll(".pm[data-pi]").forEach(el=>el.classList.toggle("on",S.pmode==="padhant"&&S.playing===el.dataset.k&&+el.dataset.pi===S.pbeat));
+  const pb=$("#pbeat");if(pb&&S.playing){const c=comp(S.playing);if(c){const tl=TAALS[c.taal]||TAALS.teentaal;
+    pb.textContent=S.pmode==="padhant"?`Padhant · matra ${S.beat+1}/${tl.n}${S.pbol?" · "+S.pbol:""}`:`${tl.name} · matra ${S.beat+1}/${tl.n} · ${tl.bols[S.beat]}`;}}}
+function syncPlay(){document.querySelectorAll("[data-act=play]").forEach(b=>{const md=b.dataset.mode==="padhant"?"padhant":"theka",on=S.playing===b.dataset.k&&S.pmode===md;b.innerHTML=on?I.pause:I.play;b.setAttribute("aria-label",(on?"Pause ":"Play ")+(md==="padhant"?"bols":"theka"));});}
 function renderPlayer(){const el=$("#player");if(!S.playing){el.innerHTML="";return;}const c=comp(S.playing);if(!c){stop();return;}
-  el.innerHTML=`<div class="player">${cover(c)}<div class="meta"><b>${esc(c.title)}</b><span id="pbeat">${esc(pname(c.owner))}</span></div><button data-act="play" data-k="${esc(c.key)}" aria-label="Pause theka">${I.pause}</button></div>`;}
+  el.innerHTML=`<div class="player">${cover(c)}<div class="meta"><b>${esc(c.title)}</b><span id="pbeat">${esc(pname(c.owner))}</span></div><button data-act="play" data-k="${esc(c.key)}" data-mode="${S.pmode}" aria-label="Pause">${I.pause}</button></div>`;}
 
 /* ---------------- views ---------------- */
 function compCard(c){const from=Math.min(...["listen","perform","teach"].map(k=>(c.prices||{})[k]??99));
@@ -693,14 +967,19 @@ function mDetail(key){
   const cols=tl.n>12?Math.ceil(tl.n/2):tl.n>8?Math.ceil(tl.n/2):tl.n;
   const pr=c.prices||{};const chs=allChors().filter(ch=>ch.comp===key);
   const lines=String(c.bols||"").split("\n");
+  const shown=full?String(c.bols||""):firstLine(c.bols),N=parseNota(shown,c.taal,c.start,c.type),pon=S.playing===key;
   return `<div class="det">${cover(c)}<div style="min-width:0"><p class="eyebrow">${esc(c.type)}</p><h2 style="font-size:30px">${esc(c.title)}</h2><p class="muted" style="margin:4px 0 0">by ${esc(pname(c.owner))}${S.profiles[c.owner]&&S.profiles[c.owner].city?" · "+esc(S.profiles[c.owner].city):""}</p>
    <div class="meta-line"><span class="pill gold">${tl.name} · ${tl.n} matras</span><span class="pill">${esc(c.laya)} laya · ${c.bpm} bpm</span></div>
    ${own?`<div class="access">${I.check} Your composition</div>`:r>0?`<div class="access">${I.check} You hold a ${r>=3?"Teach":r>=2?"Perform":"Listen"} licence</div>`:via?`<div class="access">${I.check} Released to you by ${esc(via)}${kept?" · yours to keep":""}</div>`:kept?`<div class="access">${I.check} Yours to keep: you passed ${esc(kept.l)} at ${esc(kept.a)}</div>`:""}
-   ${cp?`<p class="prac" id="prac-stat" data-k="${esc(key)}">${esc(pp&&pp.s?pracText(pp):"Play the theka to start logging practice time.")}</p>`:""}</div></div>
+   ${cp?`<p class="prac" id="prac-stat" data-k="${esc(key)}">${esc(pp&&pp.s?pracText(pp):"Play the theka or the bols to start logging practice time.")}</p>`:""}</div></div>
   <div class="taal"><div class="taal-head"><b>Theka · ${tl.name}</b><span>X sam · 0 khali</span></div>
    <div class="beats" style="grid-template-columns:repeat(${cols},minmax(0,1fr))">${tl.bols.map((b,i)=>`<div class="m ${tl.v[i]?"vs":""} ${i===0?"sam":""}" data-k="${esc(key)}" data-i="${i}"><small>${tl.v[i]||i+1}</small>${b}</div>`).join("")}</div>
-   <div class="ctrl"><button class="bigplay" data-act="play" data-k="${esc(key)}" aria-label="Play theka">${S.playing===key?I.pause:I.play}</button><label for="bpm">Laya <span id="bpmv">${bpmOf(c)} bpm</span><input type="range" id="bpm" min="40" max="180" value="${bpmOf(c)}"></label></div>
-   <div class="bols">${esc(full?c.bols:lines[0]||"")}</div>${full?"":`<p class="lock">Get any licence to see the full notation (${lines.length} lines).</p>`}</div>
+   <div class="ctrl"><button class="bigplay" data-act="play" data-k="${esc(key)}" data-mode="theka" aria-label="Play theka">${pon&&S.pmode==="theka"?I.pause:I.play}</button><label for="bpm">Laya <span id="bpmv">${bpmOf(c)} bpm</span><input type="range" id="bpm" min="40" max="180" value="${bpmOf(c)}"></label></div>
+   <div class="pad-head"><div style="min-width:0"><b>Padhant${full?"":" · preview"}</b><span>${N.count?esc(notaSum(N)):"No bols to lay out yet"}</span></div>${N.count?`<button class="bigplay" data-act="play" data-mode="padhant" data-k="${esc(key)}" aria-label="Play bols">${pon&&S.pmode==="padhant"?I.pause:I.play}</button>`:""}</div>
+   ${N.count?notaHTML(N,key):""}
+   ${N.notes.length?`<div class="bols">${esc(N.notes.join("\n"))}</div>`:!N.count&&shown.trim()?`<div class="bols">${esc(shown)}</div>`:""}
+   ${full&&String(c.bols||"").trim()?`<details class="asw"><summary>As written</summary><div class="bols">${esc(c.bols)}</div></details>`:""}
+   ${full?"":`<p class="lock">Get any licence to see the full notation (${lines.length} lines).</p>`}</div>
   ${own?`<div class="form-foot"><button class="btn ghost" data-act="comp-form" data-id="${esc(c.id)}">Edit composition</button></div>`:`
   <div class="sec" style="margin-top:22px"><h3>Licence this composition</h3><span>${esc(pname(c.owner))} keeps 80%</span></div>
   <div class="lic">${Object.entries(KIND).map(([k,K])=>{const has=r>=K.r;return `<button class="lic-opt ${has?"owned":""}" data-act="buy" data-k="${esc(key)}" data-kind="${k}" ${has||S.readOnly?"disabled":""}><b>${K.n}</b><span>${K.d}</span><em>${has?"Included":money(pr[k])}</em></button>`;}).join("")}</div>
@@ -714,8 +993,14 @@ function mComp(id){
   <div class="f2"><label class="f">Form<select id="cf-type">${TYPES.map(t=>`<option ${t===c.type?"selected":""}>${t}</option>`).join("")}</select></label>
   <label class="f">Taal<select id="cf-taal">${Object.entries(TAALS).map(([k,t])=>`<option value="${k}" ${k===c.taal?"selected":""}>${t.name} (${t.n})</option>`).join("")}</select></label>
   <label class="f">Laya<select id="cf-laya">${LAYAS.map(l=>`<option ${l===c.laya?"selected":""}>${l}</option>`).join("")}</select></label>
-  <label class="f">Tempo (bpm)<input id="cf-bpm" type="number" min="30" max="240" value="${esc(c.bpm||90)}"></label></div>
-  <label class="f">Bols / notation<textarea id="cf-bols" maxlength="4000" placeholder="One line per avartan">${esc(c.bols||"")}</textarea></label>
+  <label class="f">Tempo (bpm)<input id="cf-bpm" type="number" min="30" max="240" value="${esc(c.bpm||90)}"></label>
+  <label class="f">Starts on matra<input id="cf-start" type="number" min="1" max="${(TAALS[c.taal]||TAALS.teentaal).n}" value="${esc(c.start||1)}"></label></div>
+  <label class="f">Bols / notation<textarea id="cf-bols" maxlength="8000" placeholder="e.g. Dha-ge Na-dha Tira-kita Dha (×3)">${esc(c.bols||"")}</textarea></label>
+  <div class="row-actions nota-tools"><button type="button" class="btn sm ghost" data-act="nota-tidy">Tidy up</button><button type="button" class="btn sm ghost" data-act="nota-photo">From a photo</button><select class="inline" id="nota-lang" aria-label="Script in the photo"><option value="eng">Roman letters</option><option value="hin">Devanagari</option></select><button type="button" class="btn sm ghost" data-act="nota-rec">From a recording</button></div>
+  <input type="file" id="nota-img" accept="image/*" hidden><input type="file" id="nota-aud" accept="audio/*,video/*" hidden>
+  <div id="nota-msg" aria-live="polite"></div>
+  <div id="nota-prev">${notaPrev(c.bols||"",c.taal,c.start,c.type)}</div>
+  <p class="note">One matra per space. Join bols in the same matra with hyphens (Dha-ge), use – for a held matra, add (×3) to repeat a line, and start a line with # for a note.</p>
   <div class="f2"><label class="f">Listen price ($)<input id="cf-pl" type="number" min="0" step="0.5" value="${esc(pr.listen??2)}"></label><label class="f">Perform price ($)<input id="cf-pp" type="number" min="0" step="1" value="${esc(pr.perform??25)}"></label><label class="f">Teach price ($/yr)<input id="cf-pt" type="number" min="0" step="1" value="${esc(pr.teach??99)}"></label></div>
   <p class="note">The first line of notation is shown as a free preview. You keep 80% of every licence.</p>
   <div class="form-foot">${id?`<button type="button" class="btn danger" data-act="comp-del" data-id="${esc(id)}">${S.confirm==="comp:"+id?"Confirm delete":"Delete"}</button>`:""}<span style="flex:1"></span><button type="button" class="btn ghost" data-act="close">Cancel</button><button class="btn" type="submit">${id?"Save":"Publish"}</button></div></form>`;
@@ -747,7 +1032,7 @@ let opener=null;
 function setInert(on){["#app","#player"].forEach(s=>{const el=$(s);if(el)el.inert=on;});}
 function openModal(kind,arg){if(!S.modal)opener=focusKey(document.activeElement);S.modal={kind,arg};S.confirm=null;setInert(true);renderModal();
   const f=$("#modal input:not([type=range]),#modal button.bigplay")||$("#modal .dlg");if(f)f.focus();}
-function closeModal(){const was=!!S.modal;S.modal=null;S.confirm=null;renderModal();if(!was)return;setInert(false);
+function closeModal(){const was=!!S.modal;S.modal=null;S.confirm=null;notaUndo=null;recCache=null;renderModal();if(!was)return;setInert(false);
   const el=findKey(document,opener);opener=null;
   if(el)el.focus();else{const m=$("#main");m.tabIndex=-1;m.focus();}}
 function renderModal(){const m=$("#modal");if(!S.modal){m.hidden=true;m.innerHTML="";return;}
@@ -795,7 +1080,7 @@ document.addEventListener("click",e=>{
   if(act==="nav"){S.view=d.v;S.confirm=null;closeModal();render();window.scrollTo(0,0);return;}
   if(act==="taal"){S.taal=d.t;render();return;}
   if(act==="open"){openModal("detail",d.k);return;}
-  if(act==="play"){e.stopPropagation();play(d.k);return;}
+  if(act==="play"){e.stopPropagation();play(d.k,d.mode);return;}
   if(act==="buy"){const c=comp(d.k);if(!c)return;const price=num((c.prices||{})[d.kind],0);
     saveLedger(l=>l.items.push({id:rid(),key:c.key,kind:d.kind,seller:c.owner,price,at:Date.now()})).then(()=>{if(S.modal)renderModal();});
     toast(`${KIND[d.kind].n} licence added for ${c.title}. Demo: no payment taken.`);renderModal();return;}
@@ -820,7 +1105,15 @@ document.addEventListener("click",e=>{
   if(act==="approve"){const s=$("#ap-"+CSS.escape(d.s));const lv=s&&s.value;if(!lv)return;saveMe(p=>{p.academy.roster=p.academy.roster||{};p.academy.roster[d.s]=lv;if(p.academy.declined)delete p.academy.declined[d.s];});toast(`${pname(d.s)} joined your academy.`);return;}
   if(act==="decline"){saveMe(p=>{p.academy.declined=p.academy.declined||{};p.academy.declined[d.s]=true;});return;}
   if(act==="remove"){if(!confirmOnce("rm:"+d.s)){render();return;}saveMe(p=>{delete p.academy.roster[d.s];});toast(`${pname(d.s)} removed.`);return;}
-  if(act==="comp-form"){openModal("comp",d.id);return;}
+  if(act==="comp-form"){notaUndo=null;recCache=null;openModal("comp",d.id);return;}
+  if(act==="nota-tidy"){const f=formVals();if(!f.text.trim()){notaMsg("Type or paste some bols first.");return;}
+    const N=parseNota(f.text,f.tk,f.start,f.type),out=tidyNota(f.text,f.tk,f.start,f.type);
+    if(out.trim()===f.text.trim()){notaMsg("Already in the standard format.");return;}
+    const fx=N.fixes.slice(0,3).map(([a,b])=>`${a} → ${b}`).join(", ");
+    notaSet(out,`Tidied into the standard format${N.fixes.length?`, with ${N.fixes.length} spelling${N.fixes.length===1?"":"s"} standardised (${fx}${N.fixes.length>3?"…":""})`:""}.`);return;}
+  if(act==="nota-photo"||act==="nota-rec"){const i=$(act==="nota-photo"?"#nota-img":"#nota-aud");if(i){i.value="";i.click();}return;}
+  if(act==="nota-undo"){const ta=$("#cf-bols");if(ta&&notaUndo){ta.value=notaUndo.text;const bi=$("#cf-bpm");if(bi&&notaUndo.bpm)bi.value=notaUndo.bpm;notaUndo=null;recCache=null;updatePrev();notaMsg("Undone.");}return;}
+  if(act==="rec-realign"){if(recCache)applyRec(recCache.sub);return;}
   if(act==="comp-del"){if(!confirmOnce("comp:"+d.id)){renderModal();return;}const key=S.uid+":"+d.id;if(S.playing===key)stop();
     saveMe(p=>{p.compositions=(p.compositions||[]).filter(c=>c.id!==d.id);if(p.academy)(p.academy.levels||[]).forEach(l=>{l.pieces=(l.pieces||[]).filter(k=>k!==key);});});closeModal();toast("Composition deleted.");return;}
   if(act==="samples"){saveMe(p=>{p.compositions=p.compositions||[];SAMPLES.forEach((s,i)=>p.compositions.push(Object.assign({},s,{id:rid(),created:Date.now()-i*1000,prices:{listen:2,perform:[25,20,15,25,15,10][i],teach:[99,79,69,99,69,49][i]}})));});toast("Six sample compositions added to your catalogue.");return;}
@@ -828,7 +1121,14 @@ document.addEventListener("click",e=>{
   if(act==="ch-del"){if(!confirmOnce("ch:"+d.id)){render();return;}saveMe(p=>{p.choreographies=(p.choreographies||[]).filter(c=>c.id!==d.id);});return;}
   if(act==="prof-form"){openModal("profile");return;}
 });
-document.addEventListener("change",e=>{const t=e.target;if(t.dataset&&t.dataset.act==="move"){const sid=t.dataset.s,v=t.value;saveMe(p=>{p.academy.roster[sid]=v;});toast(`${pname(sid)} moved to a new level.`);}});
+document.addEventListener("input",e=>{const id=e.target&&e.target.id;if(id==="cf-bols"||id==="cf-start"){clearTimeout(prevT);prevT=setTimeout(updatePrev,150);}});
+document.addEventListener("change",e=>{const t=e.target;
+  if(t.id==="nota-img"){readPhoto(t.files&&t.files[0]);return;}
+  if(t.id==="nota-aud"){readRecording(t.files&&t.files[0]);return;}
+  if(t.id==="rec-sub"){applyRec(+t.value);return;}
+  if(t.id==="cf-taal"){const s=$("#cf-start");if(s){const n=(TAALS[t.value]||TAALS.teentaal).n;s.max=n;if(+s.value>n)s.value=n;}updatePrev();return;}
+  if(t.id==="cf-start"||t.id==="cf-type"){updatePrev();return;}
+  if(t.dataset&&t.dataset.act==="move"){const sid=t.dataset.s,v=t.value;saveMe(p=>{p.academy.roster[sid]=v;});toast(`${pname(sid)} moved to a new level.`);}});
 document.addEventListener("keydown",e=>{if(!S.modal)return;
   if(e.key==="Escape"){closeModal();return;}
   if(e.key!=="Tab")return;
@@ -854,6 +1154,7 @@ document.addEventListener("submit",e=>{
     if(S.gate==="onboard"){const p=Object.assign({compositions:[],choreographies:[],created:Date.now()},prof);S.profiles[S.uid]=p;S.gate=null;S.view=prof.roles.includes("composer")?"studio":prof.roles.includes("guru")?"academy":"discover";render();queue(()=>S.db.doc("profiles/"+S.uid).set(p));toast("Profile created. Welcome to Layakari.");return;}
     saveMe(p=>Object.assign(p,prof));closeModal();toast("Profile saved.");return;}
   if(kind==="comp"){const id=f.dataset.id;const data={title:v("cf-title"),type:v("cf-type"),taal:v("cf-taal"),laya:v("cf-laya"),bpm:Math.min(240,Math.max(30,parseInt(v("cf-bpm"))||90)),bols:document.getElementById("cf-bols").value.replace(/\s+$/,""),prices:{listen:num(v("cf-pl"),2),perform:num(v("cf-pp"),25),teach:num(v("cf-pt"),99)}};if(!data.title)return;
+    data.start=Math.min((TAALS[data.taal]||TAALS.teentaal).n,Math.max(1,parseInt(v("cf-start"))||1));
     saveMe(p=>{p.compositions=p.compositions||[];if(id){const c=p.compositions.find(x=>x.id===id);if(c)Object.assign(c,data);}else p.compositions.unshift(Object.assign({id:rid(),created:Date.now()},data));});closeModal();toast(id?"Composition saved.":"Composition published.");return;}
   if(kind==="chor"){const data={id:rid(),title:v("ch-title"),comp:v("ch-comp"),price:num(v("ch-price"),49),about:v("ch-about"),created:Date.now()};if(!data.title||!data.comp)return;saveMe(p=>{(p.choreographies=p.choreographies||[]).push(data);});closeModal();toast("Choreography published and linked.");return;}
   if(kind==="acad"){const data={name:v("ac-name"),about:v("ac-about"),fee:num(v("ac-fee"),0)};if(!data.name)return;
@@ -875,6 +1176,7 @@ function start(session){
   if(!session){S.gate="signin";render();return;}
   if(started)return;started=true;demoStop();
   S.db=makeDb();S.user=session.user;S.uid=session.user.id;S.gate="loading";render();
+  loadBolDb();
   const toMap=snap=>{const o={};snap.docs.forEach(d=>{if(d.exists)o[d.id]=d.data();});return o;};
   const onErr=e=>{console.error(e);toast("Couldn't load data. Check your connection and refresh.");};
   S.db.collection("profiles").onSnapshot(s=>{S.profiles=toMap(s);S.loaded.p=true;maybeReady();},onErr);
