@@ -1,0 +1,29 @@
+.region {
+  position: fixed;
+  left: 50%;
+  top: calc(16px + env(safe-area-inset-top, 0px));
+  transform: translateX(-50%);
+  z-index: 80;
+  width: max-content;
+  max-width: calc(100% - 32px);
+  pointer-events: none;
+}
+.toast {
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: var(--radius);
+  padding: 12px 18px;
+  font-weight: 500;
+  box-shadow: var(--shadow);
+  animation: in 0.2s ease-out;
+}
+.toast[data-tone="error"] {
+  background: var(--danger);
+  color: #fff;
+}
+@keyframes in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
