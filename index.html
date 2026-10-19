@@ -277,46 +277,6 @@ form .f textarea{min-height:96px;font-family:var(--mono);font-size:13px}
 .note{font-size:12.5px;color:var(--muted);margin-top:10px}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 
-/* tihai checker */
-.dlg.wide{width:min(960px,100%)}
-.tc{display:flex;flex-direction:column;gap:12px}
-.tc textarea{min-height:58px}
-.tc-form .tc>.f:first-child,.tc-inline .tc>.f:first-child{margin-top:0}
-.tc-reads{display:flex;flex-direction:column;gap:5px;font-size:12.5px;color:var(--muted)}
-.tc-chips{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
-.tc-chip{background:var(--surface2);border-radius:7px;padding:1px 8px;font-weight:600;color:var(--ink);font-size:13px}
-.tc-chip small{font-family:var(--mono);font-weight:400;color:var(--muted);margin-left:4px;font-size:10px}
-.tc-deva{font-size:14.5px;color:var(--ink)}
-.tc-out{background:radial-gradient(110% 110% at 100% 0%,var(--hero2) 0%,var(--hero1) 62%);color:var(--on-hero);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:14px}
-.tc-out p{margin:0;color:var(--on-hero-mut);font-size:13.5px}
-.tc-type{font-family:var(--mono);font-size:11px!important;letter-spacing:.08em;text-transform:uppercase;color:var(--beat)!important}
-.tc-v{font:400 clamp(24px,4vw,32px)/1.1 var(--display);margin:2px 0;display:flex;align-items:center;gap:8px;color:var(--on-hero)}
-.tc-v svg{width:24px;height:24px;flex:none}
-.tc-v.ok svg{color:#7BD7A2}.tc-v.no svg{color:#F2A07B}
-.tc-math{font-family:var(--mono);font-size:12.5px!important;color:var(--on-hero)!important}
-.tc-fix{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:6px}
-.tc-fix .btn{background:var(--beat);color:var(--beat-ink);border-color:var(--beat)}
-.tc-av-h{font-family:var(--mono);font-size:10px!important;letter-spacing:.08em;text-transform:uppercase;margin:0 0 3px!important}
-.tc-av{display:grid;gap:8px}
-@media (max-width:640px){.tc-av{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
-.tc-vb{min-width:0}
-.tc-vb .mk{font-family:var(--mono);font-size:10.5px;color:var(--beat);height:13px}
-.tc-cells{display:grid;gap:3px}
-.tc-cell{position:relative;background:rgba(255,255,255,.07);border-radius:7px;padding:14px 2px 5px;text-align:center;font-size:11.5px;font-weight:600;line-height:1.2;min-height:40px;min-width:0}
-.tc-cell small{position:absolute;top:2px;left:0;right:0;font-family:var(--mono);font-size:8.5px;font-weight:400;color:var(--on-hero-mut)}
-.tc-cell.tc-sam{box-shadow:inset 0 0 0 1px rgba(232,163,61,.55)}
-.tc-cell.tc-before{background:transparent;border:1px dashed rgba(246,239,248,.16)}
-.tc-cell.tc-after{background:rgba(255,255,255,.025);opacity:.5}
-.tc-cell.tc-pause{background:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 6px,rgba(255,255,255,.1) 6px 12px);color:var(--on-hero-mut);font-weight:500}
-.tc-cell.tc-land{box-shadow:inset 0 0 0 2px var(--on-hero)}
-.tc-cell.tc-on{background:rgba(232,163,61,.35)}
-.tc-b0{color:#E8A33D}.tc-b1{color:#57C9B9}.tc-b2{color:#E58BB5}
-.tc-g{opacity:.55}.tc-lb{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:2px}
-.tc-legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--on-hero-mut)}
-.tc-legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px}
-.tc-ctrl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.tc-ctrl label{flex:1;min-width:160px;font-size:12px;color:var(--on-hero-mut);display:flex;flex-direction:column}
-.tc-ctrl input[type=range]{accent-color:var(--beat);width:100%}
 /* Bols page: the dictionary as cards, a reading of whatever is typed in the search */
 .bolgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
 .bol{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:7px;min-width:0;scroll-margin:90px}
@@ -344,11 +304,6 @@ form .f textarea{min-height:96px;font-family:var(--mono);font-size:13px}
 .bol-m i.unk{background:transparent;color:var(--danger);box-shadow:inset 0 0 0 1px var(--danger)}
 .bol-warn{color:var(--danger)}
 .bol-read [lang=hi]{font-family:var(--display);color:var(--gold);font-size:16px}
-.tc-help{margin:0;padding-left:18px;color:var(--muted);font-size:13px}
-.tc-help li{margin:3px 0}
-.tc-help code{font-family:var(--mono);font-size:12px;background:var(--surface2);border-radius:4px;padding:0 4px;color:var(--ink)}
-.tc-inline{margin-top:6px;border:1px solid var(--line);border-radius:14px;padding:12px}
-.tc-row{margin-top:-4px}
 </style>
 </head>
 <body>
@@ -977,7 +932,7 @@ function vStudio(){
   return `<p class="eyebrow">Studio</p><h1>Your work and earnings</h1><p class="lede">Publish compositions and choreographies, set your licence prices, and see what you've earned.</p>
   <div class="hero" style="margin-top:20px"><span class="k">Earned to date</span><b class="big">${money(e.tot)}</b><p>${e.rows.length} sale${e.rows.length===1?"":"s"} · composers keep 80% of licences, choreographers 70% and the linked composer 15%. ${ac.length?`Taught in ${ac.length} academ${ac.length===1?"y":"ies"}.`:""}</p></div>
   <div class="tiles"><div class="tile"><span>Listen licences</span><b>${money(e.by.listen)}</b></div><div class="tile"><span>Perform licences</span><b>${money(e.by.perform)}</b></div><div class="tile"><span>Teach licences</span><b>${money(e.by.teach)}</b></div><div class="tile"><span>Choreography</span><b>${money(e.by.choreo)}</b></div></div>
-  <div class="sec"><h2>Your compositions</h2><span class="row-actions"><button class="btn sm ghost" data-act="tc-open">Tihai checker</button><button class="btn sm" data-act="comp-form">${I.plus}New composition</button></span></div>
+  <div class="sec"><h2>Your compositions</h2><span class="row-actions"><button class="btn sm" data-act="comp-form">${I.plus}New composition</button></span></div>
   ${mine.length?`<div class="panel list">${mine.map(c=>compLi(c,`<span class="row-actions"><span class="pill">${money((c.prices||{}).perform)} / ${money((c.prices||{}).teach)}</span><button class="btn sm ghost" data-act="comp-form" data-id="${esc(c.id)}">Edit</button></span>`)).join("")}</div>`
    :`<div class="empty"><b>No compositions yet</b>Add your first composition with its taal, laya, bols and prices. To try the app quickly, you can also load six sample pieces into your own catalogue.<span class="row-actions"><button class="btn" data-act="comp-form">New composition</button><button class="btn ghost" data-act="samples">Add 6 sample compositions</button></span></div>`}
   <div class="sec"><h2>Your choreographies</h2><span><button class="btn sm ghost" data-act="ch-form" ${allComps().length?"":"disabled"}>${I.plus}New choreography</button></span></div>
@@ -1027,7 +982,7 @@ function vBols(){
   const core=mains.filter(e=>e.group==="core"),comp=mains.filter(e=>e.group==="compound");
   const filtered=q||f!=="all";
   const count=(g,es)=>filtered?`${es.length} matching`:`Rows ${g==="core"?"1–60":"61–100"} · ${NT.DICT.filter(e=>e.group===g&&e.of).length} are other spellings, shown with their bol`;
-  return `<p class="eyebrow">Bols</p><h1>The bol dictionary</h1><p class="lede">The core and compound bols that Kathak compositions are built from. Layakari recognises every spelling here, in Roman or Devanagari, wherever you write bols: in compositions and in the tihai checker.</p>
+  return `<p class="eyebrow">Bols</p><h1>The bol dictionary</h1><p class="lede">The core and compound bols that Kathak compositions are built from. Layakari recognises every spelling here, in Roman or Devanagari, whenever you write the bols of a composition.</p>
   <label class="search">${I.search}<input id="bq" type="search" autocomplete="off" spellcheck="false" placeholder="Search, or type bols to see how they read: dheen, धीरे, dhagetirakita" value="${esc(S.bq)}" aria-label="Search the bols, or type bols to see how Layakari reads them"></label>
   ${q?bolReading(q):""}
   <div class="chips">${BOL_F.map(([k,l])=>`<button class="chip" data-act="bolf" data-f="${k}" aria-pressed="${f===k}">${l}</button>`).join("")}</div>
@@ -1171,13 +1126,10 @@ function mComp(id){
   <label class="f">Tempo (bpm)<input id="cf-bpm" type="number" min="30" max="240" value="${esc(c.bpm||90)}"></label></div>
   <label class="f">Bols / notation<textarea id="cf-bols" maxlength="4000" placeholder="One line per avartan">${esc(c.bols||"")}</textarea></label>
   <p class="note bol-warn" id="cf-unk" hidden style="margin:-4px 0 10px"></p>
-  <div class="row-actions tc-row"><button type="button" class="btn sm ghost" data-act="tc-inline" id="tc-toggle">${TC.inForm?"Hide tihai check":"Check a tihai"}</button><span class="note" style="margin:0">Select the tihai in your bols first, or type it into the checker.</span></div>
-  <div id="tc-slot">${TC.inForm?`<div class="tc-inline">${tcPanel()}</div>`:""}</div>
   <div class="f2"><label class="f">Listen price ($)<input id="cf-pl" type="number" min="0" step="0.5" value="${esc(pr.listen??2)}"></label><label class="f">Perform price ($)<input id="cf-pp" type="number" min="0" step="1" value="${esc(pr.perform??25)}"></label><label class="f">Teach price ($/yr)<input id="cf-pt" type="number" min="0" step="1" value="${esc(pr.teach??99)}"></label></div>
   <p class="note">The first line of notation is shown as a free preview. You keep 80% of every licence.</p>
   <div class="form-foot">${id?`<button type="button" class="btn danger" data-act="comp-del" data-id="${esc(id)}">${S.confirm==="comp:"+id?"Confirm delete":"Delete"}</button>`:""}<span style="flex:1"></span><button type="button" class="btn ghost" data-act="close">Cancel</button><button class="btn" type="submit">${id?"Save":"Publish"}</button></div></form>`;
 }
-function mTihai(){return `<p class="eyebrow">Studio</p><h2>Tihai checker</h2><p class="muted" style="margin:4px 0 14px">Write the phrase once. Layakari repeats it, counts the matras and pauses, shows where the last bol falls, and tells you where to start so it lands on sam.</p><form data-form="tc" class="tc-form">${tcPanel()}</form>`;}
 function mChor(){const cs=allComps();return `<p class="eyebrow">Studio</p><h2>New choreography</h2><form data-form="chor">
   <label class="f">Title<input id="ch-title" required maxlength="80" placeholder="e.g. Varsha, a monsoon solo"></label>
   <label class="f">Set to composition<select id="ch-comp">${cs.map(c=>`<option value="${esc(c.key)}">${esc(c.title)} · ${esc(pname(c.owner))}</option>`).join("")}</select></label>
@@ -1194,120 +1146,19 @@ function mAcad(){const a=me().academy||{};return `<p class="eyebrow">Academy</p>
   <div class="form-foot"><button type="button" class="btn ghost" data-act="close">Cancel</button><button class="btn" type="submit">${a.name?"Save":"Create academy"}</button></div></form>`;}
 function mLevel(id){const l=((me().academy||{}).levels||[]).find(x=>x.id===id)||{};return `<p class="eyebrow">Academy</p><h2>${id?"Rename level":"Add a level"}</h2><form data-form="level" data-id="${esc(id||"")}"><label class="f">Level name<input id="lv-name" required maxlength="40" value="${esc(l.name||"")}" placeholder="e.g. Praveen"></label><div class="form-foot"><button type="button" class="btn ghost" data-act="close">Cancel</button><button class="btn" type="submit">Save</button></div></form>`;}
 
-function openModal(kind,arg){tcStop();S.modal={kind,arg};S.confirm=null;renderModal();const f=$("#modal input:not([type=range]),#modal textarea,#modal button.bigplay");if(f)f.focus();}
-function closeModal(){tcStop();TC.inForm=false;S.modal=null;S.confirm=null;renderModal();}
+function openModal(kind,arg){S.modal={kind,arg};S.confirm=null;renderModal();const f=$("#modal input:not([type=range]),#modal textarea,#modal button.bigplay");if(f)f.focus();}
+function closeModal(){S.modal=null;S.confirm=null;renderModal();}
 function renderModal(){const m=$("#modal");if(!S.modal){m.hidden=true;m.innerHTML="";return;}
   const k=S.modal.kind,a=S.modal.arg;
-  const body=k==="detail"?mDetail(a):k==="comp"?mComp(a):k==="chor"?mChor():k==="acad"?mAcad():k==="level"?mLevel(a):k==="profile"?profileForm(me()):k==="tihai"?mTihai():"";
-  m.hidden=false;m.innerHTML=`<div class="modal" data-act="backdrop"><div class="dlg ${k==="detail"?"":k==="tihai"?"wide":"narrow"}" role="dialog" aria-modal="true"><button class="x" data-act="close" aria-label="Close">${I.x}</button>${body}</div></div>`;
-  syncPlay();paint();if($("#tc-phrase"))tcInit();cfUnknown();
+  const body=k==="detail"?mDetail(a):k==="comp"?mComp(a):k==="chor"?mChor():k==="acad"?mAcad():k==="level"?mLevel(a):k==="profile"?profileForm(me()):"";
+  m.hidden=false;m.innerHTML=`<div class="modal" data-act="backdrop"><div class="dlg ${k==="detail"?"":"narrow"}" role="dialog" aria-modal="true"><button class="x" data-act="close" aria-label="Close">${I.x}</button>${body}</div></div>`;
+  syncPlay();paint();cfUnknown();
   const r=$("#bpm");if(r)r.oninput=e=>{S.bpm[a]=+e.target.value;$("#bpmv").textContent=e.target.value+" bpm";retempo(a);};
 }
 
-/* ---------------- tihai checker ---------------- */
+/* the shared notation reader, with the bol dictionary */
 const NT=Notation;
-const TC={phrase:"dhati dhage nadha tirakita dha–",taal:"teentaal",reps:3,gap:1,speed:0,start:0,frac:0,bpm:70,inForm:false};
-const TC_OK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>';
-const TC_NO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 7v6M12 16.5v.5"/></svg>';
-const TC_STOP='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>';
-const TC_GAPS=[[0,"No pause"],[0.25,"¼ matra"],[0.5,"½ matra"],[1,"1 matra"],[1.5,"1½ matras"],[2,"2 matras"],[3,"3 matras"]];
-const TC_SPEEDS=[[0,"Each word is one matra"],[1,"1 bol per matra"],[2,"2 per matra (dugun)"],[3,"3 per matra (tigun)"],[4,"4 per matra (chaugun)"],[6,"6 per matra"],[8,"8 per matra"]];
-const TC_FR=[[0,"on the beat"],[0.25,"¼ in"],[1/3,"⅓ in"],[0.5,"½ in"],[2/3,"⅔ in"],[0.75,"¾ in"]];
-const TC_TYPE={damdar:"Damdar tihai · pauses between repeats",bedam:"Bedam tihai · no pauses",nauhakka:"Nauhakka · phrase played 9 times",chakradar:"Chakradar · a phrase with its own tihai, played 3 times"};
-const tcOpt=(v,l,sel)=>`<option value="${v}" ${sel?"selected":""}>${esc(l)}</option>`;
-function vibOf(tl){const ks=Object.keys(tl.v).map(Number).sort((a,b)=>a-b);return ks.map((k,i)=>({start:k,size:(i+1<ks.length?ks[i+1]:tl.n)-k,mark:tl.v[k]}));}
-function tcPanel(){
-  return `<div class="tc">
-  <label class="f">Tihai phrase, written once<textarea id="tc-phrase" spellcheck="false" autocomplete="off" placeholder="dhati dhage nadha tirakita dha–">${esc(TC.phrase)}</textarea></label>
-  <div class="tc-reads" id="tc-reads" aria-live="polite"></div>
-  <div class="f2">
-   <label class="f">Taal<select id="tc-taal">${Object.entries(TAALS).map(([k,t])=>tcOpt(k,t.name+" ("+t.n+")",k===TC.taal)).join("")}</select></label>
-   <label class="f">Played<select id="tc-reps">${tcOpt(3,"3 times (tihai)",TC.reps===3)}${tcOpt(9,"9 times (nauhakka)",TC.reps===9)}</select></label>
-   <label class="f"><span id="tc-gapl">Pause between repeats</span><select id="tc-gap">${TC_GAPS.map(([v,l])=>tcOpt(v,l,v===TC.gap)).join("")}</select></label>
-   <label class="f">Timing<select id="tc-speed">${TC_SPEEDS.map(([v,l])=>tcOpt(v,l,v===TC.speed)).join("")}</select></label>
-   <label class="f">Starts on<select id="tc-sm"></select></label>
-   <label class="f">Where in the matra<select id="tc-sf">${TC_FR.map(([v,l])=>tcOpt(v,l,Math.abs(v-TC.frac)<1e-4)).join("")}</select></label>
-  </div>
-  <div class="tc-out" id="tc-out"></div>
-  <ul class="tc-help"><li>Each word is one matra, and bols in a word share it: <code>dhadha</code> is two bols, <code>tirakita</code> four, <code>Dha-ge</code> two. Bars can mark vibhags.</li>
-   <li>A dash is a rest: <code>dha–</code>, or a dash on its own for a whole matra. A comma splits a matra in half; end with a comma to stop halfway, as in a bedam tihai.</li>
-   <li>Devanagari works too, and notes in brackets like (×3) are skipped.</li></ul>
-  </div>`;
-}
-function tcFillStart(){const sel=$("#tc-sm");if(!sel)return;const n=(TAALS[TC.taal]||TAALS.teentaal).n;if(TC.start>=n)TC.start=0;
-  sel.innerHTML=Array.from({length:n},(_,i)=>tcOpt(i,"matra "+(i+1)+(i===0?" (sam)":""),i===TC.start)).join("");}
-function tcSetFrac(f){const sel=$("#tc-sf");if(!sel)return;let o=[...sel.options].find(x=>Math.abs(+x.value-f)<1e-4);
-  if(!o){o=document.createElement("option");o.value=String(f);o.textContent=NT.posText(f).text.replace(/^matra 1, /,"");sel.appendChild(o);}sel.value=o.value;}
-function tcRead(){const g=id=>document.getElementById(id);if(!g("tc-phrase"))return false;
-  TC.phrase=g("tc-phrase").value;TC.taal=g("tc-taal").value;TC.reps=+g("tc-reps").value;TC.gap=+g("tc-gap").value;TC.speed=+g("tc-speed").value;
-  TC.start=+g("tc-sm").value||0;TC.frac=+g("tc-sf").value||0;return true;}
-let tcRes=null;
-function tcCompute(){const parsed=NT.parse(TC.phrase),line=NT.timeline(parsed,TC.speed),tl=TAALS[TC.taal]||TAALS.teentaal;
-  tcRes={parsed,line,tl,r:NT.tihai({line,gap:TC.gap,reps:TC.reps,start:TC.start+TC.frac,n:tl.n})};return tcRes;}
-function tcEvents(){const {r,line}=tcRes,out=[];if(r.error)return out;let last=-1;line.ev.forEach((e,i)=>{if(e.bol!=null)last=i;});
-  for(let rep=0;rep<r.reps;rep++)line.ev.forEach((e,i)=>{if(rep===r.reps-1&&i>last)return;out.push({t:Math.round((r.start+r.offs[rep]+e.t)*1e6)/1e6,bol:e.bol,rep,land:rep===r.reps-1&&i===last});});
-  return out;}
-function tcInit(){tcFillStart();tcUpdate();}
-function tcUpdate(){
-  if(!tcRead())return;tcStop();const {parsed,line,tl,r}=tcCompute();
-  $("#tc-gapl").textContent=TC.reps===9?"Pause between groups of 3":"Pause between repeats";
-  $("#tc-reads").innerHTML=parsed.matras.length?`<div class="tc-chips"><span>${TC.speed?`Reads as ${line.ev.length} bols and gaps at ${TC.speed} per matra:`:`Reads as ${esc(NT.fmtN(line.len))} matra${line.len===1?"":"s"}:`}</span>${parsed.matras.map((m,i)=>`<span class="tc-chip">${esc(NT.matraLabel(m))}${TC.speed?"":`<small>${m.cutHalf&&i===parsed.matras.length-1?"½ matra":m.slots.length+(m.slots.length===1?" bol":" bols")}</small>`}</span>`).join("")}</div><div class="tc-deva">${esc(NT.toDeva(parsed))}</div>${parsed.unknown.length?`<div style="color:var(--danger)">Not in the bol dictionary: ${esc(parsed.unknown.join(", "))}. It still counts as one bol.${TC.inForm?"":` <button type="button" class="lnk" data-act="nav" data-v="bols">See the dictionary</button>`}</div>`:""}`:"";
-  const out=$("#tc-out");
-  if(r.error){out.innerHTML=`<p>${TC.phrase.trim()?esc(r.error):"Type a tihai phrase to see where it lands."}</p>`;return;}
-  const samToSam=r.startOnSam&&r.onSam,endM=Math.floor(r.end+1e-9),lastAv=Math.floor(endM/tl.n);
-  let h=`<div><p class="tc-type">${samToSam?"Sam-to-sam ":""}${esc(TC_TYPE[r.type])}</p>
-   <h3 class="tc-v ${r.onSam?"ok":"no"}">${r.onSam?TC_OK:TC_NO}<span>${r.onSam?"Lands on sam":"Lands on "+esc(NT.posText(r.landPos).text)}</span></h3>
-   <p class="tc-math">${esc(NT.fmtN(r.P))} × ${r.reps}${r.gap?" + 2 pauses of "+esc(NT.fmtN(r.gap)):""} = ${esc(NT.fmtN(r.length))} matras</p>
-   <p>Starts on ${esc(NT.posText(NT.mod(r.start,tl.n)).text)}${r.cycles?" and lands "+(r.cycles===1?"in the next avartan":r.cycles+" avartans later"):", in the same avartan"}. The last bol falls ${esc(NT.fmtN(r.landing))} matras after the start.</p>
-   ${r.onSam?"":`<div class="tc-fix"><p>To land on sam, start on ${esc(NT.posText(r.startForSam).text)}.</p><button type="button" class="btn sm" data-act="tc-fix">Start there</button></div>`}</div>`;
-  if(lastAv>15)h+=`<p>This runs for ${lastAv+1} avartans, too long to draw here. The verdict above still applies.</p>`;
-  else{const ev=tcEvents(),byM=new Map();ev.forEach(e=>{const m=Math.floor(e.t+1e-9);if(!byM.has(m))byM.set(m,[]);byM.get(m).push(e);});
-    const pauses=[];for(let k=0;k<r.reps-1;k++){const a=r.start+r.offs[k]+r.P,b=r.start+r.offs[k+1];if(b-a>1e-6)pauses.push([a,b]);}
-    const inPause=m=>pauses.some(([a,b])=>m+1e-6>=Math.floor(a+1e-9)&&m<b-1e-6)&&!(byM.get(m)||[]).some(e=>e.bol!=null);
-    const col=rep=>"tc-b"+((r.reps===9?Math.floor(rep/3):rep)%3),vb=vibOf(tl);
-    for(let a=0;a<=lastAv;a++){h+=`<div><p class="tc-av-h">Avartan ${a+1}</p><div class="tc-av" style="grid-template-columns:${vb.map(x=>"minmax(0,"+x.size+"fr)").join(" ")}">`;
-      vb.forEach(x=>{h+=`<div class="tc-vb"><div class="mk">${esc(x.mark)}</div><div class="tc-cells" style="grid-template-columns:repeat(${x.size},minmax(0,1fr))">`;
-        for(let j=0;j<x.size;j++){const m=x.start+j,gm=a*tl.n+m,list=byM.get(gm)||[];let cls="tc-cell"+(m===0?" tc-sam":""),body="";
-          if(gm<Math.floor(r.start+1e-9)&&!list.length)cls+=" tc-before";else if(gm>endM)cls+=" tc-after";else if(!list.length&&inPause(gm)){cls+=" tc-pause";body="pause";}
-          list.forEach(e=>{if(e.land)cls+=" tc-land";body+=`<span class="${col(e.rep)}${e.bol==null?" tc-g":""}${e.land?" tc-lb":""}">${esc(NT.bolName(e.bol))}</span><wbr>`;});
-          h+=`<div class="${cls}" data-gm="${gm}"><small>${m+1}</small>${body}</div>`;}
-        h+=`</div></div>`;});
-      h+=`</div></div>`;}
-    const names=r.reps===9?["First 3","Middle 3","Last 3"]:["1st time","2nd time","3rd time"];
-    h+=`<div class="tc-legend">${names.map((n,i)=>`<span><i style="background:${["#E8A33D","#57C9B9","#E58BB5"][i]}"></i>${n}</span>`).join("")}<span>Underlined bol is where it lands</span></div>`;}
-  h+=`<div class="tc-ctrl"><button type="button" class="bigplay" data-act="tc-play" id="tc-play" aria-label="Play the tihai">${I.play}</button><label for="tc-bpm">Laya <span id="tc-bpmv">${TC.bpm} matras per minute</span><input type="range" id="tc-bpm" min="30" max="180" value="${TC.bpm}"></label></div>
-   <p style="font-size:12px">Playback counts in from sam, so you hear where it lands.</p>`;
-  out.innerHTML=h;
-}
-let tcPlaying=false,tcTimer=null,tcHL=[];
-function tcStop(){tcPlaying=false;if(tcTimer){clearInterval(tcTimer);tcTimer=null;}tcHL.forEach(clearTimeout);tcHL=[];
-  document.querySelectorAll(".tc-cell.tc-on").forEach(c=>c.classList.remove("tc-on"));const b=$("#tc-play");if(b){b.innerHTML=I.play;b.setAttribute("aria-label","Play the tihai");}}
-function ghungroo(t,v){const a=ctx();
-  for(let k=0;k<3;k++){const s=a.createBufferSource(),bp=a.createBiquadFilter(),g=a.createGain(),tt=t+k*.013;s.buffer=noise;bp.type="bandpass";bp.frequency.value=6200+k*1100;bp.Q.value=5;
-    g.gain.setValueAtTime(.0001,tt);g.gain.exponentialRampToValueAtTime(.45*v,tt+.002);g.gain.exponentialRampToValueAtTime(.0001,tt+.18);s.connect(bp).connect(g).connect(a.destination);s.start(tt);s.stop(tt+.2);}
-  const o=a.createOscillator(),g=a.createGain();o.frequency.setValueAtTime(120,t);o.frequency.exponentialRampToValueAtTime(55,t+.12);env(g,t,.55*v,.14);o.connect(g).connect(a.destination);o.start(t);o.stop(t+.16);}
-function tcClick(t,sam,land){const a=ctx(),o=a.createOscillator(),g=a.createGain();o.frequency.value=land?2093:sam?1760:1320;env(g,t,land?.3:sam?.2:.09,land?.35:.05);o.connect(g).connect(a.destination);o.start(t);o.stop(t+(land?.4:.07));
-  if(land){const o2=a.createOscillator(),g2=a.createGain();o2.frequency.value=2637;env(g2,t,.18,.45);o2.connect(g2).connect(a.destination);o2.start(t);o2.stop(t+.5);}}
-function tcPlay(){
-  if(!tcRes||tcRes.r.error)return;stop();const a=ctx();tcPlaying=true;
-  const r=tcRes.r,md=60/TC.bpm,kathak=NT.isKathak(tcRes.parsed),lastM=Math.floor(r.end+1e-9)+1;
-  const slot=Math.min(1,tcRes.line.ev.length?tcRes.line.len/tcRes.line.ev.length:1)*md,items=[];
-  tcEvents().forEach(e=>{if(e.bol!=null){const nm=NT.bolName(e.bol);items.push({t:e.t,f:at=>kathak?ghungroo(at,1):strike(nm,at,slot)});}});
-  for(let m=0;m<=lastM;m++){const sam=m%tcRes.tl.n===0,land=r.onSam&&Math.abs(m-r.end)<1e-6;items.push({t:m,f:at=>tcClick(at,sam,land)});
-    tcHL.push(setTimeout(()=>{document.querySelectorAll(".tc-cell.tc-on").forEach(c=>c.classList.remove("tc-on"));const c=document.querySelector('.tc-cell[data-gm="'+m+'"]');if(c)c.classList.add("tc-on");},(.15+m*md)*1000));}
-  items.sort((x,y)=>x.t-y.t);const t0=a.currentTime+.15;let k=0;
-  const pump=()=>{if(!tcPlaying)return;const hz=a.currentTime+.2;while(k<items.length&&t0+items[k].t*md<hz){items[k].f(t0+items[k].t*md);k++;}
-    if(k>=items.length){clearInterval(tcTimer);tcTimer=null;tcHL.push(setTimeout(tcStop,Math.max(0,(t0+(lastM+.6)*md-a.currentTime)*1000)));}};
-  tcTimer=setInterval(pump,25);pump();
-  const b=$("#tc-play");if(b){b.innerHTML=TC_STOP;b.setAttribute("aria-label","Stop");}
-}
-let tcT=0;
 let cfT=0;document.addEventListener("input",e=>{if(e.target&&e.target.id==="cf-bols"){clearTimeout(cfT);cfT=setTimeout(cfUnknown,250);}});
-document.addEventListener("input",e=>{const id=e.target&&e.target.id;if(!id||!id.startsWith("tc-"))return;
-  if(id==="tc-bpm"){TC.bpm=+e.target.value;const v=$("#tc-bpmv");if(v)v.textContent=TC.bpm+" matras per minute";return;}
-  if(id==="tc-phrase"){clearTimeout(tcT);tcT=setTimeout(tcUpdate,150);}});
-document.addEventListener("change",e=>{const id=e.target&&e.target.id;if(!id||!id.startsWith("tc-")||id==="tc-bpm"||id==="tc-phrase")return;
-  if(id==="tc-taal"){TC.taal=e.target.value;tcFillStart();}tcUpdate();});
 
 /* ---------------- render ---------------- */
 function render(){
@@ -1363,16 +1214,7 @@ document.addEventListener("click",e=>{
   if(act==="approve"){const s=$("#ap-"+CSS.escape(d.s));const lv=s&&s.value;if(!lv)return;saveMe(p=>{p.academy.roster=p.academy.roster||{};p.academy.roster[d.s]=lv;if(p.academy.declined)delete p.academy.declined[d.s];});toast(`${pname(d.s)} joined your academy.`);return;}
   if(act==="decline"){saveMe(p=>{p.academy.declined=p.academy.declined||{};p.academy.declined[d.s]=true;});return;}
   if(act==="remove"){if(!confirmOnce("rm:"+d.s)){render();return;}saveMe(p=>{delete p.academy.roster[d.s];});toast(`${pname(d.s)} removed.`);return;}
-  if(act==="comp-form"){TC.inForm=false;openModal("comp",d.id);return;}
-  if(act==="tc-open"){TC.inForm=false;openModal("tihai");return;}
-  if(act==="tc-inline"){const slot=$("#tc-slot"),btn=$("#tc-toggle");if(!slot)return;
-    if(TC.inForm){tcStop();TC.inForm=false;slot.innerHTML="";if(btn)btn.textContent="Check a tihai";return;}
-    const ta=$("#cf-bols"),txt=ta?ta.value:"";let sel=ta&&ta.selectionEnd>ta.selectionStart?txt.slice(ta.selectionStart,ta.selectionEnd).trim():"";
-    if(!sel){const lines=txt.split("\n").map(l=>l.trim()).filter(l=>l&&NT.flatBols(NT.parse(l)).length);if(lines.length)sel=lines[lines.length-1];}
-    if(sel)TC.phrase=sel;const tf=$("#cf-taal");if(tf&&TAALS[tf.value])TC.taal=tf.value;const bf=$("#cf-bpm");if(bf&&+bf.value)TC.bpm=Math.min(180,Math.max(30,+bf.value));
-    TC.start=0;TC.frac=0;TC.inForm=true;slot.innerHTML=`<div class="tc-inline">${tcPanel()}</div>`;if(btn)btn.textContent="Hide tihai check";tcInit();return;}
-  if(act==="tc-fix"){if(!tcRes||tcRes.r.error)return;const f=tcRes.r.startForSam,w=Math.floor(f+1e-9);TC.start=w;TC.frac=Math.round((f-w)*1e6)/1e6;tcFillStart();tcSetFrac(TC.frac);tcUpdate();return;}
-  if(act==="tc-play"){tcPlaying?tcStop():tcPlay();return;}
+  if(act==="comp-form"){openModal("comp",d.id);return;}
   if(act==="comp-del"){if(!confirmOnce("comp:"+d.id)){renderModal();return;}const key=S.uid+":"+d.id;if(S.playing===key)stop();
     saveMe(p=>{p.compositions=(p.compositions||[]).filter(c=>c.id!==d.id);if(p.academy)(p.academy.levels||[]).forEach(l=>{l.pieces=(l.pieces||[]).filter(k=>k!==key);});});closeModal();toast("Composition deleted.");return;}
   if(act==="samples"){saveMe(p=>{p.compositions=p.compositions||[];SAMPLES.forEach((s,i)=>p.compositions.push(Object.assign({},s,{id:rid(),created:Date.now()-i*1000,prices:{listen:2,perform:[25,20,15,25,15,10][i],teach:[99,79,69,99,69,49][i]}})));});toast("Six sample compositions added to your catalogue.");return;}
