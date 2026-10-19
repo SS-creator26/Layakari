@@ -28,7 +28,7 @@
 :root[data-theme="dark"]{--bg:#151019;--surface:#1E1725;--surface2:#2A2033;--ink:#F1E9F5;--muted:#A99BB3;--line:#33293D;--gold:#E8A33D;--gold-ink:#241405;--gold-soft:#3A2A1A;--teal:#57C9B9;--teal-soft:#1B3330;--danger:#F07A8D;--shadow:0 18px 50px -20px rgba(0,0,0,.7);color-scheme:dark}
 *{box-sizing:border-box}
 html,body{height:100%}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;margin:0}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
@@ -42,8 +42,8 @@ button{cursor:pointer}
 .nav[aria-current="page"]{background:var(--gold-soft);color:var(--gold)}
 .me{margin-top:auto;display:flex;align-items:center;gap:10px;padding:10px;border-top:1px solid var(--line)}
 .me img{width:32px;height:32px;border-radius:50%}
-.me b{display:block;font-size:15px;line-height:1.2}
-.me span{font-size:13.5px;color:var(--muted)}
+.me b{display:block;font-size:13.5px;line-height:1.2}
+.me span{font-size:12px;color:var(--muted)}
 main{min-width:0;padding-inline:clamp(16px,4vw,48px);padding-block:28px 140px}
 .wrap{max-width:1080px;margin:0 auto}
 .app.gated{grid-template-columns:minmax(0,1fr)}
@@ -51,26 +51,22 @@ main{min-width:0;padding-inline:clamp(16px,4vw,48px);padding-block:28px 140px}
   .app{grid-template-columns:minmax(0,1fr)}
   .side{position:fixed;top:auto;bottom:0;left:0;right:0;height:auto;flex-direction:row;justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));border-right:0;border-top:1px solid var(--line);z-index:20}
   .brand,.me{display:none}
-  .nav{flex-direction:column;gap:2px;font-size:12.5px;padding:6px 4px;flex:1;align-items:center}
+  .nav{flex-direction:column;gap:2px;font-size:11px;padding:6px 4px;flex:1;align-items:center}
   main{padding-block:20px 170px}
 }
 h1{font:400 clamp(30px,4.2vw,42px)/1.08 var(--display);margin:0 0 6px;text-wrap:balance}
 h2{font:400 24px/1.15 var(--display);margin:0;text-wrap:balance}
-h3{font-size:17.5px;margin:0;font-weight:600}
+h3{font-size:16px;margin:0;font-weight:600}
 .lede{color:var(--muted);margin:0;max-width:62ch}
-.eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}
 .sec{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:34px 0 14px;flex-wrap:wrap}
-.sec span{color:var(--muted);font-size:14.5px}
+.sec span{color:var(--muted);font-size:13px}
 .muted{color:var(--muted)}
-.small{font-size:14.5px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid transparent;border-radius:10px;padding:8px 14px;font-weight:600;font-size:15.5px;background:var(--gold);color:var(--gold-ink);white-space:nowrap}
+.small{font-size:13px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid transparent;border-radius:10px;padding:8px 14px;font-weight:600;font-size:14px;background:var(--gold);color:var(--gold-ink);white-space:nowrap}
 .btn.ghost{background:transparent;border-color:var(--line);color:var(--ink)}
-a.btn{text-decoration:none}
-.land-abhyas{margin:0;color:var(--on-hero-mut);font-size:16px}
-.land-abhyas a{color:var(--beat);font-weight:600;text-underline-offset:3px}
-.foot a{color:inherit;text-underline-offset:3px}
 .btn.ghost:hover{background:var(--surface2)}
-.btn.sm{padding:5px 10px;font-size:14.5px;border-radius:8px}
+.btn.sm{padding:5px 10px;font-size:13px;border-radius:8px}
 .btn.danger{background:transparent;border-color:var(--danger);color:var(--danger)}
 .btn[disabled]{opacity:.5;cursor:not-allowed}
 .btn svg{width:16px;height:16px}
@@ -79,54 +75,47 @@ a.btn{text-decoration:none}
 .search input{flex:1;border:0;background:none;outline:none;min-width:0}
 .search svg{width:16px;height:16px;color:var(--muted)}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;font-size:14.5px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px;font-size:13px}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:18px}
 .card{background:none;border:0;padding:0;text-align:left;min-width:0}
 .cover{width:100%;aspect-ratio:1;max-width:100%;border-radius:14px;display:block}
-.card b{display:block;margin-top:8px;font-size:16px;line-height:1.25}
-.card span{font-size:14px;color:var(--muted);display:block}
+.card b{display:block;margin-top:8px;font-size:14.5px;line-height:1.25}
+.card span{font-size:12.5px;color:var(--muted);display:block}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px}
 .list{display:flex;flex-direction:column}
 .li{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);min-width:0}
 .li:last-child{border-bottom:0}
 .li .cover{width:52px;flex:none;border-radius:10px}
 .li .meta{flex:1;min-width:0}
-.li .meta b{display:block;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.li .meta span{font-size:14px;color:var(--muted)}
+.li .meta b{display:block;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.li .meta span{font-size:12.5px;color:var(--muted)}
 .li button.meta{background:none;border:0;padding:0;text-align:left}
-.li .meta .prog{display:block;font-family:var(--mono);font-size:12.5px;color:var(--teal);margin-top:2px}
-.li .meta .prog.none{color:var(--muted)}
-.li .meta .passed{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
-.li .meta .pill{font-size:12.5px}
-.li .meta .pill.teal{color:var(--teal)}
-@media (max-width:600px){.li.stu{flex-wrap:wrap}.li.stu .meta{flex-basis:calc(100% - 52px)}.li.stu>.row-actions{width:100%;justify-content:flex-end}}
-.prac{font-size:14.5px;color:var(--muted);margin:8px 0 0}
-.pill{display:inline-block;font-family:var(--mono);font-size:12.5px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill{display:inline-block;font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
 .pill.gold{border-color:var(--gold);color:var(--gold)}
 .pill.teal{border-color:var(--teal);color:var(--teal)}
-.av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font:400 17px var(--display);color:#fff;flex:none}
+.av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font:400 15px var(--display);color:#fff;flex:none}
 .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
 .acad{display:flex;flex-direction:column;gap:8px}
 .acad .top{display:flex;gap:12px;align-items:center}
-.acad p{margin:0;font-size:15px;color:var(--muted)}
+.acad p{margin:0;font-size:13.5px;color:var(--muted)}
 .hero{border-radius:20px;padding:22px;background:radial-gradient(120% 120% at 100% 0%,var(--hero2) 0%,var(--hero1) 60%);color:var(--on-hero)}
-.hero .k{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--beat)}
+.hero .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--beat)}
 .hero b.big{display:block;font:400 40px/1.1 var(--display);margin:4px 0}
-.hero p{margin:0;color:var(--on-hero-mut);font-size:15px}
+.hero p{margin:0;color:var(--on-hero-mut);font-size:13.5px}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:14px}
 .tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
-.tile span{display:block;font-size:14px;color:var(--muted)}
-.tile b{font-family:var(--mono);font-weight:500;font-size:19px;font-variant-numeric:tabular-nums}
+.tile span{display:block;font-size:12.5px;color:var(--muted)}
+.tile b{font-family:var(--mono);font-weight:500;font-size:18px;font-variant-numeric:tabular-nums}
 .tbl{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:15.5px}
+table{border-collapse:collapse;width:100%;font-size:14px}
 th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
-th{font-family:var(--mono);font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:500}
-td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:14.5px;white-space:nowrap}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:500}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:13px;white-space:nowrap}
 .empty{border:1px dashed var(--line);border-radius:16px;padding:26px;text-align:center;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:12px}
-.empty b{color:var(--ink);font-size:17.5px}
+.empty b{color:var(--ink);font-size:16px}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.tab{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px 12px;font-weight:600;font-size:15px}
+.tab{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px 12px;font-weight:600;font-size:13.5px}
 .tab[aria-pressed="true"]{border-color:var(--gold);background:var(--gold-soft);color:var(--gold)}
 .tab small{font-family:var(--mono);font-weight:400;color:var(--muted);margin-left:4px}
 .sw{width:42px;height:24px;border-radius:999px;border:0;background:var(--surface2);position:relative;flex:none;box-shadow:inset 0 0 0 1px var(--line)}
@@ -134,23 +123,22 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--m
 .sw[aria-checked="true"]{background:var(--teal)}
 .sw[aria-checked="true"]::after{transform:translateX(18px);background:#fff}
 .sw[disabled]{opacity:.4;cursor:not-allowed}
-select.inline{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:4px 8px;font-size:14.5px}
+select.inline{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:4px 8px;font-size:13px}
 /* modal */
 .modal{position:fixed;inset:0;background:rgba(15,8,20,.55);display:flex;align-items:flex-start;justify-content:center;padding:max(5vh,16px) 16px;overflow-y:auto;z-index:40}
 .dlg{width:min(720px,100%);background:var(--surface);border-radius:20px;box-shadow:var(--shadow);padding:22px;position:relative}
 .dlg.narrow{width:min(520px,100%)}
-#modal .dlg:focus,#main:focus{outline:none}
 .x{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;border:0;background:var(--surface2);display:grid;place-items:center}
 .x svg{width:16px;height:16px}
 .det{display:grid;grid-template-columns:180px minmax(0,1fr);gap:20px;align-items:start}
 @media (max-width:600px){.det{grid-template-columns:minmax(0,1fr)}.det .cover{max-width:180px}}
 .meta-line{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
 .taal{margin-top:18px;background:var(--hero1);color:var(--on-hero);border-radius:16px;padding:14px}
-.taal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:14.5px}
-.taal-head span{font-family:var(--mono);font-size:12.5px;color:var(--on-hero-mut)}
+.taal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:13px}
+.taal-head span{font-family:var(--mono);font-size:11px;color:var(--on-hero-mut)}
 .beats{display:grid;gap:5px}
-.m{position:relative;background:rgba(255,255,255,.07);border-radius:8px;padding:15px 2px 6px;text-align:center;font-size:13.5px;line-height:1.1;min-width:0;overflow:hidden}
-.m small{position:absolute;top:2px;left:0;right:0;font-family:var(--mono);font-size:11px;color:var(--on-hero-mut)}
+.m{position:relative;background:rgba(255,255,255,.07);border-radius:8px;padding:15px 2px 6px;text-align:center;font-size:12px;line-height:1.1;min-width:0;overflow:hidden}
+.m small{position:absolute;top:2px;left:0;right:0;font-family:var(--mono);font-size:9.5px;color:var(--on-hero-mut)}
 .m.vs small{color:var(--beat)}
 .m.sam{box-shadow:inset 0 0 0 1px var(--beat)}
 .m.on{background:var(--beat);color:var(--beat-ink)}
@@ -158,26 +146,26 @@ select.inline{border:1px solid var(--line);background:var(--surface);border-radi
 .ctrl{display:flex;align-items:center;gap:14px;margin-top:12px}
 .bigplay{width:46px;height:46px;border-radius:50%;border:0;background:var(--beat);color:var(--beat-ink);display:grid;place-items:center;flex:none}
 .bigplay svg{width:22px;height:22px}
-.ctrl label{flex:1;font-size:13.5px;color:var(--on-hero-mut);display:flex;flex-direction:column}
+.ctrl label{flex:1;font-size:12px;color:var(--on-hero-mut);display:flex;flex-direction:column}
 .ctrl input{accent-color:var(--beat);width:100%}
-.bols{margin-top:12px;font-family:var(--mono);font-size:14px;line-height:1.7;background:rgba(0,0,0,.25);border-radius:12px;padding:10px 12px;white-space:pre-wrap;overflow-wrap:anywhere}
-.lock{color:var(--on-hero-mut);font-family:var(--body);font-size:14px;margin-top:6px}
+.bols{margin-top:12px;font-family:var(--mono);font-size:12.5px;line-height:1.7;background:rgba(0,0,0,.25);border-radius:12px;padding:10px 12px;white-space:pre-wrap;overflow-wrap:anywhere}
+.lock{color:var(--on-hero-mut);font-family:var(--body);font-size:12.5px;margin-top:6px}
 .lic{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:12px}
 .lic-opt{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--surface);text-align:left;display:flex;flex-direction:column;gap:2px}
-.lic-opt b{font-size:15.5px}
-.lic-opt span{font-size:13.5px;color:var(--muted)}
-.lic-opt em{font-style:normal;font-family:var(--mono);font-size:15.5px;margin-top:6px}
+.lic-opt b{font-size:14px}
+.lic-opt span{font-size:12px;color:var(--muted)}
+.lic-opt em{font-style:normal;font-family:var(--mono);font-size:14px;margin-top:6px}
 .lic-opt.owned{border-color:var(--teal);background:var(--teal-soft)}
 .lic-opt.owned em{color:var(--teal)}
-.access{display:inline-flex;gap:6px;align-items:center;font-size:14.5px;color:var(--teal);font-weight:600;margin-top:12px}
+.access{display:inline-flex;gap:6px;align-items:center;font-size:13px;color:var(--teal);font-weight:600;margin-top:12px}
 .access svg{width:16px;height:16px;flex:none}
 /* forms */
-form .f{display:flex;flex-direction:column;gap:4px;margin-top:12px;font-size:14.5px;color:var(--muted);font-weight:500}
-form .f input,form .f select,form .f textarea{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:8px 10px;color:var(--ink);font-size:16px;font-weight:400}
-form .f textarea{min-height:96px;font-family:var(--mono);font-size:14.5px}
+form .f{display:flex;flex-direction:column;gap:4px;margin-top:12px;font-size:13px;color:var(--muted);font-weight:500}
+form .f input,form .f select,form .f textarea{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:8px 10px;color:var(--ink);font-size:14.5px;font-weight:400}
+form .f textarea{min-height:96px;font-family:var(--mono);font-size:13px}
 .f2{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0 12px}
 .roles{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
-.roles label{display:flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:15px;color:var(--ink);cursor:pointer}
+.roles label{display:flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:13.5px;color:var(--ink);cursor:pointer}
 .roles input{accent-color:var(--gold)}
 .form-foot{display:flex;gap:10px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
 .gate{min-height:80vh;display:grid;place-items:center;padding:16px}
@@ -191,10 +179,10 @@ form .f textarea{min-height:96px;font-family:var(--mono);font-size:14.5px}
 .land-copy{grid-area:copy;color:var(--on-hero);padding:clamp(28px,5vw,64px) clamp(20px,5vw,64px) 0;display:flex;flex-direction:column;gap:18px}
 .land-brand{display:flex;align-items:center;gap:10px;font:400 26px var(--display);color:var(--on-hero)}
 .land-brand svg{width:28px;height:28px;color:var(--beat)}
-.land-copy .k{font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--beat);margin:clamp(12px,4vh,40px) 0 0}
+.land-copy .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--beat);margin:clamp(12px,4vh,40px) 0 0}
 .land-copy h1{font:400 clamp(36px,5.2vw,64px)/1.02 var(--display);margin:0;max-width:15ch;color:var(--on-hero)}
 .land-copy h1 em{font-style:normal;color:var(--beat)}
-.land-copy .lede{color:var(--on-hero-mut);font-size:clamp(16.5px,1.4vw,18.5px);max-width:46ch;margin:0}
+.land-copy .lede{color:var(--on-hero-mut);font-size:clamp(15px,1.3vw,17px);max-width:46ch;margin:0}
 .land-row{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
 .land-ring{width:clamp(120px,14vw,170px);flex:none}
 .land-ring circle.d{fill:rgba(246,239,248,.16);animation:matra 8s steps(1) infinite}
@@ -205,15 +193,15 @@ form .f textarea{min-height:96px;font-family:var(--mono);font-size:14.5px}
 @keyframes sammatra{0%{fill:#fff}6.25%,100%{fill:var(--beat)}}
 .land-ring text{font:400 15px var(--display);fill:var(--on-hero)}
 .land-ring .bol{font:500 7.5px var(--mono);fill:var(--on-hero-mut);letter-spacing:.08em}
-.land-legend{font-family:var(--mono);font-size:12.5px;color:var(--on-hero-mut);line-height:1.7}
+.land-legend{font-family:var(--mono);font-size:11.5px;color:var(--on-hero-mut);line-height:1.7}
 .land-legend b{color:var(--on-hero);font-weight:500}
 .land-feats{grid-area:feats;list-style:none;margin:0;padding:clamp(24px,4vh,40px) clamp(20px,5vw,64px) clamp(28px,5vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:14px;align-content:end}
-.land-feats li{border:1px solid rgba(246,239,248,.14);background:rgba(255,255,255,.04);border-radius:16px;padding:14px 16px;color:var(--on-hero-mut);font-size:15px;line-height:1.45}
+.land-feats li{border:1px solid rgba(246,239,248,.14);background:rgba(255,255,255,.04);border-radius:16px;padding:14px 16px;color:var(--on-hero-mut);font-size:13.5px;line-height:1.45}
 .land-feats b{display:block;color:var(--on-hero);font:400 18px var(--display);margin-bottom:4px}
-.land-feats span.tag{display:inline-block;font-family:var(--mono);font-size:12px;color:var(--beat);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.land-feats span.tag{display:inline-block;font-family:var(--mono);font-size:10.5px;color:var(--beat);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
 .land-auth{grid-area:auth;display:grid;place-items:center;padding:clamp(20px,4vw,56px)}
 .land-auth .dlg{box-shadow:var(--shadow);width:min(440px,100%)}
-.land-auth .fine{font-size:13.5px;color:var(--muted);margin:14px 0 0;text-align:center}
+.land-auth .fine{font-size:12px;color:var(--muted);margin:14px 0 0;text-align:center}
 @media (max-width:900px){
   .land{grid-template-columns:minmax(0,1fr);grid-template-rows:auto;grid-template-areas:"copy" "auth" "feats"}
   .land-copy{padding-bottom:20px}
@@ -223,7 +211,7 @@ form .f textarea{min-height:96px;font-family:var(--mono);font-size:14.5px}
 }
 @media (prefers-reduced-motion: reduce){.land-ring circle.d{animation:none}}
 .land{min-height:calc(100vh - 64px)}
-.land-auth .reassure{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;margin:12px 0 0;padding:0;list-style:none;font-size:14px;color:var(--muted)}
+.land-auth .reassure{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;margin:12px 0 0;padding:0;list-style:none;font-size:12.5px;color:var(--muted)}
 .land-auth .reassure li::before{content:"✓ ";color:var(--teal);font-weight:700}
 .more{padding:clamp(40px,7vw,88px) clamp(16px,5vw,64px);max-width:1180px;margin:0 auto}
 .more + .more{padding-top:0}
@@ -232,8 +220,8 @@ form .f textarea{min-height:96px;font-family:var(--mono);font-size:14.5px}
 .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px;counter-reset:st;margin:0;padding:0;list-style:none}
 .steps li{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;counter-increment:st}
 .steps li::before{content:counter(st);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--gold-soft);color:var(--gold);font:400 18px var(--display);margin-bottom:12px}
-.steps b{display:block;font-size:17.5px;margin-bottom:4px}
-.steps span{color:var(--muted);font-size:15.5px}
+.steps b{display:block;font-size:16px;margin-bottom:4px}
+.steps span{color:var(--muted);font-size:14px}
 .demo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(20px,4vw,48px);align-items:center}
 @media (max-width:820px){.demo{grid-template-columns:minmax(0,1fr)}}
 .demo-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow)}
@@ -246,7 +234,7 @@ form .f textarea{min-height:96px;font-family:var(--mono);font-size:14.5px}
 .demo-points li{display:flex;gap:12px;align-items:flex-start}
 .demo-points li svg{width:20px;height:20px;color:var(--teal);flex:none;margin-top:2px}
 .demo-points b{display:block}
-.demo-points span{color:var(--muted);font-size:15.5px}
+.demo-points span{color:var(--muted);font-size:14px}
 .faq{display:flex;flex-direction:column;gap:10px;max-width:820px}
 .faq details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px 18px}
 .faq summary{cursor:pointer;font-weight:600;padding:12px 0;list-style:none;display:flex;justify-content:space-between;gap:12px}
@@ -258,10 +246,10 @@ form .f textarea{min-height:96px;font-family:var(--mono);font-size:14.5px}
 .cta-band h2{font:400 clamp(24px,3vw,34px)/1.15 var(--display);margin:0;color:var(--on-hero)}
 .cta-band p{margin:4px 0 0;color:var(--on-hero-mut)}
 .cta-band .btn{background:var(--beat);color:var(--beat-ink);padding:11px 18px}
-.foot{border-top:1px solid var(--line);padding:22px clamp(16px,5vw,64px) 36px;display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between;color:var(--muted);font-size:14.5px;max-width:1180px;margin:0 auto}
+.foot{border-top:1px solid var(--line);padding:22px clamp(16px,5vw,64px) 36px;display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between;color:var(--muted);font-size:13px;max-width:1180px;margin:0 auto}
 .foot b{font:400 18px var(--display);color:var(--ink)}
 .more:first-of-type{padding-top:clamp(120px,11vw,160px)}
-.cue{position:fixed;left:76%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:15;display:flex;flex-direction:column;align-items:center;gap:1px;background:rgba(42,27,51,.62);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(246,239,248,.2);color:var(--on-hero);border-radius:999px;padding:8px 18px 6px;font-size:14px;font-weight:500;letter-spacing:.01em;transition:opacity .35s ease,transform .35s ease}
+.cue{position:fixed;left:76%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:15;display:flex;flex-direction:column;align-items:center;gap:1px;background:rgba(42,27,51,.62);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(246,239,248,.2);color:var(--on-hero);border-radius:999px;padding:8px 18px 6px;font-size:12.5px;font-weight:500;letter-spacing:.01em;transition:opacity .35s ease,transform .35s ease}
 .cue svg{width:18px;height:18px;color:var(--beat)}
 .cue:hover{border-color:var(--beat)}
 .cue.gone{opacity:0;pointer-events:none;transform:translate(-50%,12px)}
@@ -275,53 +263,92 @@ form .f textarea{min-height:96px;font-family:var(--mono);font-size:14.5px}
   .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
   .rv.in{opacity:1;transform:none}
 }
-/* padhant notation: one row per avartan, cells grouped by vibhag with X 2 0 3 beneath; dark inside the theka panel, light in forms */
-.pad-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;padding-top:12px;border-top:1px solid rgba(255,255,255,.12)}
-.pad-head b{display:block;font-size:15px}
-.pad-head span{font-family:var(--mono);font-size:12.5px;color:var(--on-hero-mut)}
-.nota{display:flex;flex-direction:column;gap:10px;margin-top:10px}
-.nota .avt{display:flex;flex-wrap:wrap;gap:6px 12px}
-.nota .vb{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:0}
-.nota .cs{display:flex;gap:4px}
-.nota .pm{min-width:40px;min-height:34px;padding:8px 6px 6px;border-radius:8px;background:rgba(255,255,255,.07);text-align:center;font-family:var(--mono);font-size:13.5px;line-height:1.2;overflow-wrap:anywhere}
-.nota .pm.sam{box-shadow:inset 0 0 0 1px var(--beat)}
-.nota .pm.none{background:transparent;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
-.nota .pm.on{background:var(--beat);color:var(--beat-ink)}
-.nota .mk{font-family:var(--mono);font-size:11.5px;color:var(--beat);padding-left:4px;min-height:14px}
-.nota .grp{display:inline-block;padding:0 2px 3px;border-bottom:1.5px solid currentColor;border-radius:0 0 9px 9px}
-.nota .rs{font-style:normal;opacity:.55}
-.nota em{font-family:var(--body);font-style:italic}
-.nota u{text-decoration:underline wavy var(--danger);text-underline-offset:3px}
-.nota .qm{color:var(--beat)}
-.nota.light .pm{background:var(--surface2);color:var(--ink)}
-.nota.light .pm.sam{box-shadow:inset 0 0 0 1px var(--gold)}
-.nota.light .pm.none{background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
-.nota.light .mk,.nota.light .qm{color:var(--gold)}
-@media (max-width:600px){.nota .pm{min-width:30px;padding:7px 3px 5px;font-size:12.5px}.nota .avt{gap:6px 8px}}
-.nota-tools{margin-top:8px}
-.nota-sum{display:flex;flex-wrap:wrap;gap:2px 12px;font-size:14px;color:var(--muted);margin-top:12px}
-.nota-sum b{color:var(--ink)}
-.nota-sum .warn{color:var(--danger)}
-.rec-ctl{margin-top:4px}
-.rec-strip{display:block;width:100%;height:26px;margin-top:8px;background:var(--surface2);border-radius:6px}
-.rec-strip line{vector-effect:non-scaling-stroke}
-.rec-strip .g{stroke:var(--line);stroke-width:1}
-.rec-strip .o{stroke:var(--teal);stroke-width:2}
-details.asw{margin-top:10px}
-details.asw summary{cursor:pointer;font-size:14px;color:var(--on-hero-mut)}
 /* player + toast */
 .player{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));width:min(560px,calc(100% - 32px));background:var(--hero1);color:var(--on-hero);border-radius:16px;display:flex;align-items:center;gap:12px;padding:8px 10px;box-shadow:var(--shadow);z-index:30}
 @media (max-width:760px){.player{bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
 .player .cover{width:40px;border-radius:8px;flex:none}
-.player .meta{flex:1;min-width:0;font-size:14.5px}
+.player .meta{flex:1;min-width:0;font-size:13px}
 .player .meta b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.player .meta span{font-family:var(--mono);font-size:12.5px;color:var(--on-hero-mut)}
+.player .meta span{font-family:var(--mono);font-size:11px;color:var(--on-hero-mut)}
 .player button{width:36px;height:36px;border-radius:50%;border:0;background:var(--beat);color:var(--beat-ink);display:grid;place-items:center;flex:none}
 .player button svg{width:16px;height:16px}
-.toast{position:fixed;left:50%;top:calc(16px + env(safe-area-inset-top,0px));transform:translate(-50%,-20px);opacity:0;background:var(--ink);color:var(--bg);border-radius:12px;padding:10px 16px;font-size:15.5px;font-weight:500;transition:.2s;z-index:60;pointer-events:none;max-width:calc(100% - 32px)}
+.toast{position:fixed;left:50%;top:calc(16px + env(safe-area-inset-top,0px));transform:translate(-50%,-20px);opacity:0;background:var(--ink);color:var(--bg);border-radius:12px;padding:10px 16px;font-size:14px;font-weight:500;transition:.2s;z-index:60;pointer-events:none;max-width:calc(100% - 32px)}
 .toast.show{opacity:1;transform:translate(-50%,0)}
-.note{font-size:14px;color:var(--muted);margin-top:10px}
+.note{font-size:12.5px;color:var(--muted);margin-top:10px}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+
+/* tihai checker */
+.dlg.wide{width:min(960px,100%)}
+.tc{display:flex;flex-direction:column;gap:12px}
+.tc textarea{min-height:58px}
+.tc-form .tc>.f:first-child,.tc-inline .tc>.f:first-child{margin-top:0}
+.tc-reads{display:flex;flex-direction:column;gap:5px;font-size:12.5px;color:var(--muted)}
+.tc-chips{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.tc-chip{background:var(--surface2);border-radius:7px;padding:1px 8px;font-weight:600;color:var(--ink);font-size:13px}
+.tc-chip small{font-family:var(--mono);font-weight:400;color:var(--muted);margin-left:4px;font-size:10px}
+.tc-deva{font-size:14.5px;color:var(--ink)}
+.tc-out{background:radial-gradient(110% 110% at 100% 0%,var(--hero2) 0%,var(--hero1) 62%);color:var(--on-hero);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:14px}
+.tc-out p{margin:0;color:var(--on-hero-mut);font-size:13.5px}
+.tc-type{font-family:var(--mono);font-size:11px!important;letter-spacing:.08em;text-transform:uppercase;color:var(--beat)!important}
+.tc-v{font:400 clamp(24px,4vw,32px)/1.1 var(--display);margin:2px 0;display:flex;align-items:center;gap:8px;color:var(--on-hero)}
+.tc-v svg{width:24px;height:24px;flex:none}
+.tc-v.ok svg{color:#7BD7A2}.tc-v.no svg{color:#F2A07B}
+.tc-math{font-family:var(--mono);font-size:12.5px!important;color:var(--on-hero)!important}
+.tc-fix{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:6px}
+.tc-fix .btn{background:var(--beat);color:var(--beat-ink);border-color:var(--beat)}
+.tc-av-h{font-family:var(--mono);font-size:10px!important;letter-spacing:.08em;text-transform:uppercase;margin:0 0 3px!important}
+.tc-av{display:grid;gap:8px}
+@media (max-width:640px){.tc-av{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+.tc-vb{min-width:0}
+.tc-vb .mk{font-family:var(--mono);font-size:10.5px;color:var(--beat);height:13px}
+.tc-cells{display:grid;gap:3px}
+.tc-cell{position:relative;background:rgba(255,255,255,.07);border-radius:7px;padding:14px 2px 5px;text-align:center;font-size:11.5px;font-weight:600;line-height:1.2;min-height:40px;min-width:0}
+.tc-cell small{position:absolute;top:2px;left:0;right:0;font-family:var(--mono);font-size:8.5px;font-weight:400;color:var(--on-hero-mut)}
+.tc-cell.tc-sam{box-shadow:inset 0 0 0 1px rgba(232,163,61,.55)}
+.tc-cell.tc-before{background:transparent;border:1px dashed rgba(246,239,248,.16)}
+.tc-cell.tc-after{background:rgba(255,255,255,.025);opacity:.5}
+.tc-cell.tc-pause{background:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 6px,rgba(255,255,255,.1) 6px 12px);color:var(--on-hero-mut);font-weight:500}
+.tc-cell.tc-land{box-shadow:inset 0 0 0 2px var(--on-hero)}
+.tc-cell.tc-on{background:rgba(232,163,61,.35)}
+.tc-b0{color:#E8A33D}.tc-b1{color:#57C9B9}.tc-b2{color:#E58BB5}
+.tc-g{opacity:.55}.tc-lb{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:2px}
+.tc-legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--on-hero-mut)}
+.tc-legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px}
+.tc-ctrl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.tc-ctrl label{flex:1;min-width:160px;font-size:12px;color:var(--on-hero-mut);display:flex;flex-direction:column}
+.tc-ctrl input[type=range]{accent-color:var(--beat);width:100%}
+/* Bols page: the dictionary as cards, a reading of whatever is typed in the search */
+.bolgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.bol{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:7px;min-width:0;scroll-margin:90px}
+.bol.flash{box-shadow:0 0 0 2px var(--gold)}
+.bol-h{display:flex;align-items:baseline;gap:10px;min-width:0}
+.bol-n{font-family:var(--mono);font-size:11px;color:var(--muted);min-width:24px;flex:none}
+.bol-r{font:400 23px/1.1 var(--display);min-width:0;overflow-wrap:anywhere}
+.bol-d{font:400 23px/1.1 var(--display);color:var(--gold);margin-left:auto;text-align:right;flex:none;max-width:55%}
+.bol-note{margin:0;font-size:13px;color:var(--muted)}
+.bol-k{margin:0;display:flex;flex-wrap:wrap;gap:4px;align-items:center;font-size:12.5px}
+.bol-k span{color:var(--muted);margin-right:3px}
+.bol-k i,.bol-m i{font-style:normal;background:var(--surface2);border-radius:6px;padding:1px 7px;font-weight:600}
+.bol-v{margin:0;display:flex;flex-wrap:wrap;gap:2px 8px;align-items:baseline;font-size:13px;border-top:1px dashed var(--line);padding-top:7px}
+.bol-v b{font-weight:600}
+.bol-v [lang=hi]{color:var(--gold)}
+.bol-v .bol-note{flex-basis:100%;padding-left:32px}
+.bol-v.hit{background:var(--gold-soft);border-radius:8px;border-top-color:transparent;padding:6px 6px 6px 0}
+.bol-s{margin:0;font-size:12.5px;color:var(--muted)}
+.lnk{background:none;border:0;padding:0;color:var(--gold);text-decoration:underline;text-underline-offset:2px;font:inherit}
+.bol .pill{align-self:flex-start}
+.bol-read{margin-top:12px;max-width:560px;display:flex;flex-direction:column;gap:8px}
+.bol-read p{margin:0}
+.bol-mats{display:flex;flex-wrap:wrap;gap:6px}
+.bol-m{display:inline-flex;flex-wrap:wrap;gap:2px;border:1px solid var(--line);border-radius:9px;padding:4px}
+.bol-m i.unk{background:transparent;color:var(--danger);box-shadow:inset 0 0 0 1px var(--danger)}
+.bol-warn{color:var(--danger)}
+.bol-read [lang=hi]{font-family:var(--display);color:var(--gold);font-size:16px}
+.tc-help{margin:0;padding-left:18px;color:var(--muted);font-size:13px}
+.tc-help li{margin:3px 0}
+.tc-help code{font-family:var(--mono);font-size:12px;background:var(--surface2);border-radius:4px;padding:0 4px;color:var(--ink)}
+.tc-inline{margin-top:6px;border:1px solid var(--line);border-radius:14px;padding:12px}
+.tc-row{margin-top:-4px}
 </style>
 </head>
 <body>
@@ -334,6 +361,395 @@ details.asw summary{cursor:pointer;font-size:14px;color:var(--on-hero-mut)}
 <div id="modal" hidden></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<script>
+/* NOTATION:BEGIN */
+/* Layakari notation reader.
+   Reads bol notation in the style explained on DigiTabla.com's notation guide:
+   - each word is one matra; bars and dandas (| । ॥) mark vibhags and don't change the timing
+   - bols inside a word share the matra equally: "dhadha" is two bols, "tirakita" is four,
+     and a hyphen inside a word just joins bols: "Dha-ge" is the same as "Dhage"
+   - a dash (– — ऽ, or a hyphen that isn't between two letters) is a gap that takes one slot, like a bol
+   - text in brackets, like "(×3)", is a note and is skipped
+   - a comma splits the matra into halves: "dha,dheradhera"; a trailing comma ends the matra halfway
+   - Roman (with or without diacritics) and Devanagari both work
+   Every bol it knows comes from the Layakari bol dictionary below.
+   Also does the tihai arithmetic: phrase × 3 (or × 9) plus pauses, and where it lands. */
+var Notation=(function(){
+"use strict";
+
+/* ---------- the Layakari bol dictionary ----------
+   The bols Kathak compositions are built from, in the order the Layakari team gave them:
+   core bols 1–60, then compound bols 61–100. Each row is [number, Roman, Devanagari, note],
+   written exactly as given. What each one is made of is worked out by the reader from the Roman. */
+const DICT_ROWS=[
+ [1,"Dha","धा","Compound, both drums"],
+ [2,"Dhaa","धा","Long-vowel spelling of Dha"],
+ [3,"Dhin","धिन","Compound, both drums"],
+ [4,"Dheen","धीन","Variant vowel spelling; usage varies"],
+ [5,"Dhi","धि","Short form used in compositions"],
+ [6,"Dhee","धी","Long-vowel variant"],
+ [7,"Din","दिन","Resonant stroke; context-dependent technique"],
+ [8,"Dhe","धे","Stroke syllable; technique varies"],
+ [9,"Dhey","धे","Alternate transliteration"],
+ [10,"Dhet","धेट","Closed or accented compound vocabulary"],
+ [11,"Dha-ge","धागे","Compound sequence"],
+ [12,"Dhin-na","धिन्ना","Compound or phrase form; context-dependent"],
+ [13,"Na","ना","Resonant treble-drum stroke"],
+ [14,"Naa","ना","Long-vowel spelling of Na"],
+ [15,"Ta","ता","Closed/damped treble stroke in common systems"],
+ [16,"Taa","ता","Long-vowel spelling of Ta"],
+ [17,"Tin","तिन","Resonant treble stroke"],
+ [18,"Teen","तीन","Alternate transliteration in some sources"],
+ [19,"Tun","तुन","Resonant treble-drum stroke"],
+ [20,"Tu","तु","Short stroke syllable"],
+ [21,"Ti","ति","Short stroke syllable"],
+ [22,"Tee","ती","Long-vowel variant"],
+ [23,"Te","ते","Stroke syllable"],
+ [24,"Tey","ते","Alternate transliteration"],
+ [25,"Tha","था","Stroke syllable; interpretation varies"],
+ [26,"Thaa","था","Long-vowel variant"],
+ [27,"Thun","थुन","Stroke syllable"],
+ [28,"Thun-na","थुन्ना","Compound form"],
+ [29,"Da","दा","Stroke syllable; technique depends on context"],
+ [30,"Daa","दा","Long-vowel variant"],
+ [31,"Ra","रा","Stroke syllable, especially in rapid phrases"],
+ [32,"Re","रे","Stroke syllable"],
+ [33,"Ri","रि","Variant used in recitation systems"],
+ [34,"Di","दि","Stroke syllable"],
+ [35,"De","दे","Stroke syllable"],
+ [36,"Den","देन","Stroke syllable"],
+ [37,"Ga","गा","Bass-drum-related syllable"],
+ [38,"Ge","गे","Open bass-drum stroke"],
+ [39,"Gey","गे","Alternate transliteration"],
+ [40,"Ghe","घे","Open bass-drum stroke"],
+ [41,"Ghey","घे","Alternate transliteration"],
+ [42,"Ghi","घि","Bass-related syllable"],
+ [43,"Ghin","घिन","Compound or bass-related vocabulary"],
+ [44,"Ghu","घु","Variant in some teaching vocabularies"],
+ [45,"Gu","गु","Variant in some teaching vocabularies"],
+ [46,"Ka","क","Closed bass-drum-related stroke"],
+ [47,"Ke","के","Closed bass-drum-related stroke"],
+ [48,"Ki","कि","Stroke syllable"],
+ [49,"Ku","कु","Stroke syllable"],
+ [50,"Kat","कट","Closed, accented stroke"],
+ [51,"Katt","कट्ट","Alternate emphatic spelling"],
+ [52,"Tak","तक","Closed, accented stroke"],
+ [53,"Taka","तक","Compound or recited sequence"],
+ [54,"Kta","क्त","Compressed syllable in some transcriptions"],
+ [55,"Kda","क्द","Research transcription for a stroke category"],
+ [56,"Tra","त्र","Rapid or compound stroke vocabulary"],
+ [57,"Tta","ट्ट / त्त","Transcription-dependent"],
+ [58,"Tta-ka","ट्टक","Compound recitation form"],
+ [59,"Thak","थक","Stroke syllable in some vocabularies"],
+ [60,"Thet","थेत","Stroke syllable in some vocabularies"],
+ [61,"Dhage","धागे","Compound"],
+ [62,"Dhage-na","धागेना","Compound phrase"],
+ [63,"Dhage-tete","धागेतेते","Compound phrase"],
+ [64,"Dhage-tirakita","धागेतिरकिट","Compound phrase"],
+ [65,"Dhere","धीरे","Compound / rolling figure"],
+ [66,"Dhere-dhere","धीरे धीरे","Repeated figure"],
+ [67,"Dhir-dhir","धिर धिर","Repeated figure"],
+ [68,"Dhi-ra","धिर","Two-part recitation; spelling varies"],
+ [69,"Dhi-na","धिना","Compound phrase"],
+ [70,"Dhin-na","धिन्ना","Compound phrase"],
+ [71,"Dhin-gi-na","धिन्गिना","Compound phrase"],
+ [72,"Dhin-ta","धिन्ता","Compound phrase"],
+ [73,"Dha-tirakita","धातिरकिट","Compound phrase"],
+ [74,"Dha-ge-tirakita","धागेतिरकिट","Compound phrase"],
+ [75,"Ti-ra-ki-ta","तिरकिट","Common rapid compound bol"],
+ [76,"Tirakita","तिरकिट","Commonly written as one word"],
+ [77,"Terekete","तेरेकिटे","Rapid compound; spelling varies"],
+ [78,"Tere-kete","तेरे किटे","Segmented spelling of the preceding form"],
+ [79,"Tete","तेते","Compound"],
+ [80,"Tita","तिटा / तिता","Compound; notation varies"],
+ [81,"Titakita","तिटकिट","Compound"],
+ [82,"Titkit","तिट्किट","Alternate spelling / recitation"],
+ [83,"Kit-taka","किट्टक","Compound"],
+ [84,"Kit-ta","किट्ट","Compound"],
+ [85,"Kat-ta","कट्ट","Compound"],
+ [86,"Tak-ta","तकता","Compound phrase"],
+ [87,"Takita","तकिट","Compound"],
+ [88,"Taka-taka","तक तक","Repeated figure"],
+ [89,"Gadi","गदि","Compound vocabulary"],
+ [90,"Ghene","घेने","Compound vocabulary"],
+ [91,"Gadi-ghene","गदि घेने","Compound phrase"],
+ [92,"Gadi-gene","गदि गेने","Variant spelling"],
+ [93,"Kri","क्रि","Rapid stroke syllable"],
+ [94,"Kre","क्रे","Rapid stroke syllable"],
+ [95,"Kran","क्रान","Compound vocabulary in some traditions"],
+ [96,"Dhum","धुम","Bass-related syllable"],
+ [97,"Dhuma","धुम","Compound or phrase form"],
+ [98,"Dhage-dhina","धागेधिना","Compound phrase"],
+ [99,"Dha-dhin","धा धिन","Two-bol sequence"],
+ [100,"Tin-na","तिन्ना","Compound phrase"]
+];
+/* rows that are another spelling of an earlier row, as their notes say */
+const VARIANT_OF={2:1,4:3,6:5,9:8,14:13,16:15,18:17,22:21,24:23,26:25,30:29,39:38,41:40,51:50,76:75,78:77,82:81,92:91};
+
+/* single strokes the reader knows, by plain Roman spelling, with the Devanagari used when writing notation out */
+const LEX={
+  /* core bols */
+  dha:"धा",dhin:"धिन",dhi:"धि",din:"दिन",dhe:"धे",dhet:"धेट",na:"ना",ta:"ता",tin:"तिन",tun:"तुन",tu:"तु",ti:"ति",te:"ते",
+  tha:"था",thun:"थुन",da:"दा",ra:"रा",re:"रे",ri:"रि",di:"दि",de:"दे",den:"देन",ga:"गा",ge:"गे",ghe:"घे",ghi:"घि",ghin:"घिन",
+  ghu:"घु",gu:"गु",ka:"क",ke:"के",ki:"कि",ku:"कु",kat:"कट",tak:"तक्",kta:"क्त",kda:"क्द",tra:"त्र",tta:"ट्ट",thak:"थक",thet:"थेत",
+  /* single strokes from the compound list */
+  kri:"क्रि",kre:"क्रे",kran:"क्रान",dhum:"धुम",
+  /* parts of compounds that aren't rows of their own (Dhin-gi-na, Ghene) */
+  gi:"गि",ne:"ने",
+  /* Kathak syllables and a few others the reader already knew */
+  thei:"थेई",tat:"तत्",aa:"आ",tig:"तिग्",dig:"दिग्",tan:"तां",kra:"क्र",dhun:"धुन",ni:"नि",gha:"घ"};
+/* (Tak is written तक in the dictionary; notation is written out as तक् so it can't be read back as Ta-ka) */
+/* other spellings of one stroke */
+const SPELL={dhey:"dhe",tey:"te",gey:"ge",ghey:"ghe",katt:"kat",dhuma:"dhum",thai:"thei",thay:"thei",they:"thei"};
+/* recited short forms that stand for two strokes: Dhir = Dhi-ra (row 68), Titkit = Titakita (row 82) */
+const EXPAND={dhir:["dhi","ra"],tir:["ti","ra"],kit:["ki","ta"],tit:["ti","ta"]};
+/* written only in some transcriptions, so a split that avoids them wins a tie */
+const RARE=new Set(["tta","kta","kda"]);
+const KATHAK=new Set(["thei","tat","aa","tig","dig","thun","tha"]);
+const ALIAS={tirkit:"tirakita",tirakit:"tirakita",tirkita:"tirakita",tigdha:"tigda"};
+const PIECES={};
+Object.keys(LEX).forEach(k=>PIECES[k]=[k]);Object.keys(SPELL).forEach(k=>PIECES[k]=[SPELL[k]]);Object.keys(EXPAND).forEach(k=>PIECES[k]=EXPAND[k]);
+const KEYS=Object.keys(PIECES).sort((a,b)=>b.length-a.length);
+const GAPCH="-–—ऽ_";
+const isGap=c=>c.length===1&&GAPCH.includes(c);
+
+function normRoman(w){
+  let s=String(w).normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z]/g,"");
+  if(ALIAS[s])s=ALIAS[s];
+  return s.replace(/([^aeiou])aa/g,"$1a").replace(/([^aeiou])ee/g,"$1i").replace(/([^aeiou])oo/g,"$1u");
+}
+/* split a run of letters into known strokes, fewest pieces first; a vowel-only syllable (Aa) may only start a word */
+function segment(s){
+  if(!s)return [];
+  if(s==="a"||s==="aa")return ["aa"];
+  const n=s.length,best=new Array(n+1).fill(null);best[0]={c:0,o:[]};
+  for(let i=0;i<n;i++){if(!best[i])continue;
+    for(const k of KEYS){if(!s.startsWith(k,i))continue;if(i>0&&/^[aeiou]/.test(k))continue;
+      const j=i+k.length,c=best[i].c+10+(RARE.has(k)?1:0);
+      if(!best[j]||c<best[j].c)best[j]={c,o:best[i].o.concat(PIECES[k])};}}
+  return best[n]?best[n].o:null;
+}
+
+/* Devanagari: split into syllables and spell them in plain Roman */
+const CONS={"क":"k","ख":"kh","ग":"g","घ":"gh","ङ":"n","च":"ch","छ":"chh","ज":"j","झ":"jh","ञ":"n","ट":"t","ठ":"th","ड":"d","ढ":"dh","ण":"n",
+  "त":"t","थ":"th","द":"d","ध":"dh","न":"n","प":"p","फ":"ph","ब":"b","भ":"bh","म":"m","य":"y","र":"r","ल":"l","व":"v","श":"sh","ष":"sh","स":"s","ह":"h","ड़":"r","ढ़":"rh"};
+const VS={"ा":"a","ि":"i","ी":"i","ु":"u","ू":"u","ृ":"ri","े":"e","ै":"ai","ो":"o","ौ":"au","ॅ":"e","ॉ":"o"};
+const IV={"अ":"a","आ":"aa","इ":"i","ई":"i","उ":"u","ऊ":"u","ए":"e","ऐ":"ai","ओ":"o","औ":"au"};
+function devSyllables(w,kathak){
+  const ch=Array.from(String(w).normalize("NFC")),out=[];let i=0,lastInherent=false;
+  while(i<ch.length){const c=ch[i];
+    if(IV[c]){let v=IV[c];i++;if(ch[i]==="ं"||ch[i]==="ँ"){v+="n";i++;}
+      if(out.length&&v==="i"&&/e$/.test(out[out.length-1]))out[out.length-1]+="i";else out.push(v==="a"?"aa":v);lastInherent=false;continue;}
+    if(CONS[c]){const cl=[];
+      const readC=()=>{let r=CONS[ch[i]];i++;if(ch[i]==="़"){r=r==="d"?"r":r==="dh"?"rh":r;i++;}return r;};
+      cl.push(readC());
+      while(ch[i]==="्"&&CONS[ch[i+1]]){i++;cl.push(readC());}
+      let dead=false;if(ch[i]==="्"){dead=true;i++;}
+      let v="a",VS_EXPLICIT_A=false;if(VS[ch[i]]){v=VS[ch[i]];VS_EXPLICIT_A=true;i++;}
+      let nas="";if(ch[i]==="ं"||ch[i]==="ँ"){nas="n";i++;}if(ch[i]==="ः")i++;
+      if(dead){const coda=cl.join("");if(out.length)out[out.length-1]+=coda;else out.push(coda);lastInherent=false;continue;}
+      /* a consonant before another (except r, y, v, l) closes the previous syllable: तिग्दा = tig + da */
+      while(cl.length>1&&!["r","y","v","l"].includes(cl[1])&&out.length)out[out.length-1]+=cl.shift();
+      out.push(cl.join("")+v+nas);lastInherent=v==="a"&&!nas&&!VS_EXPLICIT_A;continue;}
+    i++;}
+  /* a word-final consonant with no vowel sign is usually silent in Hindi: दिग = dig, थुन = thun.
+     Tabla notation keeps every letter as a stroke (कत = ka ta), so only Kathak-only syllables merge,
+     unless the composition is Kathak (then तत = tat as well). Words spelled exactly as in the
+     dictionary (धिन, कट, तुन…) are read before this, in readPart. */
+  if(out.length===2&&lastInherent){const fin=out[1],cons=fin.slice(0,-1),merged=out[0]+cons;
+    const always=["dig","tig","thun","dhun"],kathakOnly=["tat","kat","tak","dhet","tun"];
+    if(cons&&LEX[merged]&&(always.includes(merged)||(kathak&&kathakOnly.includes(merged))))return [merged];}
+  return out;
+}
+
+/* Devanagari words spelled exactly as in the dictionary, and the strokes they stand for (filled in below) */
+const DEVA_EXACT={},AMBIG={};
+
+/* one run of letters with no gaps -> slots */
+function readPart(part,kathak){
+  if(/[ऀ-ॿ]/.test(part)){
+    const ex=DEVA_EXACT[part.normalize("NFC")];
+    if(ex)return ex.map(b=>({bol:b,src:b}));
+    const out=[];
+    for(const sy of devSyllables(part,kathak)){
+      if(EXPAND[sy]){EXPAND[sy].forEach(b=>out.push({bol:b,src:b}));continue;}
+      const b=SPELL[sy]||sy;out.push({bol:b,src:b,unknown:!LEX[b]});}
+    return out;}
+  let segs=segment(normRoman(part));
+  if(!segs){const caps=part.split(/(?=[A-Z])/);
+    if(caps.length>1){const all=[];let ok=true;for(const c of caps){const s=segment(normRoman(c));if(!s){ok=false;break;}all.push(...s);}if(ok)segs=all;}}
+  if(segs&&segs.length)return segs.map(s=>({bol:s,src:s}));
+  const s=normRoman(part)||part;return [{bol:s,src:part,unknown:true}];
+}
+/* one written word (no spaces) -> slots. A hyphen between letters joins the pieces of one matra;
+   each piece is read on its own first (Tak-ta = Tak + Ta, धा-धिन = Dha + Dhin) */
+const JOIN="\u0001";
+function tokens(word,kathak){
+  const out=[];
+  if(word==="S")return [{bol:null,src:"S"}];
+  const marked=String(word).replace(/([A-Za-zÀ-ɏḀ-ỿ̀-ͯऀ-ॿ])-(?=[A-Za-zÀ-ɏḀ-ỿऀ-ॿ])/g,"$1"+JOIN);
+  for(const part of marked.split(/([-–—ऽ_])/)){if(!part)continue;
+    if(isGap(part)){out.push({bol:null,src:part});continue;}
+    const pieces=part.split(JOIN).filter(Boolean);if(!pieces.length)continue;
+    /* a piece that isn't in the dictionary stays unknown rather than being read across the hyphen (Dhit-ta is not Dhi-tta) */
+    pieces.forEach(p=>out.push(...readPart(p,kathak)));
+  }
+  return out;
+}
+
+/* full notation -> {matras:[{slots:[{bol,start,dur,half}],cutHalf,src}], unknown:[]} */
+const MARK=/^(x|o|0|[1-9]|1[0-6]|[x×]\d+|\d+[x×])$/i;
+function parse(text,_kathak){
+  if(_kathak===undefined){const first=parse(text,false);
+    if(/[\u0900-\u097F]/.test(String(text||""))&&isKathak(first))return parse(text,true);return first;}
+  /* notes in brackets are skipped; bars and dandas only mark vibhags */
+  const src=String(text||"").replace(/\([^)]*\)/g," ").replace(/[|।॥]/g," ").replace(/\s*,\s*/g,",");
+  const groups=src.split(/\s+/);
+  const matras=[],unknown=new Set();
+  for(const g of groups){
+    const words=g.trim().split(/\s+/).filter(w=>w&&!MARK.test(w));
+    if(!words.length)continue;
+    const joined=words.join(" "),halves=joined.split(",");
+    const n=halves.length,cutHalf=n===2&&!halves[1].trim(),slots=[];
+    halves.forEach((h,hi)=>{
+      let ts=[];h.trim().split(/\s+/).filter(Boolean).forEach(w=>ts.push(...tokens(w,_kathak)));
+      if(!ts.length)ts=[{bol:null,src:""}];
+      const d=1/n/ts.length;
+      ts.forEach((t,k)=>{if(t.unknown)unknown.add(t.src);slots.push({bol:t.bol,start:hi/n+k*d,dur:d,half:hi});});
+    });
+    matras.push({slots,cutHalf,src:joined});
+  }
+  return {matras,unknown:[...unknown]};
+}
+
+/* display helpers */
+const cap=s=>s?s.charAt(0).toUpperCase()+s.slice(1):s;
+function bolName(b){return b==null?"–":cap(b);}
+function flatBols(p){const o=[];p.matras.forEach(m=>m.slots.forEach(s=>{if(s.bol!=null)o.push(s.bol);}));return o;}
+function isKathak(p){return flatBols(p).some(b=>KATHAK.has(b));}
+function groupsOf(m){const g=[];m.slots.forEach(s=>{(g[s.half]=g[s.half]||[]).push(s);});const out=g.filter(Boolean);return m.cutHalf?out.slice(0,1):out;}
+const tailC=m=>m.cutHalf?",":"";
+function matraRoman(m){return groupsOf(m).map(g=>g.map(s=>s.bol==null?"–":s.bol).join("")).join(",")+tailC(m);}
+function matraLabel(m){return groupsOf(m).map(g=>g.map(s=>bolName(s.bol)).join("")).join(",")+tailC(m);}
+/* a bol on its own in a matra is written as in the dictionary. Inside a fast group the usual short
+   forms are used (तिरकिट, गदिगन, किटतक), and a bol ending in a consonant is closed so the group reads back
+   the same: धिं at the end, धिन्ना before Na, कट् and तक् with a halant */
+function devaOf(b,prev,pos,count,next){
+  if(b==null)return "ऽ";
+  const base=LEX[b]||b;
+  if(count<2)return base;
+  if(b==="te"&&prev==="te")return "टे";
+  if(b==="ta"&&prev==="ki")return "ट";
+  if(b==="ra"&&pos>0)return "र";
+  if(b==="ga")return "ग";
+  if(count>=3&&pos>0&&(b==="ta"||b==="na"))return b==="ta"?"त":"न";
+  if(LEX[b]&&/[^aeiou]$/.test(b)&&!/[ंँ]$/.test(base)){
+    const stem=base.replace(/्$/,"");
+    if(/n$/.test(b)&&stem.endsWith("न"))return next&&/^n/.test(next)?stem+"्":stem.slice(0,-1)+"ं";
+    return stem+"्";}
+  return base;
+}
+function matraDeva(m){return groupsOf(m).map(g=>{const cnt=g.filter(x=>x.bol!=null).length;
+  return g.map((s,i)=>devaOf(s.bol,i?g[i-1].bol:null,i,cnt,i+1<g.length?g[i+1].bol:null)).join("");}).join(",")+tailC(m);}
+function toRoman(p){return p.matras.map(matraRoman).join(" ");}
+function toDeva(p){return p.matras.map(matraDeva).join(" ");}
+
+/* ---------- tihai arithmetic ---------- */
+const TAALS={
+  teentaal:{name:"Teentaal",n:16,vib:[4,4,4,4],marks:["X","2","0","3"]},
+  jhaptaal:{name:"Jhaptaal",n:10,vib:[2,3,2,3],marks:["X","2","0","3"]},
+  rupak:{name:"Rupak",n:7,vib:[3,2,2],marks:["0","1","2"]},
+  ektaal:{name:"Ektaal",n:12,vib:[2,2,2,2,2,2],marks:["X","0","2","0","3","4"]},
+  dhamar:{name:"Dhamar",n:14,vib:[5,2,3,4],marks:["X","2","0","3"]}
+};
+const EPS=1e-6,rnd=x=>Math.round(x*1e6)/1e6;
+const mod=(x,n)=>{let r=rnd(((x%n)+n)%n);return Math.abs(r-n)<EPS?0:r;};
+
+/* lay a parsed phrase out in time. speed 0: each matra is one matra long; speed k: every bol and gap is 1/k matra */
+function timeline(p,speed){
+  const ev=[];let len=0;
+  if(!speed){p.matras.forEach((m,i)=>m.slots.forEach(s=>ev.push({bol:s.bol,t:rnd(i+s.start),dur:s.dur})));len=p.matras.length;
+    const last=p.matras[p.matras.length-1];
+    if(last&&last.cutHalf){len-=.5;while(ev.length&&ev[ev.length-1].t>=len-EPS)ev.pop();}}
+  else{let c=0;p.matras.forEach(m=>m.slots.forEach(s=>{if(m.cutHalf&&s.half===1&&s.bol==null)return;ev.push({bol:s.bol,t:rnd(c/speed),dur:1/speed});c++;}));len=rnd(c/speed);}
+  return {ev,len};
+}
+/* the same bols said three times, evenly spaced, ending on the phrase's last bol */
+function innerTihai(line){
+  const ev=line.ev.filter(e=>e.bol!=null),n=ev.length;
+  for(let p=Math.floor(n/3);p>=2;p--){const s=n-3*p;let ok=true;
+    for(let j=0;j<p&&ok;j++){if(ev[s+j].bol!==ev[s+p+j].bol||ev[s+j].bol!==ev[s+2*p+j].bol)ok=false;
+      else if(Math.abs((ev[s+p+j].t-ev[s+p].t)-(ev[s+j].t-ev[s].t))>EPS||Math.abs((ev[s+2*p+j].t-ev[s+2*p].t)-(ev[s+j].t-ev[s].t))>EPS)ok=false;}
+    if(ok&&Math.abs((ev[s+p].t-ev[s].t)-(ev[s+2*p].t-ev[s+p].t))<EPS)return {p,start:ev[s].t,span:rnd(ev[s+p].t-ev[s].t),fromStart:s===0};}
+  return null;
+}
+/* o: {line, gap, reps (3 or 9), start (matras after sam, 0-based), n (matras in the taal)} */
+function tihai(o){
+  const P=o.line.len,bols=o.line.ev.filter(e=>e.bol!=null);
+  if(!bols.length||P<=0)return {error:"Type a phrase with at least one bol."};
+  const reps=o.reps===9?9:3,gap=Math.max(0,+o.gap||0),N=o.n,start=+o.start||0;
+  const offs=[];for(let r=0;r<reps;r++)offs.push(rnd(reps===9?r*P+Math.floor(r/3)*gap:r*(P+gap)));
+  const lastOn=bols[bols.length-1].t,landing=rnd(offs[reps-1]+lastOn);
+  const length=rnd(reps===9?9*P+2*gap:3*P+2*gap);
+  const end=rnd(start+landing),cycles=Math.floor((end+EPS)/N),landPos=mod(end,N);
+  const inner=innerTihai(o.line);
+  let type=reps===9?"nauhakka":inner?(inner.fromStart?"nauhakka":"chakradar"):gap>0?"damdar":"bedam";
+  return {P,gap,reps,offs,lastOn,tail:rnd(P-lastOn),landing,length,start,end,cycles,landPos,onSam:landPos===0,
+    startForSam:mod(-landing,N),startOnSam:mod(start,N)===0,type,inner};
+}
+/* "matra 9", "matra 9, halfway through" */
+function posText(pos){
+  const m=Math.floor(pos+EPS),f=rnd(pos-m);
+  const names={0.25:"a quarter of the way in",0.5:"halfway through",0.75:"three quarters of the way in"};
+  let ft="";if(f>EPS){if(names[f])ft=names[f];else if(Math.abs(f-1/3)<1e-4)ft="a third of the way in";else if(Math.abs(f-2/3)<1e-4)ft="two thirds of the way in";
+    else{for(let d=2;d<=12;d++){const k=Math.round(f*d);if(Math.abs(k/d-f)<1e-4){ft=k+"/"+d+" of the way in";break;}}if(!ft)ft=Math.round(f*100)+"% of the way in";}}
+  return {matra:m+1,frac:f,text:"matra "+(m+1)+(ft?", "+ft:"")};
+}
+const fmtN=x=>{x=rnd(x);if(Number.isInteger(x))return String(x);const w=Math.floor(x),f=rnd(x-w);const fr={0.25:"¼",0.5:"½",0.75:"¾"}[f];if(fr)return (w?w:"")+fr;return String(+x.toFixed(2));};
+
+/* ---------- the dictionary, as the reader understands it ---------- */
+const keyOf=s=>String(s||"").normalize("NFC").toLowerCase().replace(/[\s\-–—_.,|।॥/]/g,"");
+const romanKey=s=>normRoman(String(s||"").replace(/[-–—]/g,""));
+/* the same letters, ignoring case, accents, spaces and hyphens */
+const plainKey=s=>keyOf(String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"")).normalize("NFC");
+const DICT=DICT_ROWS.map(([n,roman,deva,note])=>{
+  const p=parse(roman,false);
+  return {n,roman,deva,devas:deva.split("/").map(s=>s.trim()).filter(Boolean),note,group:n<=60?"core":"compound",
+    of:VARIANT_OF[n]||null,bols:flatBols(p),matras:p.matras.length,unknown:p.unknown};});
+const BY_N={};DICT.forEach(e=>BY_N[e.n]=e);
+DICT.forEach(e=>{const main=e.of?BY_N[e.of]:e,t=main.note+" "+e.note;
+  e.drum=/both drums/i.test(t)?"both":/treble/i.test(t)?"treble":/bass/i.test(t)?"bass":null;
+  e.variants=DICT.filter(v=>v.of===e.n).map(v=>v.n);});
+DICT.forEach(e=>{const k=e.bols.join(" ");e.same=DICT.filter(o=>o!==e&&o.bols.join(" ")===k&&o.of!==e.n&&e.of!==o.n&&!(e.of&&e.of===o.of)).map(o=>o.n);});
+/* Devanagari spellings that stand for one reading; a spelling given for two different readings is left to the usual rules */
+(function(){const seen={};
+  DICT.forEach(e=>e.devas.forEach(d=>{if(/\s/.test(d))return;d=d.normalize("NFC");const k=e.bols.join(" ");
+    (seen[d]=seen[d]||{});(seen[d][k]=seen[d][k]||[]).push(e.n);}));
+  for(const d in seen){const ks=Object.keys(seen[d]);
+    if(ks.length===1)DEVA_EXACT[d]=ks[0].split(" ");else AMBIG[d]=ks.map(k=>({bols:k.split(" "),rows:seen[d][k]}));}})();
+
+/* what someone typed: how it reads, and which dictionary rows it is */
+function lookup(q){
+  const t=String(q||"").trim();if(!t)return null;
+  const p=parse(t),bols=flatBols(p),k=plainKey(t);
+  const spelled=DICT.filter(e=>plainKey(e.roman)===k||e.devas.some(d=>plainKey(d)===k));
+  const same=bols.length?DICT.filter(e=>e.bols.join(" ")===bols.join(" ")&&!spelled.includes(e)):[];
+  return {parsed:p,bols,matras:p.matras.length,spelled,same,unknown:p.unknown,ambiguous:AMBIG[t.normalize("NFC")]||null};
+}
+/* rows whose name, Devanagari or note contain the search */
+function search(q){
+  const t=String(q||"").trim();if(!t)return DICT.slice();
+  const k=keyOf(t),rk=/[ऀ-ॿ]/.test(t)?"":romanKey(t),lo=t.toLowerCase();
+  return DICT.filter(e=>(rk&&romanKey(e.roman).includes(rk))||e.devas.some(d=>keyOf(d).includes(k))||e.note.toLowerCase().includes(lo)||String(e.n)===t);
+}
+
+return {LEX,KATHAK,TAALS,DICT,AMBIG,parse,tokens,segment,devSyllables,normRoman,bolName,flatBols,isKathak,matraRoman,matraLabel,matraDeva,toRoman,toDeva,
+  lookup,search,timeline,innerTihai,tihai,posText,fmtN,mod};
+})();
+if(typeof module!=="undefined")module.exports=Notation;
+
+/* NOTATION:END */
+</script>
 <script>
 (function(){
 "use strict";
@@ -381,6 +797,7 @@ const I={
  library:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4v16M9 4v16M14 5l4 15"/></svg>',
  academy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11.5V16c0 1.5 2.5 3 5 3s5-1.5 5-3v-4.5"/></svg>',
  studio:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V9M9 19V5M14 19v-8M19 19V7"/></svg>',
+ bols:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8.5" cy="13.5" r="5.5"/><circle cx="8.5" cy="13.5" r="1.7" fill="currentColor"/><circle cx="18" cy="10.5" r="3.8"/><circle cx="18" cy="10.5" r="1.2" fill="currentColor"/></svg>',
  profile:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
  play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
  pause:'<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>',
@@ -389,11 +806,11 @@ const I={
  plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>',
  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12.5l4.5 4.5L19 7"/></svg>'
 };
-const NAV=[["discover","Discover"],["library","Library"],["academy","Academy"],["studio","Studio"],["profile","Profile"]];
+const NAV=[["discover","Discover"],["library","Library"],["bols","Bols"],["academy","Academy"],["studio","Studio"],["profile","Profile"]];
 
 /* ---------------- state ---------------- */
-const S={view:"discover",gate:"loading",uid:null,db:null,user:null,profiles:{},ledgers:{},enrolls:{},loaded:{p:false,l:false,e:false},
-  q:"",taal:"all",selLvl:null,pvLvl:"",playing:null,pmode:"theka",beat:-1,pbeat:-1,pbol:"",bpm:{},modal:null,confirm:null,readOnly:false,avatar:"",authMode:"up",authMsg:"",authBusy:false};
+const S={view:"discover",bq:"",bolf:"all",gate:"loading",uid:null,db:null,user:null,profiles:{},ledgers:{},enrolls:{},loaded:{p:false,l:false,e:false},
+  q:"",taal:"all",selLvl:null,pvLvl:"",playing:null,beat:-1,bpm:{},modal:null,confirm:null,readOnly:false,avatar:"",authMode:"up",authMsg:"",authBusy:false};
 
 /* ---------------- helpers ---------------- */
 const $=s=>document.querySelector(s);
@@ -433,225 +850,6 @@ function rank(key){ // my licence rank for a composition
   let r=0;for(const it of myItems()){if(it.key!==key)continue;if(it.kind==="choreo")r=Math.max(r,2);else r=Math.max(r,(KIND[it.kind]||{}).r||0);}return r;
 }
 function academyAccess(key){for(const m of memberships()){if(m.status==="active"&&levelPieces(m.a,m.lvl).includes(key)){const l=(m.a.levels||[]).find(x=>x.id===m.lvl);return `${m.a.name} · ${l?l.name:""}`;}}return "";}
-/* Passing a level: the guru records it in academy.passed[student][level] = {at, name, pieces}, where pieces is
-   everything released up to that level. The student keeps those pieces even after leaving the academy. */
-function myEnroll(){return S.enrolls[S.uid]||{};}
-function passesFor(a,sid){return ((a&&a.passed)||{})[sid]||{};}
-function keptMap(){ // pieces I keep: my own saved copy, plus any pass a guru has recorded that isn't saved on my side yet
-  const out=Object.assign({},myEnroll().kept||{});
-  for(const a of academies())for(const p of Object.values(passesFor(a,S.uid)))for(const k of (p.pieces||[]))if(!out[k])out[k]={g:a.guru,a:a.name,l:p.name,at:p.at};
-  return out;
-}
-function keptInfo(key){return keptMap()[key]||null;}
-function canPractice(key){const c=comp(key);return !!c&&c.owner!==S.uid&&!!(rank(key)>0||academyAccess(key)||keptInfo(key));}
-/* Practice log: enroll.practice[key] = {s: seconds, days: distinct days, day: last day, last: timestamp} */
-const dayKey=t=>{const d=new Date(t);return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();};
-function pracOf(uid,key){return ((S.enrolls[uid]||{}).practice||{})[key]||null;}
-function pracSum(uid,keys){let s=0,last=0;for(const k of keys){const p=pracOf(uid,k);if(p){s+=p.s||0;last=Math.max(last,p.last||0);}}return {s,last};}
-function dur(s){s=Math.round(+s||0);if(s<60)return "under a minute";const m=Math.round(s/60);if(m<60)return m+" min";const h=Math.floor(m/60),r=m%60;return h+" h"+(r?" "+r+" min":"");}
-function pracText(p){return p&&p.s?`Practised ${dur(p.s)}${p.days>1?` over ${p.days} days`:""} · last ${date(p.last)}`:"Not practised yet";}
-function pracLine(uid,key,pre){const p=pracOf(uid,key);return `<span class="prog${p&&p.s?"":" none"}">${pre?esc(pre)+" · ":""}${esc(pracText(p))}</span>`;}
-function hasFull(key){const c=comp(key);return !!c&&(c.owner===S.uid||rank(key)>0||!!academyAccess(key)||!!keptInfo(key));}
-const firstLine=t=>String(t||"").split(/\r?\n/).find(l=>l.trim())||"";
-
-/* ---------------- notation (padhant) ----------------
-   Standard written format: one matra per space, bols in the same matra joined by hyphens (Dha-ge), "–", S or ऽ for a held
-   matra, "|" optional (vibhag bars are worked out from the taal), "(×3)" at the end of a line repeats it. A line starting
-   with #, wrapped in brackets, or containing ":" is a note. Matras are counted from the composition's start matra (1 = sam).
-   Bol vocabulary: a built-in copy, merged with the Supabase bols / bol_aliases / bol_components tables when readable.
-   Rows: [canonical, category t=tabla/pakhawaj n=natwari p=parmelu, Devanagari, aliases, component bols] */
-const BOL_BASE=[
- ["Dha","t","धा",["dhaa"]],["Dhi","t","धि",["dhee"]],["Dhin","t","धिं",["dhinn"]],["Dhit","t","धित्",[]],["Dhum","t","धुम",["dhoom"]],
- ["Na","t","ना",["naa"]],["Ti","t","ति",["tee"]],["Tin","t","तिं",["tinn"]],["Tu","t","तू",["too","tun"]],["Te","t","टे",[]],["Ra","t","र",[]],
- ["Ke","t","के",[]],["Ka","t","क",[]],["Kat","t","कत्",["katt"]],["Ga","t","ग",[]],["Ge","t","गे",[]],["Ghe","t","घे",[]],["Di","t","दि",[]],
- ["Kran","t","क्रान",["kraan"]],["Dhage","t","धागे",["dhaage"],["Dha","Ge"]],
- ["Tirakita","t","तिरकिट",["tirkit","tirakit","tirikita","tiraktit","tirkita"],["Ti","Ra","Ki","Ta"]],
- ["Kitataka","t","किटतक",["kitatak","kittak"],["Ki","Ta","Ta","Ka"]],["Dhirdhir","t","धिरधिर",["dhiradhira"],["Dhi","Ra","Dhi","Ra"]],
- ["Tita","t","तिट",["tit"],["Ti","Ta"]],["Tira","t","तिर",[],["Ti","Ra"]],["Kita","t","किट",["kit"],["Ki","Ta"]],["Taka","t","तक",["tak"],["Ta","Ka"]],
- ["Gadi","t","गदि",[],["Ga","Di"]],["Gana","t","गन",[],["Ga","Na"]],["Tete","t","तेटे",[],["Te","Te"]],
- ["Ta","n","ता",["taa"]],["Thei","n","थेई",["thai","tei","theyi","they","thay"]],["Tat","n","तत्",["tatt"]],["Aa","n","आ",["aah"]],
- ["Dig","n","दिग्",[]],["Thun","n","थुन",[]],["Ki","n","कि",["kee"]],["Takita","n","तकिट",["takit"],["Ta","Ki","Ta"]],
- ["Tigda","n","तिगदा",["tigdha","tigada"]],["Jhanak","p","झनक",[]],["Dhilang","p","धिलांग",[]],["Kidnag","p","किड़नग",["kirnag","kidanag"]]
-];
-let BOLMAP={};
-function buildBolMap(extra){
-  const by={};
-  for(const [c,cat,dev,al,parts] of BOL_BASE.concat(extra||[])){const k=c.toLowerCase(),o=by[k],pp=parts&&parts.length?parts:null;
-    by[k]=o?{c:o.c,cat:cat||o.cat,dev:dev||o.dev,al:[...new Set(o.al.concat(al||[]))],parts:pp||o.parts}:{c,cat:cat||"t",dev:dev||"",al:(al||[]).slice(),parts:pp};}
-  const m={};
-  for(const e of Object.values(by)){m[e.c.toLowerCase()]=e;if(e.dev&&!m[e.dev])m[e.dev]=e;}
-  // canonical names win over aliases, so a stray alias can't swallow a real bol
-  for(const e of Object.values(by))for(const a of e.al){const k=String(a).toLowerCase().trim();if(k&&!m[k])m[k]=e;}
-  BOLMAP=m;
-}
-buildBolMap();
-const BOL_CAT={natwari:"n",tabla_pakhawaj:"t",parmelu:"p"};
-async function loadBolDb(){
-  try{
-    const [b,a,k]=await Promise.all([sb.from("bols").select("id,canonical,devanagari,category,status"),sb.from("bol_aliases").select("bol_id,alias"),sb.from("bol_components").select("compound_id,component_id,position")]);
-    if(!b||b.error||!Array.isArray(b.data)||!b.data.length)return;
-    const byId={},al={},pt={};b.data.forEach(r=>{byId[r.id]=r;});
-    if(a&&!a.error&&Array.isArray(a.data))a.data.forEach(r=>{(al[r.bol_id]=al[r.bol_id]||[]).push(r.alias);});
-    if(k&&!k.error&&Array.isArray(k.data))k.data.slice().sort((x,y)=>x.position-y.position).forEach(r=>{const p=byId[r.component_id];if(p&&r.component_id!==r.compound_id)(pt[r.compound_id]=pt[r.compound_id]||[]).push(p.canonical);});
-    buildBolMap(b.data.filter(r=>r.canonical&&!/\s/.test(r.canonical)&&(!r.status||r.status==="approved")).map(r=>[r.canonical,BOL_CAT[r.category]||"t",r.devanagari||"",al[r.id]||[],pt[r.id]||null]));
-    if(S.gate)return;
-    if(S.modal&&S.modal.kind==="detail")renderModal();else updatePrev();
-  }catch(e){}
-}
-const RESTS=new Set(["–","—","-","s","ऽ","_"]);
-const isMark=t=>/^(x|\+|\d+|\|+|।|॥)$/i.test(t);
-function canon(raw){
-  if(raw==="?")return {t:"?",q:1};
-  const s=String(raw).replace(/^[.,;:!"'“”‘’()[\]{}]+|[.,;:!"'“”‘’()[\]{}]+$/g,"");if(!s)return null;
-  const k=s.toLowerCase();if(RESTS.has(k))return {t:"–",r:1};
-  const e=BOLMAP[k];return e?{t:e.c,e,o:s}:{t:s,u:1};
-}
-function parseNota(text,tk,start,type){
-  const tl=TAALS[tk]||TAALS.teentaal,n=tl.n,st=Math.min(n,Math.max(1,parseInt(start)||1))-1;
-  const cells=[],notes=[],lines=[],unknown=new Set(),fixes=new Map();let i=0,q=0;
-  for(const raw0 of String(text||"").split(/\r?\n/)){
-    const raw=raw0.trim();let s=raw;if(!s)continue;
-    if(/^(#|\/\/)/.test(s)||/^[([].*[)\]]$/.test(s)||s.includes(":")){notes.push(s.replace(/^(#|\/\/)\s*/,""));lines.push({k:"note",raw});continue;}
-    let rep=1;const rm=s.match(/[([]?\s*[×x*]\s*([2-9])\s*[)\]]?$/i);if(rm&&rm.index>0){rep=+rm[1];s=s.slice(0,rm.index).trim();}
-    let tail="";const cm=s.match(/\(([^()]*)\)$/);if(cm&&cm.index>0){tail=cm[1].trim();s=s.slice(0,cm.index).trim();}
-    const toks=s.split(/\s+/).filter(t=>t&&!/^[|।॥]+$/.test(t));
-    if(!toks.length||toks.every(isMark))continue;
-    const mats=toks.map(t=>(t.length>1?t.split("-").filter(Boolean):[t]).map(canon).filter(Boolean)).filter(m=>m.length);
-    if(!mats.length)continue;
-    let known=0,unk=0;mats.forEach(m=>m.forEach(b=>{if(b.e)known++;else if(b.u)unk++;}));
-    const words=unk>known;
-    if(words&&!known&&type!=="Kavitt"){notes.push(s);lines.push({k:"note",raw});continue;}
-    mats.forEach(m=>m.forEach(b=>{if(b.u){if(words){b.w=1;delete b.u;}else unknown.add(b.t);}if(b.q)q++;if(b.e&&b.o.toLowerCase()!==b.e.c.toLowerCase())fixes.set(b.o,b.e.c);}));
-    const first=[];
-    for(let r=0;r<rep;r++)mats.forEach(m=>{const c={i,pos:(st+i)%n,av:Math.floor((st+i)/n),bols:m,w:words};cells.push(c);if(!r)first.push(c);i++;});
-    lines.push({k:words?"words":"bols",mats,rep,first,tail,raw});
-  }
-  const last=cells[cells.length-1];
-  return {tl,n,st,cells,notes,lines,unknown:[...unknown],fixes:[...fixes],q,count:cells.length,avs:last?last.av+1:0,end:last?last.pos:-1,sam:!!last&&cells.length>1&&last.pos===0};
-}
-function tidyNota(text,tk,start,type){ // the same composition, rewritten in the standard format with standard spellings
-  const N=parseNota(text,tk,start,type);
-  return N.lines.map(L=>{if(L.k!=="bols")return L.raw;
-    const parts=L.mats.map((m,j)=>(j&&N.tl.v[L.first[j].pos]!=null?"| ":"")+m.map(b=>b.t).join("-"));
-    return parts.join(" ")+(L.tail?` (${L.tail})`:"")+(L.rep>1?` (×${L.rep})`:"");}).join("\n");
-}
-function notaSum(N){return `${N.count} matra${N.count===1?"":"s"}${N.st?` · starts on matra ${N.st+1}`:""} · ${N.sam?"lands on sam":`ends on matra ${N.end+1}`}`;}
-function cellHTML(c){const one=b=>b.r?`<i class="rs">–</i>`:b.q?`<b class="qm">?</b>`:b.u?`<u title="Not in the bol list">${esc(b.t)}</u>`:c.w?`<em>${esc(b.t)}</em>`:esc(b.t);
-  return c.bols.length>1?`<span class="grp">${c.bols.map(one).join(" ")}</span>`:one(c.bols[0]);}
-function notaHTML(N,key,light){ // Bhatkhande-style: one row per avartan, cells grouped by vibhag, X 2 0 3 under each vibhag
-  const vs=Object.keys(N.tl.v).map(Number).sort((a,b)=>a-b),at={};N.cells.forEach(c=>{(at[c.av]=at[c.av]||{})[c.pos]=c;});
-  let h=`<div class="nota${light?" light":""}" role="group" aria-label="Padhant notation">`;
-  const endV=vs.filter(v=>v<=N.end).length-1; // the last avartan stops after the vibhag where the composition ends
-  for(let av=0;av<N.avs;av++){h+=`<div class="avt">`;
-    vs.forEach((v0,vi)=>{if(av===N.avs-1&&vi>endV)return;const v1=vs[vi+1]??N.n;let cs="";
-      for(let p=v0;p<v1;p++){const c=(at[av]||{})[p];
-        cs+=c?`<div class="pm${p===0?" sam":""}" title="Matra ${p+1}"${key?` data-k="${esc(key)}" data-pi="${c.i}"`:""}>${cellHTML(c)}</div>`:`<div class="pm none" aria-hidden="true"></div>`;}
-      h+=`<div class="vb"><div class="cs">${cs}</div><span class="mk">${esc(N.tl.v[v0])}</span></div>`;});
-    h+=`</div>`;}
-  return h+`</div>`;
-}
-function padSeq(N){ // one playback loop: the composition, then empty matras until the cycle comes back round to its start
-  const seq=N.cells.map(c=>({pos:c.pos,pi:c.i,bols:c.bols,w:c.w}));if(!seq.length)return seq;
-  let p=(N.cells[N.cells.length-1].pos+1)%N.n;while(p!==N.st){seq.push({pos:p,pi:-1,bols:[]});p=(p+1)%N.n;}
-  return seq;
-}
-function strokeSyls(text,tk,start,type){ // every spoken syllable in order (compounds split into their parts), for lining up with a recording
-  const N=parseNota(text,tk,start,type),out=[];
-  const add=(b,d)=>{if(!b||b.r)return;if(b.e&&b.e.parts&&d<3){b.e.parts.forEach(p=>{const pe=BOLMAP[p.toLowerCase()];add(pe?{t:pe.c,e:pe}:{t:p},d+1);});return;}out.push(b.t);};
-  N.cells.forEach(c=>c.bols.forEach(b=>add(b,0)));return out;
-}
-
-/* ---------------- Studio: bring bols in (typed, photo, recording) ---------------- */
-let notaUndo=null,recCache=null,prevT=null;
-function formVals(){const g=id=>{const el=document.getElementById(id);return el?el.value:"";};return {text:g("cf-bols"),tk:g("cf-taal")||"teentaal",start:g("cf-start")||1,type:g("cf-type")};}
-function notaPrev(text,tk,start,type){const N=parseNota(text,tk,start,type);
-  if(!N.count)return String(text||"").trim()?`<p class="note">No bols found yet. Check the spelling, or start a line with # if it's a note.</p>`:"";
-  const warn=N.unknown.length?`<span class="warn">Not in the bol list: ${esc(N.unknown.slice(0,6).join(", "))}${N.unknown.length>6?"…":""}</span>`:"";
-  const q=N.q?`<span class="warn">${N.q} bol${N.q===1?"":"s"} to fill in at the ? marks</span>`:"";
-  const fix=N.fixes.length?`<span>${N.fixes.length} spelling${N.fixes.length===1?"":"s"} to standardise with Tidy up</span>`:"";
-  return `<div class="nota-sum"><b>Preview</b><span>${esc(notaSum(N))}</span>${q}${warn}${fix}</div>${notaHTML(N,"",true)}`;}
-function updatePrev(){const el=$("#nota-prev");if(!el)return;const f=formVals();el.innerHTML=notaPrev(f.text,f.tk,f.start,f.type);}
-function notaMsg(html,extra){const m=$("#nota-msg");if(m)m.innerHTML=html?`<p class="note" role="status">${html}</p>${extra||""}`:"";}
-const undoBtn=`<button type="button" class="btn sm ghost" data-act="nota-undo">Undo</button>`;
-function notaSet(text,msg){const ta=$("#cf-bols");if(!ta)return;notaUndo={text:ta.value,bpm:($("#cf-bpm")||{}).value};recCache=null;ta.value=text;updatePrev();notaMsg(esc(msg)+" "+undoBtn);}
-/* Photo: text recognition runs in the browser with Tesseract.js, loaded only when first needed */
-let tessP=null;
-function loadTess(){if(window.Tesseract)return Promise.resolve(window.Tesseract);
-  return tessP||(tessP=new Promise((res,rej)=>{const s=document.createElement("script");s.src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";
-    s.onload=()=>window.Tesseract?res(window.Tesseract):rej(new Error("Tesseract missing"));s.onerror=()=>{tessP=null;s.remove();rej(new Error("Tesseract failed to load"));};document.head.appendChild(s);}));}
-function cleanOcr(t){return String(t||"").replace(/[—―]/g,"–").split(/\r?\n/).map(l=>l.replace(/[ \t]+/g," ").trim().split(" ").map(w=>/^[Il!]$/.test(w)?"|":w).join(" ")).filter(l=>/[A-Za-zऀ-ॿ]/.test(l)).join("\n");}
-async function readPhoto(f){
-  if(!f)return;
-  if(!/^image\//.test(f.type||"")&&!/\.(png|jpe?g|webp|gif|bmp)$/i.test(f.name||"")){notaMsg("Choose a photo or an image file.");return;}
-  const lang=($("#nota-lang")||{}).value==="hin"?"hin":"eng";let w=null;
-  notaMsg("Reading the photo… the first time takes a little longer.");
-  try{const T=await loadTess();
-    w=await T.createWorker(lang,1,{logger:m=>{if(m&&m.status==="recognizing text"&&typeof m.progress==="number")notaMsg(`Reading the photo… ${Math.round(m.progress*100)}%`);}});
-    const r=await w.recognize(f);const text=cleanOcr(r&&r.data&&r.data.text);
-    if(!$("#cf-bols"))return;
-    if(!text){notaMsg("Couldn't find any text in that photo. Try a sharper, well-lit photo of printed or neatly written bols.");return;}
-    notaSet(text,"Read from the photo. Check it against the photo and fix any mistakes, then tap Tidy up.");
-  }catch(e){console.warn(e);notaMsg("Couldn't read the photo. Check your connection and try again.");}
-  finally{if(w)try{await w.terminate();}catch(e){}}
-}
-/* Recording: decode the audio (or a video's soundtrack), find each stroke or spoken syllable as a jump in loudness,
-   then work out the gap between strokes, how many fall in a matra, and the laya. Rests show up as missing strokes. */
-function decodeFile(f){return f.arrayBuffer().then(ab=>new Promise((res,rej)=>{const p=ctx().decodeAudioData(ab,res,rej);if(p&&typeof p.then==="function")p.then(res,rej);}));}
-function findStrokes(buf){
-  const sr=buf.sampleRate,N=Math.min(buf.length,Math.floor(sr*180)),ch=buf.numberOfChannels,x=new Float32Array(N);
-  for(let c=0;c<ch;c++){const d=buf.getChannelData(c);for(let i=0;i<N;i++)x[i]+=d[i]/ch;}
-  const hop=Math.max(1,Math.round(sr*.005)),win=hop*2,F=Math.floor((N-win)/hop),dur=N/sr,fs=hop/sr;
-  if(F<20)return {on:[],dur};
-  // two loudness curves: plain (voices) and high-passed (sharp strokes); a stroke is a quick rise in either
-  const L=new Float32Array(F),Lp=new Float32Array(F);
-  for(let f=0;f<F;f++){let s=0,sp=0;const o=f*hop;for(let i=o;i<o+win;i++){const v=x[i],w=v-(i?.97*x[i-1]:0);s+=v*v;sp+=w*w;}L[f]=10*Math.log10(1e-12+s/win);Lp[f]=10*Math.log10(1e-12+sp/win);}
-  const srt=Array.from(L).sort((a,b)=>a-b),gate=Math.max(srt[Math.floor(F*.1)]+10,srt[Math.floor(F*.99)]-35);
-  const D=new Float32Array(F);for(let f=4;f<F;f++)D[f]=Math.max(0,L[f]-Math.min(L[f-2],L[f-3],L[f-4]),Lp[f]-Math.min(Lp[f-2],Lp[f-3],Lp[f-4]));
-  const on=[],wnd=Math.round(.03/fs),gap=Math.round(.07/fs),look=Math.round(.05/fs);let last=-1e9;
-  for(let f=4;f<F-1;f++){if(D[f]<5||f-last<gap)continue;
-    let pk=true;for(let j=Math.max(0,f-wnd);j<=Math.min(F-1,f+wnd);j++)if(D[j]>D[f]||(D[j]===D[f]&&j<f)){pk=false;break;}
-    if(!pk)continue;let mx=-1e9;for(let j=f;j<Math.min(F,f+look);j++)mx=Math.max(mx,L[j]);if(mx<gate)continue;
-    on.push(f*fs);last=f;}
-  if(on.length<4)return {on,dur};
-  const ioi=[];for(let k=1;k<on.length;k++)ioi.push(on[k]-on[k-1]);
-  const med=a=>{const s=a.slice().sort((p,q)=>p-q);return s[Math.floor(s.length/2)];};
-  const srtI=ioi.slice().sort((a,b)=>a-b);let T=srtI[Math.floor(srtI.length*.25)];const near=ioi.filter(v=>v>T*.7&&v<T*1.3);if(near.length)T=med(near);
-  const slots=[0];for(let k=1;k<on.length;k++)slots.push(slots[k-1]+Math.max(1,Math.round(ioi[k-1]/T)));
-  let sx=0,sy=0,sxx=0,sxy=0;const n=on.length;for(let k=0;k<n;k++){sx+=slots[k];sy+=on[k];sxx+=slots[k]*slots[k];sxy+=slots[k]*on[k];}
-  const den=n*sxx-sx*sx;if(den>0){const sl=(n*sxy-sx*sy)/den;if(sl>T*.8&&sl<T*1.2)T=sl;}
-  return {on,dur,T,slots};
-}
-function bestSub(T,target){let best=0,bd=1e9;
-  for(const strict of [true,false]){for(const k of [1,2,3,4]){const bpm=60/(T*k);if(strict&&(bpm<40||bpm>200))continue;const d=Math.abs(Math.log(bpm/target))+(k===3?.15:0);if(d<bd){bd=d;best=k;}}if(best)break;}
-  return best||1;}
-function recSvg(r,sub){const W=600,H=26,d=Math.max(r.dur,.1),x=t=>(t/d*W).toFixed(1),mw=r.T*sub;let s="";
-  for(let t=r.on[0];t<=r.on[r.on.length-1]+1e-6&&mw>0;t+=mw)s+=`<line x1="${x(t)}" x2="${x(t)}" y1="0" y2="${H}" class="g"/>`;
-  r.on.forEach(t=>{s+=`<line x1="${x(t)}" x2="${x(t)}" y1="5" y2="${H-5}" class="o"/>`;});
-  return `<svg class="rec-strip" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Strokes found in the recording, with matra lines">${s}</svg>`;}
-async function readRecording(f){
-  if(!f)return;
-  if(f.size>80*1024*1024){notaMsg("That file is over 80 MB. Trim it to just the composition, or use an audio recording, and try again.");return;}
-  notaMsg("Listening to the recording…");
-  try{const buf=await decodeFile(f),r=findStrokes(buf),ta=$("#cf-bols");if(!ta)return;
-    if(r.on.length<4){notaMsg("Couldn't hear clear, separate bols in this recording. Try one with a single voice or instrument and little background noise.");return;}
-    notaUndo={text:ta.value,bpm:($("#cf-bpm")||{}).value};recCache=r;applyRec(0);
-  }catch(e){console.warn(e);notaMsg("Couldn't read the audio in this file. Try an audio file (m4a, mp3 or wav), or a different video.");}
-}
-function applyRec(sub){
-  const r=recCache,ta=$("#cf-bols"),bi=$("#cf-bpm");if(!r||!ta)return;
-  const f=formVals(),tl=TAALS[f.tk]||TAALS.teentaal,n=tl.n,st=Math.min(n,Math.max(1,parseInt(f.start)||1))-1;
-  sub=sub||bestSub(r.T,+(bi&&bi.value)||90);r.sub=sub;
-  const syl=strokeSyls(ta.value,f.tk,f.start,f.type),real=syl.filter(s=>s!=="?").length,use=syl.length===r.on.length&&real>0;
-  const nm=Math.ceil((r.slots[r.slots.length-1]+1)/sub),mats=[];for(let m=0;m<nm;m++)mats.push(Array(sub).fill(""));
-  r.slots.forEach((s,k)=>{mats[Math.floor(s/sub)][s%sub]=use?syl[k]:"?";});
-  const toks=mats.map(m=>m.every(b=>!b)?"–":m.slice(1).every(b=>!b)?m[0]:m.map(b=>b||"–").join("-"));
-  const out=[];let cur=[];toks.forEach((t,j)=>{if(j&&(st+j)%n===0){out.push(cur.join(" "));cur=[];}cur.push(t);});if(cur.length)out.push(cur.join(" "));
-  const bpm=Math.min(240,Math.max(30,Math.round(60/(r.T*sub))));if(bi)bi.value=bpm;
-  ta.value=tidyNota(out.join("\n"),f.tk,f.start,f.type);updatePrev();
-  const lab=use?" Your bols are lined up with the recording.":real?` Your notation has ${syl.length} bols but the recording has ${r.on.length}, so they couldn't be lined up. Replace each ? with the bol you hear, or fix your bols and tap Re-align.`:" Replace each ? with the bol you hear.";
-  notaMsg(esc(`Heard ${r.on.length} strokes in ${r.dur.toFixed(1)} s: about ${bpm} bpm, ${sub} bol${sub>1?"s":""} per matra, ${nm} matras.`+lab)+" "+undoBtn,
-    `<div class="rec-ctl row-actions"><label class="small muted">Bols per matra <select class="inline" id="rec-sub">${[1,2,3,4].map(k=>`<option ${k===sub?"selected":""}>${k}</option>`).join("")}</select></label><button type="button" class="btn sm ghost" data-act="rec-realign">Re-align</button></div>${recSvg(r,sub)}`);
-}
 
 /* ---------------- writes ---------------- */
 let q=Promise.resolve();
@@ -661,12 +859,6 @@ const clone=o=>JSON.parse(JSON.stringify(o||{}));
 function saveMe(mut){const p=clone(me());mut(p);p.updated=Date.now();S.profiles[S.uid]=p;render();const ref=S.db.doc("profiles/"+S.uid);return queue(()=>ref.set(p));}
 function saveLedger(mut){const l=clone(S.ledgers[S.uid]);l.items=l.items||[];mut(l);S.ledgers[S.uid]=l;render();const ref=S.db.doc("ledger/"+S.uid);return queue(()=>ref.set(l));}
 function saveEnroll(mut){const e=clone(S.enrolls[S.uid]);e.req=e.req||{};mut(e);S.enrolls[S.uid]=e;render();const ref=S.db.doc("enroll/"+S.uid);return queue(()=>ref.set(e));}
-function capturePasses(){ // copy pieces from levels a guru marked as passed into my own record, so they stay mine
-  if(S.readOnly||!S.uid)return;
-  const kept=myEnroll().kept||{},add={};
-  for(const a of academies())for(const p of Object.values(passesFor(a,S.uid)))for(const k of (p.pieces||[]))if(!kept[k]&&!add[k])add[k]={g:a.guru,a:a.name,l:p.name,at:p.at};
-  if(Object.keys(add).length)saveEnroll(e=>{e.kept=Object.assign(e.kept||{},add);});
-}
 
 /* ---------------- audio ---------------- */
 let ac,noise;
@@ -683,77 +875,26 @@ function strike(bol,t,beat){const b=bol.toLowerCase();
   if(/^tin|^ti$|^tu/.test(b)){dayan(t,466,.6,.8);return;}
   if(/^kat|^ka|^ke|^ga/.test(b)){b.startsWith("ga")?bayan(t,.7):click(t,.5,1200);return;}
   dayan(t,440,.25,1);}
-/* Practice time: while the theka plays for a piece you can practise, time is saved to your record every minute and on stop.
-   Runs shorter than 10 seconds in total aren't counted. */
-let pr=null;
-function logPractice(key,sec){if(sec<1||S.readOnly)return;
-  saveEnroll(e=>{const P=e.practice=e.practice||{},p=P[key]=P[key]||{s:0,days:0,day:"",last:0},now=Date.now(),d=dayKey(now);
-    p.s=Math.round((p.s||0)+sec);if(p.day!==d){p.days=(p.days||0)+1;p.day=d;}p.last=now;});
-  const el=$("#prac-stat");if(el&&el.dataset.k===key)el.textContent=pracText(pracOf(S.uid,key));}
-function practiceCheckpoint(force){if(!pr)return;const now=Date.now(),sec=(now-pr.since)/1000;if(!force&&sec<60)return;
-  if(pr.run+sec>=10){pr.run+=sec;pr.since=now;logPractice(pr.key,sec);}}
-function practiceEnd(){practiceCheckpoint(true);pr=null;}
-document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")practiceCheckpoint(true);});
-/* Padhant sounds: tabla bols use the tabla strokes above; natwari (dance) bols a footfall and ghungroo; words and
-   unrecognised bols a soft wood tick; a quiet metronome marks every matra (brightest on sam, lowest on khali). */
-function thud(t,v){const a=ctx(),o=a.createOscillator(),g=a.createGain();o.frequency.setValueAtTime(120,t);o.frequency.exponentialRampToValueAtTime(55,t+.18);env(g,t,.6*v,.28);o.connect(g).connect(a.destination);o.start(t);o.stop(t+.32);}
-function ghung(t,v,len){const a=ctx();[0,.011,.024].forEach((dt,i)=>{const s=a.createBufferSource(),hp=a.createBiquadFilter(),g=a.createGain();s.buffer=noise;hp.type="highpass";hp.frequency.value=5200+i*900;env(g,t+dt,.22*v,Math.max(.05,(len||.12)-dt*2));s.connect(hp).connect(g).connect(a.destination);s.start(t+dt);s.stop(t+dt+.2);});}
-function wood(t,v){const a=ctx(),o=a.createOscillator(),g=a.createGain();o.type="triangle";o.frequency.value=820;env(g,t,.18*v,.07);o.connect(g).connect(a.destination);o.start(t);o.stop(t+.1);}
-function metro(t,pos,tl){const a=ctx(),o=a.createOscillator(),g=a.createGain(),m=tl.v[pos];o.frequency.value=pos===0?1760:m==="0"?880:m?1320:1100;env(g,t,pos===0?.12:m?.07:.04,.04);o.connect(g).connect(a.destination);o.start(t);o.stop(t+.06);}
-function dance(nm,t,d){const b=nm.toLowerCase();
-  if(b==="thei"){thud(t,1);ghung(t,.9);return;}
-  if(b==="tat"){click(t,.45,2600);ghung(t,.7);return;}
-  if(b==="aa"){ghung(t,.5,Math.min(.35,d));return;}
-  if(b==="dig"){thud(t,.8);ghung(t+.02,.6);return;}
-  if(b==="thun"){thud(t,.9);return;}
-  if(b==="ki"){ghung(t,.55);return;}
-  thud(t,.6);ghung(t,.6);}
-function tabla(nm,t,d){const b=nm.toLowerCase();
-  if(/^g/.test(b)){bayan(t,.75);return;}
-  if(b==="kran"){click(t,.4,1300);dayan(t+Math.min(.05,d/3),440,.25,.85);return;}
-  if(b==="ra"||b==="te"){dayan(t,520,.12,.6);return;}
-  strike(nm,t,d);}
-const TABLA_FORMS=new Set(["Paran","Kaida","Rela","Peshkar"]);
-function bolSound(b,t,d,tab,word,depth){
-  if(!b||b.r)return;
-  if(word||b.u||b.q||!b.e){wood(t,.7);return;}
-  const e=b.e;
-  if(e.parts&&(depth||0)<3){const dd=d/e.parts.length;e.parts.forEach((p,j)=>{const pe=BOLMAP[p.toLowerCase()];bolSound(pe?{t:pe.c,e:pe}:{t:p,u:1},t+j*dd,dd,tab||e.cat==="t",false,(depth||0)+1);});return;}
-  if(e.cat==="p"){ghung(t,.8,.2);return;}
-  if(e.cat==="n"&&!tab){dance(e.c,t,d);return;}
-  tabla(e.c,t,d);}
-let timer=null,curTick=null;
-function stop(){practiceEnd();clearInterval(timer);timer=null;curTick=null;S.playing=null;S.pmode="theka";S.beat=-1;S.pbeat=-1;S.pbol="";paint();renderPlayer();syncPlay();}
+let timer=null;
+function stop(){clearInterval(timer);timer=null;S.playing=null;S.beat=-1;paint();renderPlayer();syncPlay();}
 function bpmOf(c){return S.bpm[c.key]||c.bpm||90;}
-function play(key,mode){
-  mode=mode==="padhant"?"padhant":"theka";
-  if(S.playing===key&&S.pmode===mode){stop();return;}
-  const c=comp(key);if(!c)return;
-  let seq=null;
-  if(mode==="padhant"){seq=padSeq(parseNota(hasFull(key)?c.bols:firstLine(c.bols),c.taal,c.start,c.type));if(!seq.length)return;}
-  stop();ctx();S.playing=key;S.pmode=mode;
-  pr=canPractice(key)?{key,since:Date.now(),run:0}:null;
-  const tl=TAALS[c.taal]||TAALS.teentaal,tab=TABLA_FORMS.has(c.type);let k=-1;
-  curTick=seq?()=>{const cc=comp(key)||c,beat=60/bpmOf(cc),t=ctx().currentTime+.02;k=(k+1)%seq.length;const m=seq[k];
-      S.beat=m.pos;S.pbeat=m.pi;S.pbol=m.bols.map(b=>b.t).join("-");metro(t,m.pos,tl);
-      const dd=beat/(m.bols.length||1);m.bols.forEach((b,j)=>bolSound(b,t+j*dd,dd,tab,m.w));paint();practiceCheckpoint();}
-    :()=>{const cc=comp(key)||c;S.beat=(S.beat+1)%tl.n;strike(tl.bols[S.beat],ctx().currentTime+.02,60/bpmOf(cc));paint();practiceCheckpoint();};
-  renderPlayer();curTick();timer=setInterval(curTick,60000/bpmOf(c));syncPlay();
+function play(key){
+  if(S.playing===key){stop();return;}
+  const c=comp(key);if(!c)return;stop();ctx();S.playing=key;
+  const tl=TAALS[c.taal]||TAALS.teentaal;
+  const tick=()=>{const cc=comp(key)||c;S.beat=(S.beat+1)%tl.n;strike(tl.bols[S.beat],ctx().currentTime+.02,60/bpmOf(cc));paint();};
+  tick();timer=setInterval(tick,60000/bpmOf(c));renderPlayer();syncPlay();
 }
-function retempo(key){if(S.playing===key&&curTick){const c=comp(key);if(!c)return;clearInterval(timer);timer=setInterval(curTick,60000/bpmOf(c));}}
-function paint(){
-  document.querySelectorAll(".m").forEach(el=>el.classList.toggle("on",S.playing===el.dataset.k&&+el.dataset.i===S.beat));
-  document.querySelectorAll(".pm[data-pi]").forEach(el=>el.classList.toggle("on",S.pmode==="padhant"&&S.playing===el.dataset.k&&+el.dataset.pi===S.pbeat));
-  const pb=$("#pbeat");if(pb&&S.playing){const c=comp(S.playing);if(c){const tl=TAALS[c.taal]||TAALS.teentaal;
-    pb.textContent=S.pmode==="padhant"?`Padhant · matra ${S.beat+1}/${tl.n}${S.pbol?" · "+S.pbol:""}`:`${tl.name} · matra ${S.beat+1}/${tl.n} · ${tl.bols[S.beat]}`;}}}
-function syncPlay(){document.querySelectorAll("[data-act=play]").forEach(b=>{const md=b.dataset.mode==="padhant"?"padhant":"theka",on=S.playing===b.dataset.k&&S.pmode===md;b.innerHTML=on?I.pause:I.play;b.setAttribute("aria-label",(on?"Pause ":"Play ")+(md==="padhant"?"bols":"theka"));});}
+function retempo(key){if(S.playing===key){const c=comp(key);clearInterval(timer);const tl=TAALS[c.taal]||TAALS.teentaal;timer=setInterval(()=>{S.beat=(S.beat+1)%tl.n;strike(tl.bols[S.beat],ctx().currentTime+.02,60/bpmOf(c));paint();},60000/bpmOf(c));}}
+function paint(){document.querySelectorAll(".m").forEach(el=>el.classList.toggle("on",S.playing===el.dataset.k&&+el.dataset.i===S.beat));const pb=$("#pbeat");if(pb&&S.playing){const c=comp(S.playing);if(c){const tl=TAALS[c.taal]||TAALS.teentaal;pb.textContent=`${tl.name} · matra ${S.beat+1}/${tl.n} · ${tl.bols[S.beat]}`;}}}
+function syncPlay(){document.querySelectorAll("[data-act=play]").forEach(b=>{const on=S.playing===b.dataset.k;b.innerHTML=on?I.pause:I.play;b.setAttribute("aria-label",on?"Pause theka":"Play theka");});}
 function renderPlayer(){const el=$("#player");if(!S.playing){el.innerHTML="";return;}const c=comp(S.playing);if(!c){stop();return;}
-  el.innerHTML=`<div class="player">${cover(c)}<div class="meta"><b>${esc(c.title)}</b><span id="pbeat">${esc(pname(c.owner))}</span></div><button data-act="play" data-k="${esc(c.key)}" data-mode="${S.pmode}" aria-label="Pause">${I.pause}</button></div>`;}
+  el.innerHTML=`<div class="player">${cover(c)}<div class="meta"><b>${esc(c.title)}</b><span id="pbeat">${esc(pname(c.owner))}</span></div><button data-act="play" data-k="${esc(c.key)}" aria-label="Pause theka">${I.pause}</button></div>`;}
 
 /* ---------------- views ---------------- */
 function compCard(c){const from=Math.min(...["listen","perform","teach"].map(k=>(c.prices||{})[k]??99));
   return `<button class="card" data-act="open" data-k="${esc(c.key)}">${cover(c)}<b>${esc(c.title)}</b><span>${esc(pname(c.owner))}</span><span>${esc((TAALS[c.taal]||{}).name||"")} · ${esc(c.type)} · from ${money(from)}</span></button>`;}
-function compLi(c,right,sub){return `<div class="li">${cover(c)}<button class="meta" data-act="open" data-k="${esc(c.key)}"><b>${esc(c.title)}</b><span>${esc(pname(c.owner))} · ${esc((TAALS[c.taal]||{}).name||"")} · ${esc(c.type)}</span>${sub||""}</button>${right||""}</div>`;}
+function compLi(c,right){return `<div class="li">${cover(c)}<button class="meta" data-act="open" data-k="${esc(c.key)}"><b>${esc(c.title)}</b><span>${esc(pname(c.owner))} · ${esc((TAALS[c.taal]||{}).name||"")} · ${esc(c.type)}</span></button>${right||""}</div>`;}
 
 function vDiscover(){
   const p=me(),qq=S.q.toLowerCase();
@@ -762,7 +903,6 @@ function vDiscover(){
   const req=((S.enrolls[S.uid]||{}).req)||{};
   const chors=allChors();
   return `<p class="eyebrow">Discover</p><h1>Namaste, ${esc(p.name.split(" ")[0])}</h1><p class="lede">Compositions published by Kathak and tabla artists, academies taking students, and choreographies set to these pieces.</p>
-  <p style="margin:12px 0 0"><a class="btn ghost sm" href="/abhyas/">Practise in Abhyas</a></p>
   <label class="search">${I.search}<input id="q" type="search" placeholder="Search compositions, composers, forms" value="${esc(S.q)}" aria-label="Search"></label>
   <div class="chips">${[["all","All taals"]].concat(Object.entries(TAALS).map(([k,t])=>[k,`${t.name} · ${t.n}`])).map(([k,l])=>`<button class="chip" data-act="taal" data-t="${k}" aria-pressed="${S.taal===k}">${l}</button>`).join("")}</div>
   <div class="sec"><h2>Compositions</h2><span>${comps.length} ${S.q||S.taal!=="all"?"matching":"published"}</span></div>
@@ -775,28 +915,21 @@ function vDiscover(){
 
 function vLibrary(){
   const items=myItems();const byKey={};items.forEach(it=>{(byKey[it.key]=byKey[it.key]||[]).push(it);});
-  const ms=memberships(),km=keptMap();
-  const lic=Object.entries(byKey).map(([k,its])=>{const c=comp(k);if(!c)return "";const kinds=[...new Set(its.map(i=>i.kind==="choreo"?"Choreography":KIND[i.kind].n))];const p=pracOf(S.uid,k);
-    return compLi(c,`<span class="row-actions">${kinds.map(k=>`<span class="pill teal">${k}</span>`).join("")}<button class="btn sm ghost" data-act="play" data-k="${esc(k)}" aria-label="Play theka">${I.play}</button></span>`,p&&p.s?pracLine(S.uid,k):"");}).join("");
-  const live=new Set();ms.forEach(m=>{if(m.status==="active")levelPieces(m.a,m.lvl).forEach(k=>live.add(k));});
-  const keptOnly=Object.entries(km).filter(([k])=>!live.has(k)&&!byKey[k]&&comp(k)).sort((x,y)=>(y[1].at||0)-(x[1].at||0));
-  return `<p class="eyebrow">Library</p><h1>Your compositions</h1><p class="lede">Everything you've licensed, what your gurus have released to you, and the pieces you keep from levels you've passed.</p>
+  const ms=memberships();
+  const lic=Object.entries(byKey).map(([k,its])=>{const c=comp(k);if(!c)return "";const kinds=[...new Set(its.map(i=>i.kind==="choreo"?"Choreography":KIND[i.kind].n))];
+    return compLi(c,`<span class="row-actions">${kinds.map(k=>`<span class="pill teal">${k}</span>`).join("")}<button class="btn sm ghost" data-act="play" data-k="${esc(k)}" aria-label="Play theka">${I.play}</button></span>`);}).join("");
+  return `<p class="eyebrow">Library</p><h1>Your compositions</h1><p class="lede">Everything you've licensed, plus what your gurus have released to you.</p>
   <div class="sec"><h2>Licensed by you</h2><span>${Object.keys(byKey).length}</span></div>
   ${lic?`<div class="panel list">${lic}</div>`:`<div class="empty"><b>No licences yet</b>Open a composition in Discover and choose Listen, Perform or Teach.<button class="btn" data-act="nav" data-v="discover">Browse compositions</button></div>`}
   <div class="sec"><h2>Your academies</h2><span>${ms.length}</span></div>
   ${ms.length?ms.map(m=>{const l=(m.a.levels||[]).find(x=>x.id===m.lvl);const keys=m.status==="active"?levelPieces(m.a,m.lvl):[];
-    const passed=Object.values(passesFor(m.a,S.uid)).sort((x,y)=>(x.at||0)-(y.at||0));
     return `<div class="panel" style="margin-bottom:14px"><div class="row-actions" style="justify-content:space-between"><div><h3>${esc(m.a.name)}</h3><span class="small muted">Guru ${esc(pname(m.a.guru))}${l&&m.status==="active"?` · Your level: <b>${esc(l.name)}</b>`:""}</span></div><span class="row-actions">${m.status==="active"?`<span class="pill teal">Enrolled</span>`:m.status==="declined"?`<span class="pill">Not accepted</span>`:`<span class="pill gold">Waiting for guru</span>`}<button class="btn sm ghost" data-act="leave" data-g="${esc(m.a.guru)}">${m.status==="active"?"Leave":"Withdraw"}</button></span></div>
-    ${passed.length?`<div class="row-actions" style="margin-top:10px">${passed.map(x=>`<span class="pill teal">✓ Passed ${esc(x.name)}</span>`).join("")}</div>`:""}
-    ${m.status==="active"?(keys.length?`<div class="list" style="margin-top:6px">${keys.map(k=>{const c=comp(k);return c?compLi(c,`<button class="btn sm" data-act="open" data-k="${esc(k)}">Practice</button>`,pracLine(S.uid,k,km[k]?"Kept":"")):"";}).join("")}</div>`:`<p class="note">Your guru hasn't released pieces for your level yet.</p>`):`<p class="note">${m.status==="declined"?"The guru didn't accept this request.":"Your guru will place you in a level, then pieces appear here."}</p>`}</div>`;}).join(""):`<div class="empty">You haven't joined an academy. Find one in Discover.</div>`}
-  ${keptOnly.length?`<div class="sec"><h2>Kept from levels you passed</h2><span>${keptOnly.length}</span></div>
-  <div class="panel list">${keptOnly.map(([k,v])=>compLi(comp(k),`<button class="btn sm" data-act="open" data-k="${esc(k)}">Practice</button>`,`<span class="prog none">Passed ${esc(v.l)} · ${esc(v.a)}</span>${pracLine(S.uid,k)}`)).join("")}</div>
-  <p class="note">These stay in your library even if you leave the academy.</p>`:""}`;
+    ${m.status==="active"?(keys.length?`<div class="list" style="margin-top:6px">${keys.map(k=>{const c=comp(k);return c?compLi(c,`<button class="btn sm" data-act="open" data-k="${esc(k)}">Practice</button>`):"";}).join("")}</div>`:`<p class="note">Your guru hasn't released pieces for your level yet.</p>`):`<p class="note">${m.status==="declined"?"The guru didn't accept this request.":"Your guru will place you in a level, then pieces appear here."}</p>`}</div>`;}).join(""):`<div class="empty">You haven't joined an academy. Find one in Discover.</div>`}`;
 }
 
 function vAcademy(){
   const p=me(),a=p.academy;
-  if(!a)return `<p class="eyebrow">Academy</p><h1>Teach on Layakari</h1><p class="lede">Run your own academy. Organise students into levels and release compositions to each level. Students practise with the full notation and theka, and the composers you teach are paid for every student. You see how much each student practises, and mark levels as passed when they're ready.</p>
+  if(!a)return `<p class="eyebrow">Academy</p><h1>Teach on Layakari</h1><p class="lede">Run your own academy. Organise students into levels and release compositions to each level. Students practise with the full notation and theka, and the composers you teach are paid for every student.</p>
    <div class="empty" style="margin-top:24px"><b>You don't have an academy yet</b>You can teach your own compositions, and any composition you hold a Teach licence for.<button class="btn" data-act="acad-form">Start your academy</button></div>`;
   const levels=a.levels||[];if(!levels.find(l=>l.id===S.selLvl))S.selLvl=levels[0]&&levels[0].id;
   const lvl=levels.find(l=>l.id===S.selLvl);
@@ -815,18 +948,12 @@ function vAcademy(){
 
   <div class="sec"><h2>Levels and syllabus</h2><span>Students see their level and every level below it</span></div>
   <div class="tabs">${levels.map(l=>`<button class="tab" data-act="lvl" data-l="${esc(l.id)}" aria-pressed="${l.id===S.selLvl}">${esc(l.name)}<small>${(l.pieces||[]).length}</small></button>`).join("")}<button class="btn sm ghost" data-act="lvl-form">${I.plus}Add level</button></div>
-  ${lvl?`<div class="panel" style="margin-top:12px"><div class="row-actions" style="justify-content:space-between"><h3>${esc(lvl.name)}: pieces released</h3><span class="row-actions"><button class="btn sm ghost" data-act="lvl-mv" data-l="${esc(lvl.id)}" data-dir="-1" ${levels.indexOf(lvl)<1?"disabled":""} aria-label="Move ${esc(lvl.name)} one level earlier">◂ Earlier</button><button class="btn sm ghost" data-act="lvl-mv" data-l="${esc(lvl.id)}" data-dir="1" ${levels.indexOf(lvl)>=levels.length-1?"disabled":""} aria-label="Move ${esc(lvl.name)} one level later">Later ▸</button><button class="btn sm ghost" data-act="lvl-form" data-l="${esc(lvl.id)}">Rename</button><button class="btn sm danger" data-act="lvl-del" data-l="${esc(lvl.id)}">${S.confirm==="lvl:"+lvl.id?"Confirm delete":"Delete level"}</button></span></div>
+  ${lvl?`<div class="panel" style="margin-top:12px"><div class="row-actions" style="justify-content:space-between"><h3>${esc(lvl.name)}: pieces released</h3><span class="row-actions"><button class="btn sm ghost" data-act="lvl-form" data-l="${esc(lvl.id)}">Rename</button><button class="btn sm danger" data-act="lvl-del" data-l="${esc(lvl.id)}">${S.confirm==="lvl:"+lvl.id?"Confirm delete":"Delete level"}</button></span></div>
     ${mine.length+licensed.length?`<div class="list">${mine.map(c=>pieceRow(c,true)).join("")}${licensed.map(c=>pieceRow(c,rank(c.key)>=3)).join("")}</div>`:`<div class="empty" style="margin-top:12px">No compositions to teach yet. Publish your own in Studio, or get a Teach licence for one in Discover.<span class="row-actions"><button class="btn sm" data-act="nav" data-v="studio">Open Studio</button><button class="btn sm ghost" data-act="nav" data-v="discover">Discover</button></span></div>`}</div>`:`<div class="empty" style="margin-top:12px">Add a level to start building your syllabus.</div>`}
 
   <div class="sec"><h2>Students</h2><span>${students.length} enrolled · ${reqs.length} waiting</span></div>
   ${reqs.length?`<div class="panel list" style="margin-bottom:14px">${reqs.map(([sid,e])=>`<div class="li">${avatar(sid)}<div class="meta"><b>${esc(pname(sid))}</b><span>Asked to join ${esc(date(e.req[S.uid].at))}</span></div><span class="row-actions"><select class="inline" id="ap-${esc(sid)}" aria-label="Level for ${esc(pname(sid))}">${lvlOpts(levels[0]&&levels[0].id)}</select><button class="btn sm" data-act="approve" data-s="${esc(sid)}" ${levels.length?"":"disabled"}>Accept</button><button class="btn sm ghost" data-act="decline" data-s="${esc(sid)}">Decline</button></span></div>`).join("")}</div>`:""}
-  ${students.length?`<div class="panel list">${students.map(sid=>{
-    const lid=roster[sid],li=levels.findIndex(l=>l.id===lid),L=levels[li],nx=levels[li+1];
-    const keys=levelPieces(a,lid),ps=pracSum(sid,keys),passed=passesFor(a,sid),done=L&&passed[L.id]&&!nx;
-    const pills=Object.values(passed).sort((x,y)=>(x.at||0)-(y.at||0)).map(x=>`<span class="pill teal">✓ ${esc(x.name)}</span>`).join("");
-    return `<div class="li stu">${avatar(sid)}<div class="meta"><b>${esc(pname(sid))}</b><span>${keys.length} piece${keys.length===1?"":"s"} · ${ps.s?`practised ${esc(dur(ps.s))} · last ${esc(date(ps.last))}`:"no practice logged yet"}</span>${pills?`<div class="passed">${pills}</div>`:""}</div>
-    <span class="row-actions"><select class="inline" data-act="move" data-s="${esc(sid)}" id="mv-${esc(sid)}" aria-label="Level for ${esc(pname(sid))}">${lvlOpts(lid)}</select>${L?(done?`<span class="pill teal">Completed</span>`:`<button class="btn sm" data-act="pass" data-s="${esc(sid)}" ${S.readOnly?"disabled":""}>${S.confirm==="pass:"+sid?"Confirm pass":`Pass ${esc(L.name)}`}</button>`):""}<button class="btn sm ghost" data-act="remove" data-s="${esc(sid)}">${S.confirm==="rm:"+sid?"Confirm":"Remove"}</button></span></div>`;}).join("")}</div>
-  <p class="note">Passing a level moves the student up one level. They keep every piece released to them up to that level, even if they later leave your academy.</p>`:`<div class="empty">No students yet. Students find your academy in Discover and ask to join; you place them in a level here.</div>`}
+  ${students.length?`<div class="panel list">${students.map(sid=>`<div class="li">${avatar(sid)}<div class="meta"><b>${esc(pname(sid))}</b><span>${levelPieces(a,roster[sid]).length} pieces available</span></div><span class="row-actions"><select class="inline" data-act="move" data-s="${esc(sid)}" id="mv-${esc(sid)}" aria-label="Level for ${esc(pname(sid))}">${lvlOpts(roster[sid])}</select><button class="btn sm ghost" data-act="remove" data-s="${esc(sid)}">${S.confirm==="rm:"+sid?"Confirm":"Remove"}</button></span></div>`).join("")}</div>`:`<div class="empty">No students yet. Students find your academy in Discover and ask to join; you place them in a level here.</div>`}
 
   ${levels.length?`<div class="sec"><h2>Preview as a student</h2><span>What a student at this level can open</span></div>
   <div class="panel"><label class="small muted">Level <select class="inline" id="pv-lvl">${lvlOpts(pv.id)}</select></label>
@@ -850,7 +977,7 @@ function vStudio(){
   return `<p class="eyebrow">Studio</p><h1>Your work and earnings</h1><p class="lede">Publish compositions and choreographies, set your licence prices, and see what you've earned.</p>
   <div class="hero" style="margin-top:20px"><span class="k">Earned to date</span><b class="big">${money(e.tot)}</b><p>${e.rows.length} sale${e.rows.length===1?"":"s"} · composers keep 80% of licences, choreographers 70% and the linked composer 15%. ${ac.length?`Taught in ${ac.length} academ${ac.length===1?"y":"ies"}.`:""}</p></div>
   <div class="tiles"><div class="tile"><span>Listen licences</span><b>${money(e.by.listen)}</b></div><div class="tile"><span>Perform licences</span><b>${money(e.by.perform)}</b></div><div class="tile"><span>Teach licences</span><b>${money(e.by.teach)}</b></div><div class="tile"><span>Choreography</span><b>${money(e.by.choreo)}</b></div></div>
-  <div class="sec"><h2>Your compositions</h2><span class="row-actions"><button class="btn sm" data-act="comp-form">${I.plus}New composition</button></span></div>
+  <div class="sec"><h2>Your compositions</h2><span class="row-actions"><button class="btn sm ghost" data-act="tc-open">Tihai checker</button><button class="btn sm" data-act="comp-form">${I.plus}New composition</button></span></div>
   ${mine.length?`<div class="panel list">${mine.map(c=>compLi(c,`<span class="row-actions"><span class="pill">${money((c.prices||{}).perform)} / ${money((c.prices||{}).teach)}</span><button class="btn sm ghost" data-act="comp-form" data-id="${esc(c.id)}">Edit</button></span>`)).join("")}</div>`
    :`<div class="empty"><b>No compositions yet</b>Add your first composition with its taal, laya, bols and prices. To try the app quickly, you can also load six sample pieces into your own catalogue.<span class="row-actions"><button class="btn" data-act="comp-form">New composition</button><button class="btn ghost" data-act="samples">Add 6 sample compositions</button></span></div>`}
   <div class="sec"><h2>Your choreographies</h2><span><button class="btn sm ghost" data-act="ch-form" ${allComps().length?"":"disabled"}>${I.plus}New choreography</button></span></div>
@@ -859,23 +986,73 @@ function vStudio(){
   ${e.rows.length?`<div class="panel tbl"><table><thead><tr><th>Date</th><th>Composition</th><th>Buyer</th><th>Type</th><th class="n">Price</th><th class="n">Your share</th></tr></thead><tbody>${e.rows.slice(0,25).map(r=>`<tr><td>${esc(date(r.it.at))}</td><td>${esc(r.c?r.c.title:"Removed")}</td><td>${esc(pname(r.buyer))}</td><td>${esc(r.what)}</td><td class="n">${money(r.it.price)}</td><td class="n">${money(r.share)}</td></tr>`).join("")}</tbody></table></div>`:`<div class="empty">No sales yet. Sales appear here when someone licenses your work.</div>`}`;
 }
 
+/* ---------------- Bols: the dictionary every composition is read with ---------------- */
+const BOL_F=[["all","All"],["core","Core"],["compound","Compound"],["both","Both drums"],["treble","Treble drum"],["bass","Bass drum"]];
+const DRUM={both:"Both drums",treble:"Treble drum",bass:"Bass drum"};
+const bolRow=n=>NT.DICT[n-1];
+const bolRef=e=>`<button type="button" class="lnk" data-act="bol-go" data-n="${e.n}">${e.n} ${esc(e.roman)}</button>`;
+function bolCard(e,q){
+  const strokes=e.bols.map(NT.bolName),showK=strokes.length>1||strokes[0]!==e.roman;
+  const plain=x=>String(x).toLowerCase().replace(/[\s\-–—]/g,""),qq=plain(q||"");
+  const hit=v=>qq&&(plain(v.roman).includes(qq)||v.devas.some(d=>plain(d).includes(qq)));
+  return `<article class="bol" id="bol-${e.n}">
+    <div class="bol-h"><span class="bol-n">${e.n}</span><b class="bol-r">${esc(e.roman)}</b><span class="bol-d" lang="hi">${esc(e.deva)}</span></div>
+    <p class="bol-note">${esc(e.note)}</p>
+    ${showK?`<p class="bol-k"><span>${strokes.length} stroke${strokes.length===1?"":"s"}:</span>${strokes.map(b=>`<i>${esc(b)}</i>`).join("")}</p>`:""}
+    ${e.variants.map(bolRow).map(v=>`<div class="bol-v${hit(v)?" hit":""}"><span class="bol-n">${v.n}</span><b>${esc(v.roman)}</b><span lang="hi">${esc(v.deva)}</span><p class="bol-note">${esc(v.note)}</p></div>`).join("")}
+    ${e.same.length?`<p class="bol-s">Same strokes as ${e.same.map(bolRow).map(bolRef).join(", ")}</p>`:""}
+    ${e.drum?`<span class="pill ${e.drum==="both"?"gold":"teal"}">${DRUM[e.drum]}</span>`:""}
+  </article>`;
+}
+function bolReading(q){
+  const L=NT.lookup(q);if(!L||!L.bols.some(b=>NT.LEX[b]))return "";
+  const n=L.bols.length,list=es=>es.map(bolRef).join(", ");
+  const kath=NT.flatBols(NT.parse(q,true)).map(NT.bolName).join(" "),here=L.bols.map(NT.bolName).join(" ");
+  return `<div class="panel bol-read" role="status" aria-live="polite">
+    <span class="eyebrow" style="margin:0">Layakari reads this as</span>
+    <div class="bol-mats">${L.parsed.matras.map(m=>`<span class="bol-m">${m.slots.map(sl=>sl.bol==null?`<i>–</i>`:`<i${NT.LEX[sl.bol]?"":` class="unk"`}>${esc(NT.bolName(sl.bol))}</i>`).join("")}</span>`).join("")}</div>
+    <p class="small muted">${n} stroke${n===1?"":"s"} in ${L.matras} matra${L.matras===1?"":"s"} · <span lang="hi">${esc(NT.toDeva(L.parsed))}</span></p>
+    ${L.ambiguous?"":L.spelled.length?`<p class="small">In the dictionary as ${list(L.spelled)}.</p>`:L.same.length?`<p class="small">Same strokes as ${list(L.same)}.</p>`:""}
+    ${L.ambiguous?`<p class="small">The dictionary gives this spelling for two bols: ${L.ambiguous.map(a=>list(a.rows.map(bolRow))).join(" and ")}. On its own Layakari reads it as ${esc(here)}${kath!==here?`, and in a Kathak composition as ${esc(kath)}`:""}.</p>`:""}
+    ${L.unknown.length?`<p class="small bol-warn">Not in the dictionary yet: ${esc(L.unknown.join(", "))}</p>`:""}
+  </div>`;
+}
+function vBols(){
+  const q=S.bq.trim(),f=S.bolf,ok=e=>f==="all"||e.group===f||e.drum===f;
+  const hits=new Set(NT.search(q).map(e=>e.of||e.n));
+  if(q){const p=NT.parse(q),key=bs=>bs.join(" "),want=new Set();
+    p.matras.forEach(m=>{const bs=m.slots.filter(x=>x.bol!=null).map(x=>x.bol);if(bs.length)want.add(key(bs));bs.forEach(b=>want.add(b));});
+    NT.DICT.forEach(e=>{if(want.has(key(e.bols)))hits.add(e.of||e.n);});}
+  const mains=NT.DICT.filter(e=>!e.of&&hits.has(e.n)&&ok(e));
+  const core=mains.filter(e=>e.group==="core"),comp=mains.filter(e=>e.group==="compound");
+  const filtered=q||f!=="all";
+  const count=(g,es)=>filtered?`${es.length} matching`:`Rows ${g==="core"?"1–60":"61–100"} · ${NT.DICT.filter(e=>e.group===g&&e.of).length} are other spellings, shown with their bol`;
+  return `<p class="eyebrow">Bols</p><h1>The bol dictionary</h1><p class="lede">The core and compound bols that Kathak compositions are built from. Layakari recognises every spelling here, in Roman or Devanagari, wherever you write bols: in compositions and in the tihai checker.</p>
+  <label class="search">${I.search}<input id="bq" type="search" autocomplete="off" spellcheck="false" placeholder="Search, or type bols to see how they read: dheen, धीरे, dhagetirakita" value="${esc(S.bq)}" aria-label="Search the bols, or type bols to see how Layakari reads them"></label>
+  ${q?bolReading(q):""}
+  <div class="chips">${BOL_F.map(([k,l])=>`<button class="chip" data-act="bolf" data-f="${k}" aria-pressed="${f===k}">${l}</button>`).join("")}</div>
+  ${core.length?`<div class="sec"><h2>Core bols</h2><span>${count("core",core)}</span></div><div class="bolgrid">${core.map(e=>bolCard(e,q)).join("")}</div>`:""}
+  ${comp.length?`<div class="sec"><h2>Compound bols</h2><span>${count("compound",comp)}</span></div><div class="bolgrid">${comp.map(e=>bolCard(e,q)).join("")}</div>`:""}
+  ${mains.length?"":`<div class="empty" style="margin-top:20px">No bols in the dictionary match${q?` “${esc(q)}”`:""}${f!=="all"?" with this filter":""}.${filtered?`<button class="btn sm ghost" data-act="bolf" data-f="all" data-clear="1">Show all bols</button>`:""}</div>`}`;
+}
+/* bols in a composition that aren't in the dictionary, from lines that are mostly bols (lyrics and notes are left alone) */
+function bolsNotInDict(text){
+  const out=new Set();
+  String(text||"").split("\n").forEach(line=>{const words=line.replace(/\([^)]*\)/g," ").split(/[\s|।॥]+/).filter(w=>w&&/[A-Za-zऀ-ॿ]/.test(w)&&!/^(x|o|[x×]\d+|\d+[x×])$/i.test(w));
+    if(!words.length)return;const bad=words.filter(w=>NT.parse(w).unknown.length);
+    if(bad.length&&bad.length<=words.length/2)bad.forEach(w=>NT.parse(w).unknown.forEach(u=>out.add(u)));});
+  return [...out];
+}
+function cfUnknown(){const ta=$("#cf-bols"),el=$("#cf-unk");if(!ta||!el)return;const u=bolsNotInDict(ta.value);
+  el.innerHTML=u.length?`Not in the bol dictionary: <b>${esc(u.join(", "))}</b>. Check the spelling, or it may be a bol the dictionary doesn't have yet. The Bols page lists every spelling Layakari knows.`:"";el.hidden=!u.length;}
+
 function vProfile(){
   const p=me();const nComp=(p.compositions||[]).length,nCh=(p.choreographies||[]).length,nLic=myItems().length;
-  const ms=memberships().filter(m=>m.status==="active");
-  const nKept=Object.keys(keptMap()).filter(k=>comp(k)).length;
-  const pt=Object.values(myEnroll().practice||{}).reduce((t,x)=>t+(x.s||0),0);
-  const nPassed=academies().reduce((t,a)=>t+Object.keys(passesFor(a,S.uid)).length,0);
-  const acTile=p.academy?["Your academy",esc(p.academy.name)]:ms.length?["Learning at",ms.map(m=>esc(m.a.name)).join(", ")]:["Academy","None"];
   return `<p class="eyebrow">Profile</p>
   <div class="panel" style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap">${avatar(S.uid,72)}<div style="flex:1;min-width:220px"><h1 style="margin:0">${esc(p.name)}</h1><p class="muted" style="margin:2px 0 8px">${esc(p.city||"")}</p><div class="chips" style="margin:0">${(p.roles||[]).map(r=>`<span class="pill gold">${esc((ROLES.find(x=>x[0]===r)||[r,r])[1])}</span>`).join("")}</div><p style="margin:12px 0 0;max-width:62ch">${esc(p.bio||"")}</p></div><button class="btn ghost" data-act="prof-form">Edit profile</button></div>
-  <div class="tiles"><div class="tile"><span>Compositions published</span><b>${nComp}</b></div><div class="tile"><span>Choreographies</span><b>${nCh}</b></div><div class="tile"><span>Licences bought</span><b>${nLic}</b></div><div class="tile"><span>${acTile[0]}</span><b style="font-size:17px">${acTile[1]}</b></div></div>
-  ${ms.length||nKept||pt?`<div class="sec"><h2>Learning</h2><button class="btn ghost sm" data-act="nav" data-v="library">Open your library</button></div>
-  <div class="tiles" style="margin-top:0"><div class="tile"><span>Practice logged</span><b>${pt?esc(dur(pt)):"None yet"}</b></div><div class="tile"><span>Levels passed</span><b>${nPassed}</b></div><div class="tile"><span>Pieces kept</span><b>${nKept}</b></div></div>
-  ${ms.length?`<div class="panel list" style="margin-top:14px">${ms.map(m=>{const L=(m.a.levels||[]).find(x=>x.id===m.lvl),keys=levelPieces(m.a,m.lvl),ps=pracSum(S.uid,keys);
-    const passed=Object.values(passesFor(m.a,S.uid)).sort((x,y)=>(x.at||0)-(y.at||0));
-    return `<div class="li">${avatar(m.a.guru)}<div class="meta"><b>${esc(m.a.name)}</b><span>Guru ${esc(pname(m.a.guru))} · level ${esc(L?L.name:"")} · ${keys.length} piece${keys.length===1?"":"s"}${ps.s?` · practised ${esc(dur(ps.s))}`:""}</span>${passed.length?`<div class="passed">${passed.map(x=>`<span class="pill teal">✓ ${esc(x.name)}</span>`).join("")}</div>`:""}</div></div>`;}).join("")}</div>`:""}`:""}
+  <div class="tiles"><div class="tile"><span>Compositions published</span><b>${nComp}</b></div><div class="tile"><span>Choreographies</span><b>${nCh}</b></div><div class="tile"><span>Licences bought</span><b>${nLic}</b></div><div class="tile"><span>Academy</span><b style="font-size:15px">${p.academy?esc(p.academy.name):"None"}</b></div></div>
   <div class="sec"><h2>About this prototype</h2><button class="btn ghost sm" data-act="signout">Sign out</button></div>
-  <div class="panel small muted"><p style="margin:0 0 8px">Your profile, compositions and academy are visible to everyone who can open this app. Purchases are simulated: licences are recorded, but no payment is taken.</p><p style="margin:0">Licence levels: Teach includes Perform, and Perform includes Listen. Students get listen and practice access to every piece released up to their level, and keep those pieces once their guru marks the level as passed. Practice time is logged while the theka plays, and your guru can see it.</p></div>`;
+  <div class="panel small muted"><p style="margin:0 0 8px">Your profile, compositions and academy are visible to everyone who can open this app. Purchases are simulated: licences are recorded, but no payment is taken.</p><p style="margin:0">Licence levels: Teach includes Perform, and Perform includes Listen. Students get listen and practice access to every piece released up to their level.</p></div>`;
 }
 
 function landingMore(){
@@ -905,7 +1082,7 @@ function landingMore(){
    <details><summary>Which taals are supported?</summary><p>Teentaal, Jhaptaal, Rupak, Ektaal and Dhamar today, with more to come.</p></details>
   </div></section>
   <section class="more rv"><div class="cta-band"><div><h2>Ready to find your sam?</h2><p>Free to join. Set up your profile in a minute.</p></div><button class="btn" data-act="to-signup">Create your account</button></div></section>
-  <footer class="foot"><b>Layakari</b><a href="/abhyas/">Abhyas, the free practice room</a><span>Made in Canada for Kathak and tabla artists · © ${new Date().getFullYear()} Layakari</span></footer>`;
+  <footer class="foot"><b>Layakari</b><span>Made in Canada for Kathak and tabla artists · © ${new Date().getFullYear()} Layakari</span></footer>`;
 }
 let demoTimer=null,demoBeat=-1,landIO=null;
 function onLandScroll(){const c=document.getElementById("scroll-cue");if(c)c.classList.toggle("gone",window.scrollY>60);}
@@ -935,7 +1112,6 @@ function vGate(){
      <p class="k">Kathak · Tabla · Taal</p>
      <h1 id="land-h">Every composition finds its <em>sam</em>.</h1>
      <p class="lede">A home for Kathak and tabla artists. Composers publish and license their work, gurus run their academies, and students practise every piece with full notation and a live theka.</p>
-     <p class="land-abhyas"><a href="/abhyas/">Practise now in Abhyas</a>, our free practice room. No sign-up needed.</p>
      <div class="land-row"><svg class="land-ring" viewBox="0 0 120 120" role="img" aria-label="Teentaal, 16 matras, cycling to sam"><circle cx="60" cy="60" r="46" fill="none" stroke="rgba(246,239,248,.14)" stroke-width=".8"/>${ring}<text x="60" y="62" text-anchor="middle">16</text><text class="bol" x="60" y="76" text-anchor="middle">TEENTAAL</text></svg>
        <div class="land-legend"><b>Dha Dhin Dhin Dha</b><br>Dha Dhin Dhin Dha<br>Dha Tin Tin Ta<br>Ta Dhin Dhin Dha</div></div>
    </section>
@@ -968,24 +1144,17 @@ function profileForm(p){return `<form data-form="profile"><label class="f">Stage
 /* ---------------- modals ---------------- */
 function mDetail(key){
   const c=comp(key);if(!c)return `<p>This composition is no longer available.</p>`;
-  const tl=TAALS[c.taal]||TAALS.teentaal,own=c.owner===S.uid,r=rank(key),via=academyAccess(key),kept=keptInfo(key),full=r>0||via||kept;
-  const cp=canPractice(key),pp=cp?pracOf(S.uid,key):null;
+  const tl=TAALS[c.taal]||TAALS.teentaal,own=c.owner===S.uid,r=rank(key),via=academyAccess(key),full=r>0||via;
   const cols=tl.n>12?Math.ceil(tl.n/2):tl.n>8?Math.ceil(tl.n/2):tl.n;
   const pr=c.prices||{};const chs=allChors().filter(ch=>ch.comp===key);
   const lines=String(c.bols||"").split("\n");
-  const shown=full?String(c.bols||""):firstLine(c.bols),N=parseNota(shown,c.taal,c.start,c.type),pon=S.playing===key;
   return `<div class="det">${cover(c)}<div style="min-width:0"><p class="eyebrow">${esc(c.type)}</p><h2 style="font-size:30px">${esc(c.title)}</h2><p class="muted" style="margin:4px 0 0">by ${esc(pname(c.owner))}${S.profiles[c.owner]&&S.profiles[c.owner].city?" · "+esc(S.profiles[c.owner].city):""}</p>
    <div class="meta-line"><span class="pill gold">${tl.name} · ${tl.n} matras</span><span class="pill">${esc(c.laya)} laya · ${c.bpm} bpm</span></div>
-   ${own?`<div class="access">${I.check} Your composition</div>`:r>0?`<div class="access">${I.check} You hold a ${r>=3?"Teach":r>=2?"Perform":"Listen"} licence</div>`:via?`<div class="access">${I.check} Released to you by ${esc(via)}${kept?" · yours to keep":""}</div>`:kept?`<div class="access">${I.check} Yours to keep: you passed ${esc(kept.l)} at ${esc(kept.a)}</div>`:""}
-   ${cp?`<p class="prac" id="prac-stat" data-k="${esc(key)}">${esc(pp&&pp.s?pracText(pp):"Play the theka or the bols to start logging practice time.")}</p>`:""}</div></div>
+   ${own?`<div class="access">${I.check} Your composition</div>`:r>0?`<div class="access">${I.check} You hold a ${r>=3?"Teach":r>=2?"Perform":"Listen"} licence</div>`:via?`<div class="access">${I.check} Released to you by ${esc(via)}</div>`:""}</div></div>
   <div class="taal"><div class="taal-head"><b>Theka · ${tl.name}</b><span>X sam · 0 khali</span></div>
    <div class="beats" style="grid-template-columns:repeat(${cols},minmax(0,1fr))">${tl.bols.map((b,i)=>`<div class="m ${tl.v[i]?"vs":""} ${i===0?"sam":""}" data-k="${esc(key)}" data-i="${i}"><small>${tl.v[i]||i+1}</small>${b}</div>`).join("")}</div>
-   <div class="ctrl"><button class="bigplay" data-act="play" data-k="${esc(key)}" data-mode="theka" aria-label="Play theka">${pon&&S.pmode==="theka"?I.pause:I.play}</button><label for="bpm">Laya <span id="bpmv">${bpmOf(c)} bpm</span><input type="range" id="bpm" min="40" max="180" value="${bpmOf(c)}"></label></div>
-   <div class="pad-head"><div style="min-width:0"><b>Padhant${full?"":" · preview"}</b><span>${N.count?esc(notaSum(N)):"No bols to lay out yet"}</span></div>${N.count?`<button class="bigplay" data-act="play" data-mode="padhant" data-k="${esc(key)}" aria-label="Play bols">${pon&&S.pmode==="padhant"?I.pause:I.play}</button>`:""}</div>
-   ${N.count?notaHTML(N,key):""}
-   ${N.notes.length?`<div class="bols">${esc(N.notes.join("\n"))}</div>`:!N.count&&shown.trim()?`<div class="bols">${esc(shown)}</div>`:""}
-   ${full&&String(c.bols||"").trim()?`<details class="asw"><summary>As written</summary><div class="bols">${esc(c.bols)}</div></details>`:""}
-   ${full?"":`<p class="lock">Get any licence to see the full notation (${lines.length} lines).</p>`}</div>
+   <div class="ctrl"><button class="bigplay" data-act="play" data-k="${esc(key)}" aria-label="Play theka">${S.playing===key?I.pause:I.play}</button><label for="bpm">Laya <span id="bpmv">${bpmOf(c)} bpm</span><input type="range" id="bpm" min="40" max="180" value="${bpmOf(c)}"></label></div>
+   <div class="bols">${esc(full?c.bols:lines[0]||"")}</div>${full?"":`<p class="lock">Get any licence to see the full notation (${lines.length} lines).</p>`}</div>
   ${own?`<div class="form-foot"><button class="btn ghost" data-act="comp-form" data-id="${esc(c.id)}">Edit composition</button></div>`:`
   <div class="sec" style="margin-top:22px"><h3>Licence this composition</h3><span>${esc(pname(c.owner))} keeps 80%</span></div>
   <div class="lic">${Object.entries(KIND).map(([k,K])=>{const has=r>=K.r;return `<button class="lic-opt ${has?"owned":""}" data-act="buy" data-k="${esc(key)}" data-kind="${k}" ${has||S.readOnly?"disabled":""}><b>${K.n}</b><span>${K.d}</span><em>${has?"Included":money(pr[k])}</em></button>`;}).join("")}</div>
@@ -999,18 +1168,16 @@ function mComp(id){
   <div class="f2"><label class="f">Form<select id="cf-type">${TYPES.map(t=>`<option ${t===c.type?"selected":""}>${t}</option>`).join("")}</select></label>
   <label class="f">Taal<select id="cf-taal">${Object.entries(TAALS).map(([k,t])=>`<option value="${k}" ${k===c.taal?"selected":""}>${t.name} (${t.n})</option>`).join("")}</select></label>
   <label class="f">Laya<select id="cf-laya">${LAYAS.map(l=>`<option ${l===c.laya?"selected":""}>${l}</option>`).join("")}</select></label>
-  <label class="f">Tempo (bpm)<input id="cf-bpm" type="number" min="30" max="240" value="${esc(c.bpm||90)}"></label>
-  <label class="f">Starts on matra<input id="cf-start" type="number" min="1" max="${(TAALS[c.taal]||TAALS.teentaal).n}" value="${esc(c.start||1)}"></label></div>
-  <label class="f">Bols / notation<textarea id="cf-bols" maxlength="8000" placeholder="e.g. Dha-ge Na-dha Tira-kita Dha (×3)">${esc(c.bols||"")}</textarea></label>
-  <div class="row-actions nota-tools"><button type="button" class="btn sm ghost" data-act="nota-tidy">Tidy up</button><button type="button" class="btn sm ghost" data-act="nota-photo">From a photo</button><select class="inline" id="nota-lang" aria-label="Script in the photo"><option value="eng">Roman letters</option><option value="hin">Devanagari</option></select><button type="button" class="btn sm ghost" data-act="nota-rec">From a recording</button></div>
-  <input type="file" id="nota-img" accept="image/*" hidden><input type="file" id="nota-aud" accept="audio/*,video/*" hidden>
-  <div id="nota-msg" aria-live="polite"></div>
-  <div id="nota-prev">${notaPrev(c.bols||"",c.taal,c.start,c.type)}</div>
-  <p class="note">One matra per space. Join bols in the same matra with hyphens (Dha-ge), use – for a held matra, add (×3) to repeat a line, and start a line with # for a note.</p>
+  <label class="f">Tempo (bpm)<input id="cf-bpm" type="number" min="30" max="240" value="${esc(c.bpm||90)}"></label></div>
+  <label class="f">Bols / notation<textarea id="cf-bols" maxlength="4000" placeholder="One line per avartan">${esc(c.bols||"")}</textarea></label>
+  <p class="note bol-warn" id="cf-unk" hidden style="margin:-4px 0 10px"></p>
+  <div class="row-actions tc-row"><button type="button" class="btn sm ghost" data-act="tc-inline" id="tc-toggle">${TC.inForm?"Hide tihai check":"Check a tihai"}</button><span class="note" style="margin:0">Select the tihai in your bols first, or type it into the checker.</span></div>
+  <div id="tc-slot">${TC.inForm?`<div class="tc-inline">${tcPanel()}</div>`:""}</div>
   <div class="f2"><label class="f">Listen price ($)<input id="cf-pl" type="number" min="0" step="0.5" value="${esc(pr.listen??2)}"></label><label class="f">Perform price ($)<input id="cf-pp" type="number" min="0" step="1" value="${esc(pr.perform??25)}"></label><label class="f">Teach price ($/yr)<input id="cf-pt" type="number" min="0" step="1" value="${esc(pr.teach??99)}"></label></div>
   <p class="note">The first line of notation is shown as a free preview. You keep 80% of every licence.</p>
   <div class="form-foot">${id?`<button type="button" class="btn danger" data-act="comp-del" data-id="${esc(id)}">${S.confirm==="comp:"+id?"Confirm delete":"Delete"}</button>`:""}<span style="flex:1"></span><button type="button" class="btn ghost" data-act="close">Cancel</button><button class="btn" type="submit">${id?"Save":"Publish"}</button></div></form>`;
 }
+function mTihai(){return `<p class="eyebrow">Studio</p><h2>Tihai checker</h2><p class="muted" style="margin:4px 0 14px">Write the phrase once. Layakari repeats it, counts the matras and pauses, shows where the last bol falls, and tells you where to start so it lands on sam.</p><form data-form="tc" class="tc-form">${tcPanel()}</form>`;}
 function mChor(){const cs=allComps();return `<p class="eyebrow">Studio</p><h2>New choreography</h2><form data-form="chor">
   <label class="f">Title<input id="ch-title" required maxlength="80" placeholder="e.g. Varsha, a monsoon solo"></label>
   <label class="f">Set to composition<select id="ch-comp">${cs.map(c=>`<option value="${esc(c.key)}">${esc(c.title)} · ${esc(pname(c.owner))}</option>`).join("")}</select></label>
@@ -1027,31 +1194,120 @@ function mAcad(){const a=me().academy||{};return `<p class="eyebrow">Academy</p>
   <div class="form-foot"><button type="button" class="btn ghost" data-act="close">Cancel</button><button class="btn" type="submit">${a.name?"Save":"Create academy"}</button></div></form>`;}
 function mLevel(id){const l=((me().academy||{}).levels||[]).find(x=>x.id===id)||{};return `<p class="eyebrow">Academy</p><h2>${id?"Rename level":"Add a level"}</h2><form data-form="level" data-id="${esc(id||"")}"><label class="f">Level name<input id="lv-name" required maxlength="40" value="${esc(l.name||"")}" placeholder="e.g. Praveen"></label><div class="form-foot"><button type="button" class="btn ghost" data-act="close">Cancel</button><button class="btn" type="submit">Save</button></div></form>`;}
 
-/* Views and dialogs are rebuilt with innerHTML, so focus is remembered as a selector (id, or the button's data-* attributes) rather than a node. */
-const FOCUSABLE='a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
-function focusKey(el){if(!el||el===document.body)return null;if(el.id)return{sel:"#"+CSS.escape(el.id),i:0};
-  const t=el.closest("[data-act]");if(!t||t.dataset.act==="backdrop")return null;
-  const sel=[...t.attributes].filter(x=>x.name.startsWith("data-")).map(x=>`[${x.name}="${CSS.escape(x.value)}"]`).join("");
-  return{sel,i:[...document.querySelectorAll(sel)].indexOf(t)};}
-function findKey(root,k){if(!k)return null;const all=root.querySelectorAll(k.sel);return all[k.i]||all[0]||null;}
-let opener=null;
-function setInert(on){["#app","#player"].forEach(s=>{const el=$(s);if(el)el.inert=on;});}
-function openModal(kind,arg){if(!S.modal)opener=focusKey(document.activeElement);S.modal={kind,arg};S.confirm=null;setInert(true);renderModal();
-  const f=$("#modal input:not([type=range]),#modal button.bigplay")||$("#modal .dlg");if(f)f.focus();}
-function closeModal(){const was=!!S.modal;S.modal=null;S.confirm=null;notaUndo=null;recCache=null;renderModal();if(!was)return;setInert(false);
-  const el=findKey(document,opener);opener=null;
-  if(el)el.focus();else{const m=$("#main");m.tabIndex=-1;m.focus();}}
+function openModal(kind,arg){tcStop();S.modal={kind,arg};S.confirm=null;renderModal();const f=$("#modal input:not([type=range]),#modal textarea,#modal button.bigplay");if(f)f.focus();}
+function closeModal(){tcStop();TC.inForm=false;S.modal=null;S.confirm=null;renderModal();}
 function renderModal(){const m=$("#modal");if(!S.modal){m.hidden=true;m.innerHTML="";return;}
   const k=S.modal.kind,a=S.modal.arg;
-  const body=k==="detail"?mDetail(a):k==="comp"?mComp(a):k==="chor"?mChor():k==="acad"?mAcad():k==="level"?mLevel(a):k==="profile"?profileForm(me()):"";
-  const ae=document.activeElement,had=m.contains(ae),fk=had?focusKey(ae):null;
-  m.hidden=false;m.innerHTML=`<div class="modal" data-act="backdrop"><div class="dlg ${k==="detail"?"":"narrow"}" role="dialog" aria-modal="true" tabindex="-1"><button class="x" data-act="close" aria-label="Close">${I.x}</button>${body}</div></div>`;
-  const dlg=$("#modal .dlg"),h=dlg.querySelector("h2");
-  if(h){h.id="dlg-title";dlg.setAttribute("aria-labelledby","dlg-title");}else dlg.setAttribute("aria-label",k==="profile"?"Edit profile":"Dialog");
-  if(had){const el=findKey(m,fk);(el||dlg).focus();}
-  syncPlay();paint();
+  const body=k==="detail"?mDetail(a):k==="comp"?mComp(a):k==="chor"?mChor():k==="acad"?mAcad():k==="level"?mLevel(a):k==="profile"?profileForm(me()):k==="tihai"?mTihai():"";
+  m.hidden=false;m.innerHTML=`<div class="modal" data-act="backdrop"><div class="dlg ${k==="detail"?"":k==="tihai"?"wide":"narrow"}" role="dialog" aria-modal="true"><button class="x" data-act="close" aria-label="Close">${I.x}</button>${body}</div></div>`;
+  syncPlay();paint();if($("#tc-phrase"))tcInit();cfUnknown();
   const r=$("#bpm");if(r)r.oninput=e=>{S.bpm[a]=+e.target.value;$("#bpmv").textContent=e.target.value+" bpm";retempo(a);};
 }
+
+/* ---------------- tihai checker ---------------- */
+const NT=Notation;
+const TC={phrase:"dhati dhage nadha tirakita dha–",taal:"teentaal",reps:3,gap:1,speed:0,start:0,frac:0,bpm:70,inForm:false};
+const TC_OK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>';
+const TC_NO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 7v6M12 16.5v.5"/></svg>';
+const TC_STOP='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>';
+const TC_GAPS=[[0,"No pause"],[0.25,"¼ matra"],[0.5,"½ matra"],[1,"1 matra"],[1.5,"1½ matras"],[2,"2 matras"],[3,"3 matras"]];
+const TC_SPEEDS=[[0,"Each word is one matra"],[1,"1 bol per matra"],[2,"2 per matra (dugun)"],[3,"3 per matra (tigun)"],[4,"4 per matra (chaugun)"],[6,"6 per matra"],[8,"8 per matra"]];
+const TC_FR=[[0,"on the beat"],[0.25,"¼ in"],[1/3,"⅓ in"],[0.5,"½ in"],[2/3,"⅔ in"],[0.75,"¾ in"]];
+const TC_TYPE={damdar:"Damdar tihai · pauses between repeats",bedam:"Bedam tihai · no pauses",nauhakka:"Nauhakka · phrase played 9 times",chakradar:"Chakradar · a phrase with its own tihai, played 3 times"};
+const tcOpt=(v,l,sel)=>`<option value="${v}" ${sel?"selected":""}>${esc(l)}</option>`;
+function vibOf(tl){const ks=Object.keys(tl.v).map(Number).sort((a,b)=>a-b);return ks.map((k,i)=>({start:k,size:(i+1<ks.length?ks[i+1]:tl.n)-k,mark:tl.v[k]}));}
+function tcPanel(){
+  return `<div class="tc">
+  <label class="f">Tihai phrase, written once<textarea id="tc-phrase" spellcheck="false" autocomplete="off" placeholder="dhati dhage nadha tirakita dha–">${esc(TC.phrase)}</textarea></label>
+  <div class="tc-reads" id="tc-reads" aria-live="polite"></div>
+  <div class="f2">
+   <label class="f">Taal<select id="tc-taal">${Object.entries(TAALS).map(([k,t])=>tcOpt(k,t.name+" ("+t.n+")",k===TC.taal)).join("")}</select></label>
+   <label class="f">Played<select id="tc-reps">${tcOpt(3,"3 times (tihai)",TC.reps===3)}${tcOpt(9,"9 times (nauhakka)",TC.reps===9)}</select></label>
+   <label class="f"><span id="tc-gapl">Pause between repeats</span><select id="tc-gap">${TC_GAPS.map(([v,l])=>tcOpt(v,l,v===TC.gap)).join("")}</select></label>
+   <label class="f">Timing<select id="tc-speed">${TC_SPEEDS.map(([v,l])=>tcOpt(v,l,v===TC.speed)).join("")}</select></label>
+   <label class="f">Starts on<select id="tc-sm"></select></label>
+   <label class="f">Where in the matra<select id="tc-sf">${TC_FR.map(([v,l])=>tcOpt(v,l,Math.abs(v-TC.frac)<1e-4)).join("")}</select></label>
+  </div>
+  <div class="tc-out" id="tc-out"></div>
+  <ul class="tc-help"><li>Each word is one matra, and bols in a word share it: <code>dhadha</code> is two bols, <code>tirakita</code> four, <code>Dha-ge</code> two. Bars can mark vibhags.</li>
+   <li>A dash is a rest: <code>dha–</code>, or a dash on its own for a whole matra. A comma splits a matra in half; end with a comma to stop halfway, as in a bedam tihai.</li>
+   <li>Devanagari works too, and notes in brackets like (×3) are skipped.</li></ul>
+  </div>`;
+}
+function tcFillStart(){const sel=$("#tc-sm");if(!sel)return;const n=(TAALS[TC.taal]||TAALS.teentaal).n;if(TC.start>=n)TC.start=0;
+  sel.innerHTML=Array.from({length:n},(_,i)=>tcOpt(i,"matra "+(i+1)+(i===0?" (sam)":""),i===TC.start)).join("");}
+function tcSetFrac(f){const sel=$("#tc-sf");if(!sel)return;let o=[...sel.options].find(x=>Math.abs(+x.value-f)<1e-4);
+  if(!o){o=document.createElement("option");o.value=String(f);o.textContent=NT.posText(f).text.replace(/^matra 1, /,"");sel.appendChild(o);}sel.value=o.value;}
+function tcRead(){const g=id=>document.getElementById(id);if(!g("tc-phrase"))return false;
+  TC.phrase=g("tc-phrase").value;TC.taal=g("tc-taal").value;TC.reps=+g("tc-reps").value;TC.gap=+g("tc-gap").value;TC.speed=+g("tc-speed").value;
+  TC.start=+g("tc-sm").value||0;TC.frac=+g("tc-sf").value||0;return true;}
+let tcRes=null;
+function tcCompute(){const parsed=NT.parse(TC.phrase),line=NT.timeline(parsed,TC.speed),tl=TAALS[TC.taal]||TAALS.teentaal;
+  tcRes={parsed,line,tl,r:NT.tihai({line,gap:TC.gap,reps:TC.reps,start:TC.start+TC.frac,n:tl.n})};return tcRes;}
+function tcEvents(){const {r,line}=tcRes,out=[];if(r.error)return out;let last=-1;line.ev.forEach((e,i)=>{if(e.bol!=null)last=i;});
+  for(let rep=0;rep<r.reps;rep++)line.ev.forEach((e,i)=>{if(rep===r.reps-1&&i>last)return;out.push({t:Math.round((r.start+r.offs[rep]+e.t)*1e6)/1e6,bol:e.bol,rep,land:rep===r.reps-1&&i===last});});
+  return out;}
+function tcInit(){tcFillStart();tcUpdate();}
+function tcUpdate(){
+  if(!tcRead())return;tcStop();const {parsed,line,tl,r}=tcCompute();
+  $("#tc-gapl").textContent=TC.reps===9?"Pause between groups of 3":"Pause between repeats";
+  $("#tc-reads").innerHTML=parsed.matras.length?`<div class="tc-chips"><span>${TC.speed?`Reads as ${line.ev.length} bols and gaps at ${TC.speed} per matra:`:`Reads as ${esc(NT.fmtN(line.len))} matra${line.len===1?"":"s"}:`}</span>${parsed.matras.map((m,i)=>`<span class="tc-chip">${esc(NT.matraLabel(m))}${TC.speed?"":`<small>${m.cutHalf&&i===parsed.matras.length-1?"½ matra":m.slots.length+(m.slots.length===1?" bol":" bols")}</small>`}</span>`).join("")}</div><div class="tc-deva">${esc(NT.toDeva(parsed))}</div>${parsed.unknown.length?`<div style="color:var(--danger)">Not in the bol dictionary: ${esc(parsed.unknown.join(", "))}. It still counts as one bol.${TC.inForm?"":` <button type="button" class="lnk" data-act="nav" data-v="bols">See the dictionary</button>`}</div>`:""}`:"";
+  const out=$("#tc-out");
+  if(r.error){out.innerHTML=`<p>${TC.phrase.trim()?esc(r.error):"Type a tihai phrase to see where it lands."}</p>`;return;}
+  const samToSam=r.startOnSam&&r.onSam,endM=Math.floor(r.end+1e-9),lastAv=Math.floor(endM/tl.n);
+  let h=`<div><p class="tc-type">${samToSam?"Sam-to-sam ":""}${esc(TC_TYPE[r.type])}</p>
+   <h3 class="tc-v ${r.onSam?"ok":"no"}">${r.onSam?TC_OK:TC_NO}<span>${r.onSam?"Lands on sam":"Lands on "+esc(NT.posText(r.landPos).text)}</span></h3>
+   <p class="tc-math">${esc(NT.fmtN(r.P))} × ${r.reps}${r.gap?" + 2 pauses of "+esc(NT.fmtN(r.gap)):""} = ${esc(NT.fmtN(r.length))} matras</p>
+   <p>Starts on ${esc(NT.posText(NT.mod(r.start,tl.n)).text)}${r.cycles?" and lands "+(r.cycles===1?"in the next avartan":r.cycles+" avartans later"):", in the same avartan"}. The last bol falls ${esc(NT.fmtN(r.landing))} matras after the start.</p>
+   ${r.onSam?"":`<div class="tc-fix"><p>To land on sam, start on ${esc(NT.posText(r.startForSam).text)}.</p><button type="button" class="btn sm" data-act="tc-fix">Start there</button></div>`}</div>`;
+  if(lastAv>15)h+=`<p>This runs for ${lastAv+1} avartans, too long to draw here. The verdict above still applies.</p>`;
+  else{const ev=tcEvents(),byM=new Map();ev.forEach(e=>{const m=Math.floor(e.t+1e-9);if(!byM.has(m))byM.set(m,[]);byM.get(m).push(e);});
+    const pauses=[];for(let k=0;k<r.reps-1;k++){const a=r.start+r.offs[k]+r.P,b=r.start+r.offs[k+1];if(b-a>1e-6)pauses.push([a,b]);}
+    const inPause=m=>pauses.some(([a,b])=>m+1e-6>=Math.floor(a+1e-9)&&m<b-1e-6)&&!(byM.get(m)||[]).some(e=>e.bol!=null);
+    const col=rep=>"tc-b"+((r.reps===9?Math.floor(rep/3):rep)%3),vb=vibOf(tl);
+    for(let a=0;a<=lastAv;a++){h+=`<div><p class="tc-av-h">Avartan ${a+1}</p><div class="tc-av" style="grid-template-columns:${vb.map(x=>"minmax(0,"+x.size+"fr)").join(" ")}">`;
+      vb.forEach(x=>{h+=`<div class="tc-vb"><div class="mk">${esc(x.mark)}</div><div class="tc-cells" style="grid-template-columns:repeat(${x.size},minmax(0,1fr))">`;
+        for(let j=0;j<x.size;j++){const m=x.start+j,gm=a*tl.n+m,list=byM.get(gm)||[];let cls="tc-cell"+(m===0?" tc-sam":""),body="";
+          if(gm<Math.floor(r.start+1e-9)&&!list.length)cls+=" tc-before";else if(gm>endM)cls+=" tc-after";else if(!list.length&&inPause(gm)){cls+=" tc-pause";body="pause";}
+          list.forEach(e=>{if(e.land)cls+=" tc-land";body+=`<span class="${col(e.rep)}${e.bol==null?" tc-g":""}${e.land?" tc-lb":""}">${esc(NT.bolName(e.bol))}</span><wbr>`;});
+          h+=`<div class="${cls}" data-gm="${gm}"><small>${m+1}</small>${body}</div>`;}
+        h+=`</div></div>`;});
+      h+=`</div></div>`;}
+    const names=r.reps===9?["First 3","Middle 3","Last 3"]:["1st time","2nd time","3rd time"];
+    h+=`<div class="tc-legend">${names.map((n,i)=>`<span><i style="background:${["#E8A33D","#57C9B9","#E58BB5"][i]}"></i>${n}</span>`).join("")}<span>Underlined bol is where it lands</span></div>`;}
+  h+=`<div class="tc-ctrl"><button type="button" class="bigplay" data-act="tc-play" id="tc-play" aria-label="Play the tihai">${I.play}</button><label for="tc-bpm">Laya <span id="tc-bpmv">${TC.bpm} matras per minute</span><input type="range" id="tc-bpm" min="30" max="180" value="${TC.bpm}"></label></div>
+   <p style="font-size:12px">Playback counts in from sam, so you hear where it lands.</p>`;
+  out.innerHTML=h;
+}
+let tcPlaying=false,tcTimer=null,tcHL=[];
+function tcStop(){tcPlaying=false;if(tcTimer){clearInterval(tcTimer);tcTimer=null;}tcHL.forEach(clearTimeout);tcHL=[];
+  document.querySelectorAll(".tc-cell.tc-on").forEach(c=>c.classList.remove("tc-on"));const b=$("#tc-play");if(b){b.innerHTML=I.play;b.setAttribute("aria-label","Play the tihai");}}
+function ghungroo(t,v){const a=ctx();
+  for(let k=0;k<3;k++){const s=a.createBufferSource(),bp=a.createBiquadFilter(),g=a.createGain(),tt=t+k*.013;s.buffer=noise;bp.type="bandpass";bp.frequency.value=6200+k*1100;bp.Q.value=5;
+    g.gain.setValueAtTime(.0001,tt);g.gain.exponentialRampToValueAtTime(.45*v,tt+.002);g.gain.exponentialRampToValueAtTime(.0001,tt+.18);s.connect(bp).connect(g).connect(a.destination);s.start(tt);s.stop(tt+.2);}
+  const o=a.createOscillator(),g=a.createGain();o.frequency.setValueAtTime(120,t);o.frequency.exponentialRampToValueAtTime(55,t+.12);env(g,t,.55*v,.14);o.connect(g).connect(a.destination);o.start(t);o.stop(t+.16);}
+function tcClick(t,sam,land){const a=ctx(),o=a.createOscillator(),g=a.createGain();o.frequency.value=land?2093:sam?1760:1320;env(g,t,land?.3:sam?.2:.09,land?.35:.05);o.connect(g).connect(a.destination);o.start(t);o.stop(t+(land?.4:.07));
+  if(land){const o2=a.createOscillator(),g2=a.createGain();o2.frequency.value=2637;env(g2,t,.18,.45);o2.connect(g2).connect(a.destination);o2.start(t);o2.stop(t+.5);}}
+function tcPlay(){
+  if(!tcRes||tcRes.r.error)return;stop();const a=ctx();tcPlaying=true;
+  const r=tcRes.r,md=60/TC.bpm,kathak=NT.isKathak(tcRes.parsed),lastM=Math.floor(r.end+1e-9)+1;
+  const slot=Math.min(1,tcRes.line.ev.length?tcRes.line.len/tcRes.line.ev.length:1)*md,items=[];
+  tcEvents().forEach(e=>{if(e.bol!=null){const nm=NT.bolName(e.bol);items.push({t:e.t,f:at=>kathak?ghungroo(at,1):strike(nm,at,slot)});}});
+  for(let m=0;m<=lastM;m++){const sam=m%tcRes.tl.n===0,land=r.onSam&&Math.abs(m-r.end)<1e-6;items.push({t:m,f:at=>tcClick(at,sam,land)});
+    tcHL.push(setTimeout(()=>{document.querySelectorAll(".tc-cell.tc-on").forEach(c=>c.classList.remove("tc-on"));const c=document.querySelector('.tc-cell[data-gm="'+m+'"]');if(c)c.classList.add("tc-on");},(.15+m*md)*1000));}
+  items.sort((x,y)=>x.t-y.t);const t0=a.currentTime+.15;let k=0;
+  const pump=()=>{if(!tcPlaying)return;const hz=a.currentTime+.2;while(k<items.length&&t0+items[k].t*md<hz){items[k].f(t0+items[k].t*md);k++;}
+    if(k>=items.length){clearInterval(tcTimer);tcTimer=null;tcHL.push(setTimeout(tcStop,Math.max(0,(t0+(lastM+.6)*md-a.currentTime)*1000)));}};
+  tcTimer=setInterval(pump,25);pump();
+  const b=$("#tc-play");if(b){b.innerHTML=TC_STOP;b.setAttribute("aria-label","Stop");}
+}
+let tcT=0;
+let cfT=0;document.addEventListener("input",e=>{if(e.target&&e.target.id==="cf-bols"){clearTimeout(cfT);cfT=setTimeout(cfUnknown,250);}});
+document.addEventListener("input",e=>{const id=e.target&&e.target.id;if(!id||!id.startsWith("tc-"))return;
+  if(id==="tc-bpm"){TC.bpm=+e.target.value;const v=$("#tc-bpmv");if(v)v.textContent=TC.bpm+" matras per minute";return;}
+  if(id==="tc-phrase"){clearTimeout(tcT);tcT=setTimeout(tcUpdate,150);}});
+document.addEventListener("change",e=>{const id=e.target&&e.target.id;if(!id||!id.startsWith("tc-")||id==="tc-bpm"||id==="tc-phrase")return;
+  if(id==="tc-taal"){TC.taal=e.target.value;tcFillStart();}tcUpdate();});
 
 /* ---------------- render ---------------- */
 function render(){
@@ -1063,11 +1319,12 @@ function render(){
   side.innerHTML=`<div class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="3.5" r="1.8" fill="currentColor"/></svg>Layakari</div>`+
     NAV.map(([k,l])=>`<button class="nav" data-act="nav" data-v="${k}" ${S.view===k?'aria-current="page"':""}>${I[k]}${l}</button>`).join("")+
     `<div class="me">${avatar(S.uid,32)}<div style="min-width:0"><b>${esc(p.name)}</b><span>${esc(((p.roles||[]).map(r=>(ROLES.find(x=>x[0]===r)||[r,r])[1])).slice(0,2).join(" · "))}</span></div></div>`;
-  const ae=document.activeElement,fk=main.contains(ae)?focusKey(ae):null,sel=ae&&ae.selectionStart!=null?[ae.selectionStart,ae.selectionEnd]:null;
-  const v={discover:vDiscover,library:vLibrary,academy:vAcademy,studio:vStudio,profile:vProfile}[S.view]();
+  const ae=document.activeElement,fid=ae&&ae.id,sel=ae&&ae.selectionStart!=null?[ae.selectionStart,ae.selectionEnd]:null;
+  const v={discover:vDiscover,library:vLibrary,bols:vBols,academy:vAcademy,studio:vStudio,profile:vProfile}[S.view]();
   main.innerHTML=`<div class="wrap">${S.readOnly?`<p class="note" style="margin-top:0">You can browse, but changes can't be saved with your access level.</p>`:""}${v}</div>`;
-  if(fk){const el=findKey(main,fk);if(el){el.focus();if(sel&&el.setSelectionRange)try{el.setSelectionRange(sel[0],sel[1]);}catch(e){}}}
+  if(fid){const el=document.getElementById(fid);if(el&&main.contains(el)){el.focus();if(sel&&el.setSelectionRange)try{el.setSelectionRange(sel[0],sel[1]);}catch(e){}}}
   const qi=$("#q");if(qi)qi.oninput=e=>{S.q=e.target.value;render();};
+  const bq=$("#bq");if(bq)bq.oninput=e=>{S.bq=e.target.value;render();};
   const pv=$("#pv-lvl");if(pv)pv.onchange=e=>{S.pvLvl=e.target.value;render();};
   paint();syncPlay();
 }
@@ -1081,12 +1338,14 @@ document.addEventListener("click",e=>{
   if(act==="to-how"){const h=document.getElementById("how");if(h)h.scrollIntoView({block:"start"});return;}
   if(act==="to-signup"){if(S.authMode!=="up"){S.authMode="up";S.authMsg="";demoStop();render();}window.scrollTo({top:0,behavior:"smooth"});setTimeout(()=>{const el=document.getElementById("au-email");if(el)el.focus({preventScroll:true});},300);return;}
   if(act==="auth-mode"){demoStop();S.authMode=S.authMode==="up"?"in":"up";S.authMsg="";render();return;}
-  if(act==="signout"){stop();q.then(()=>sb.auth.signOut()).finally(()=>location.reload());return;}
+  if(act==="signout"){stop();sb.auth.signOut().finally(()=>location.reload());return;}
   if(act==="close"){closeModal();return;}
   if(act==="nav"){S.view=d.v;S.confirm=null;closeModal();render();window.scrollTo(0,0);return;}
   if(act==="taal"){S.taal=d.t;render();return;}
+  if(act==="bolf"){S.bolf=d.f;if(d.clear)S.bq="";render();return;}
+  if(act==="bol-go"){const r=NT.DICT[+d.n-1],to=r&&(r.of||r.n);S.bq="";S.bolf="all";if(S.view!=="bols"){S.view="bols";closeModal();}render();const el=document.getElementById("bol-"+to);if(el){el.scrollIntoView({behavior:"smooth",block:"center"});el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1600);}return;}
   if(act==="open"){openModal("detail",d.k);return;}
-  if(act==="play"){e.stopPropagation();play(d.k,d.mode);return;}
+  if(act==="play"){e.stopPropagation();play(d.k);return;}
   if(act==="buy"){const c=comp(d.k);if(!c)return;const price=num((c.prices||{})[d.kind],0);
     saveLedger(l=>l.items.push({id:rid(),key:c.key,kind:d.kind,seller:c.owner,price,at:Date.now()})).then(()=>{if(S.modal)renderModal();});
     toast(`${KIND[d.kind].n} licence added for ${c.title}. Demo: no payment taken.`);renderModal();return;}
@@ -1094,32 +1353,26 @@ document.addEventListener("click",e=>{
     saveLedger(l=>l.items.push({id:rid(),key:ch.comp,kind:"choreo",chor:ch.ckey,seller:ch.owner,price:num(ch.price,0),at:Date.now()}));
     toast(`Licensed "${ch.title}". Demo: no payment taken.`);renderModal();return;}
   if(act==="join"){saveEnroll(en=>{en.req[d.g]={at:Date.now()};});toast("Request sent. The guru will place you in a level.");return;}
-  if(act==="leave"){const ac=academies().find(x=>x.guru===d.g),keeps=ac&&Object.keys(passesFor(ac,S.uid)).length;
-    saveEnroll(en=>{delete en.req[d.g];});toast(keeps?"You've left the academy. Pieces from levels you passed stay in your library.":"Removed.");return;}
+  if(act==="leave"){saveEnroll(en=>{delete en.req[d.g];});toast("Removed.");return;}
   if(act==="acad-form"){openModal("acad");return;}
   if(act==="acad-open"){saveMe(p=>{p.academy.open=p.academy.open===false;});return;}
   if(act==="lvl"){S.selLvl=d.l;S.confirm=null;render();return;}
   if(act==="lvl-form"){openModal("level",d.l);return;}
-  if(act==="lvl-mv"){saveMe(p=>{const ls=p.academy.levels||[],i=ls.findIndex(l=>l.id===d.l),j=i+(+d.dir);if(i<0||j<0||j>=ls.length)return;[ls[i],ls[j]]=[ls[j],ls[i]];});return;}
-  if(act==="pass"){if(!confirmOnce("pass:"+d.s)){render();return;}
-    const A=me().academy;if(!A)return;const ls=A.levels||[],cur=(A.roster||{})[d.s],i=ls.findIndex(l=>l.id===cur);if(i<0)return;
-    const L=ls[i],nx=ls[i+1],pieces=levelPieces(A,cur);
-    saveMe(p=>{const a=p.academy;a.passed=a.passed||{};(a.passed[d.s]=a.passed[d.s]||{})[cur]={at:Date.now(),name:L.name,pieces};if(nx)a.roster[d.s]=nx.id;});
-    toast(nx?`${pname(d.s)} passed ${L.name} and moved up to ${nx.name}.`:`${pname(d.s)} passed ${L.name}, your top level.`);return;}
   if(act==="lvl-del"){if(!confirmOnce("lvl:"+d.l)){render();return;}saveMe(p=>{const a=p.academy;a.levels=a.levels.filter(l=>l.id!==d.l);for(const s in (a.roster||{}))if(a.roster[s]===d.l)a.roster[s]=a.levels[0]?a.levels[0].id:null;});toast("Level deleted. Its students moved to the first level.");return;}
   if(act==="piece"){saveMe(p=>{const l=p.academy.levels.find(x=>x.id===S.selLvl);if(!l)return;l.pieces=l.pieces||[];const i=l.pieces.indexOf(d.k);if(i>-1)l.pieces.splice(i,1);else l.pieces.push(d.k);});return;}
   if(act==="approve"){const s=$("#ap-"+CSS.escape(d.s));const lv=s&&s.value;if(!lv)return;saveMe(p=>{p.academy.roster=p.academy.roster||{};p.academy.roster[d.s]=lv;if(p.academy.declined)delete p.academy.declined[d.s];});toast(`${pname(d.s)} joined your academy.`);return;}
   if(act==="decline"){saveMe(p=>{p.academy.declined=p.academy.declined||{};p.academy.declined[d.s]=true;});return;}
   if(act==="remove"){if(!confirmOnce("rm:"+d.s)){render();return;}saveMe(p=>{delete p.academy.roster[d.s];});toast(`${pname(d.s)} removed.`);return;}
-  if(act==="comp-form"){notaUndo=null;recCache=null;openModal("comp",d.id);return;}
-  if(act==="nota-tidy"){const f=formVals();if(!f.text.trim()){notaMsg("Type or paste some bols first.");return;}
-    const N=parseNota(f.text,f.tk,f.start,f.type),out=tidyNota(f.text,f.tk,f.start,f.type);
-    if(out.trim()===f.text.trim()){notaMsg("Already in the standard format.");return;}
-    const fx=N.fixes.slice(0,3).map(([a,b])=>`${a} → ${b}`).join(", ");
-    notaSet(out,`Tidied into the standard format${N.fixes.length?`, with ${N.fixes.length} spelling${N.fixes.length===1?"":"s"} standardised (${fx}${N.fixes.length>3?"…":""})`:""}.`);return;}
-  if(act==="nota-photo"||act==="nota-rec"){const i=$(act==="nota-photo"?"#nota-img":"#nota-aud");if(i){i.value="";i.click();}return;}
-  if(act==="nota-undo"){const ta=$("#cf-bols");if(ta&&notaUndo){ta.value=notaUndo.text;const bi=$("#cf-bpm");if(bi&&notaUndo.bpm)bi.value=notaUndo.bpm;notaUndo=null;recCache=null;updatePrev();notaMsg("Undone.");}return;}
-  if(act==="rec-realign"){if(recCache)applyRec(recCache.sub);return;}
+  if(act==="comp-form"){TC.inForm=false;openModal("comp",d.id);return;}
+  if(act==="tc-open"){TC.inForm=false;openModal("tihai");return;}
+  if(act==="tc-inline"){const slot=$("#tc-slot"),btn=$("#tc-toggle");if(!slot)return;
+    if(TC.inForm){tcStop();TC.inForm=false;slot.innerHTML="";if(btn)btn.textContent="Check a tihai";return;}
+    const ta=$("#cf-bols"),txt=ta?ta.value:"";let sel=ta&&ta.selectionEnd>ta.selectionStart?txt.slice(ta.selectionStart,ta.selectionEnd).trim():"";
+    if(!sel){const lines=txt.split("\n").map(l=>l.trim()).filter(l=>l&&NT.flatBols(NT.parse(l)).length);if(lines.length)sel=lines[lines.length-1];}
+    if(sel)TC.phrase=sel;const tf=$("#cf-taal");if(tf&&TAALS[tf.value])TC.taal=tf.value;const bf=$("#cf-bpm");if(bf&&+bf.value)TC.bpm=Math.min(180,Math.max(30,+bf.value));
+    TC.start=0;TC.frac=0;TC.inForm=true;slot.innerHTML=`<div class="tc-inline">${tcPanel()}</div>`;if(btn)btn.textContent="Hide tihai check";tcInit();return;}
+  if(act==="tc-fix"){if(!tcRes||tcRes.r.error)return;const f=tcRes.r.startForSam,w=Math.floor(f+1e-9);TC.start=w;TC.frac=Math.round((f-w)*1e6)/1e6;tcFillStart();tcSetFrac(TC.frac);tcUpdate();return;}
+  if(act==="tc-play"){tcPlaying?tcStop():tcPlay();return;}
   if(act==="comp-del"){if(!confirmOnce("comp:"+d.id)){renderModal();return;}const key=S.uid+":"+d.id;if(S.playing===key)stop();
     saveMe(p=>{p.compositions=(p.compositions||[]).filter(c=>c.id!==d.id);if(p.academy)(p.academy.levels||[]).forEach(l=>{l.pieces=(l.pieces||[]).filter(k=>k!==key);});});closeModal();toast("Composition deleted.");return;}
   if(act==="samples"){saveMe(p=>{p.compositions=p.compositions||[];SAMPLES.forEach((s,i)=>p.compositions.push(Object.assign({},s,{id:rid(),created:Date.now()-i*1000,prices:{listen:2,perform:[25,20,15,25,15,10][i],teach:[99,79,69,99,69,49][i]}})));});toast("Six sample compositions added to your catalogue.");return;}
@@ -1127,23 +1380,8 @@ document.addEventListener("click",e=>{
   if(act==="ch-del"){if(!confirmOnce("ch:"+d.id)){render();return;}saveMe(p=>{p.choreographies=(p.choreographies||[]).filter(c=>c.id!==d.id);});return;}
   if(act==="prof-form"){openModal("profile");return;}
 });
-document.addEventListener("input",e=>{const id=e.target&&e.target.id;if(id==="cf-bols"||id==="cf-start"){clearTimeout(prevT);prevT=setTimeout(updatePrev,150);}});
-document.addEventListener("change",e=>{const t=e.target;
-  if(t.id==="nota-img"){readPhoto(t.files&&t.files[0]);return;}
-  if(t.id==="nota-aud"){readRecording(t.files&&t.files[0]);return;}
-  if(t.id==="rec-sub"){applyRec(+t.value);return;}
-  if(t.id==="cf-taal"){const s=$("#cf-start");if(s){const n=(TAALS[t.value]||TAALS.teentaal).n;s.max=n;if(+s.value>n)s.value=n;}updatePrev();return;}
-  if(t.id==="cf-start"||t.id==="cf-type"){updatePrev();return;}
-  if(t.dataset&&t.dataset.act==="move"){const sid=t.dataset.s,v=t.value;saveMe(p=>{p.academy.roster[sid]=v;});toast(`${pname(sid)} moved to a new level.`);}});
-document.addEventListener("keydown",e=>{if(!S.modal)return;
-  if(e.key==="Escape"){closeModal();return;}
-  if(e.key!=="Tab")return;
-  const dlg=$("#modal .dlg");if(!dlg)return;
-  const f=[...dlg.querySelectorAll(FOCUSABLE)].filter(el=>el.getClientRects().length);if(!f.length){e.preventDefault();dlg.focus();return;}
-  const first=f[0],last=f[f.length-1],ae=document.activeElement;
-  if(!dlg.contains(ae)||ae===dlg){e.preventDefault();(e.shiftKey?last:first).focus();}
-  else if(e.shiftKey&&ae===first){e.preventDefault();last.focus();}
-  else if(!e.shiftKey&&ae===last){e.preventDefault();first.focus();}});
+document.addEventListener("change",e=>{const t=e.target;if(t.dataset&&t.dataset.act==="move"){const sid=t.dataset.s,v=t.value;saveMe(p=>{p.academy.roster[sid]=v;});toast(`${pname(sid)} moved to a new level.`);}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&S.modal)closeModal();});
 document.addEventListener("submit",e=>{
   const f=e.target;if(!f.dataset||!f.dataset.form)return;e.preventDefault();const v=id=>{const el=document.getElementById(id);return el?el.value.trim():"";};
   const kind=f.dataset.form;
@@ -1160,7 +1398,6 @@ document.addEventListener("submit",e=>{
     if(S.gate==="onboard"){const p=Object.assign({compositions:[],choreographies:[],created:Date.now()},prof);S.profiles[S.uid]=p;S.gate=null;S.view=prof.roles.includes("composer")?"studio":prof.roles.includes("guru")?"academy":"discover";render();queue(()=>S.db.doc("profiles/"+S.uid).set(p));toast("Profile created. Welcome to Layakari.");return;}
     saveMe(p=>Object.assign(p,prof));closeModal();toast("Profile saved.");return;}
   if(kind==="comp"){const id=f.dataset.id;const data={title:v("cf-title"),type:v("cf-type"),taal:v("cf-taal"),laya:v("cf-laya"),bpm:Math.min(240,Math.max(30,parseInt(v("cf-bpm"))||90)),bols:document.getElementById("cf-bols").value.replace(/\s+$/,""),prices:{listen:num(v("cf-pl"),2),perform:num(v("cf-pp"),25),teach:num(v("cf-pt"),99)}};if(!data.title)return;
-    data.start=Math.min((TAALS[data.taal]||TAALS.teentaal).n,Math.max(1,parseInt(v("cf-start"))||1));
     saveMe(p=>{p.compositions=p.compositions||[];if(id){const c=p.compositions.find(x=>x.id===id);if(c)Object.assign(c,data);}else p.compositions.unshift(Object.assign({id:rid(),created:Date.now()},data));});closeModal();toast(id?"Composition saved.":"Composition published.");return;}
   if(kind==="chor"){const data={id:rid(),title:v("ch-title"),comp:v("ch-comp"),price:num(v("ch-price"),49),about:v("ch-about"),created:Date.now()};if(!data.title||!data.comp)return;saveMe(p=>{(p.choreographies=p.choreographies||[]).push(data);});closeModal();toast("Choreography published and linked.");return;}
   if(kind==="acad"){const data={name:v("ac-name"),about:v("ac-about"),fee:num(v("ac-fee"),0)};if(!data.name)return;
@@ -1174,7 +1411,6 @@ function maybeReady(){
   if(!(S.loaded.p&&S.loaded.l&&S.loaded.e))return;
   if(!S.profiles[S.uid]){if(S.gate!=="onboard"){S.gate="onboard";render();}return;}
   if(S.gate)S.gate=null;
-  capturePasses();
   render();if(S.modal&&S.modal.kind==="detail")renderModal();
 }
 let started=false;
@@ -1182,7 +1418,6 @@ function start(session){
   if(!session){S.gate="signin";render();return;}
   if(started)return;started=true;demoStop();
   S.db=makeDb();S.user=session.user;S.uid=session.user.id;S.gate="loading";render();
-  loadBolDb();
   const toMap=snap=>{const o={};snap.docs.forEach(d=>{if(d.exists)o[d.id]=d.data();});return o;};
   const onErr=e=>{console.error(e);toast("Couldn't load data. Check your connection and refresh.");};
   S.db.collection("profiles").onSnapshot(s=>{S.profiles=toMap(s);S.loaded.p=true;maybeReady();},onErr);
