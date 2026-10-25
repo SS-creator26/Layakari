@@ -488,12 +488,14 @@ const DICT_ROWS=[
  [136,"Parmelu","परमेलु","Composition form"],
  [137,"Tihai","तिहाई","Rhythmic structure repeated three times"],
  [138,"Aamad","आमद","Kathak presentation/composition form"],
- [139,"Chakkardar","चक्करदार","Repeated composition structure"]
+ [139,"Chakkardar","चक्करदार","Repeated composition structure"],
+ /* added later */
+ [140,"Theiya","थेइया","Dance syllable / variant"]
 ];
 /* rows that name a technique or a form of composition rather than bols: kept as words, never read as strokes */
 const TERMS=new Set([131,132,133,134,135,136,137,138,139]);
 /* rows that are another spelling of an earlier row, as their notes say */
-const VARIANT_OF={2:1,4:3,6:5,9:8,14:13,16:15,18:17,22:21,24:23,26:25,30:29,39:38,41:40,51:50,76:75,78:77,82:81,92:91,102:101,112:101,122:121};
+const VARIANT_OF={2:1,4:3,6:5,9:8,14:13,16:15,18:17,22:21,24:23,26:25,30:29,39:38,41:40,51:50,76:75,78:77,82:81,92:91,102:101,112:101,122:121,140:101};
 
 /* single strokes the reader knows, by plain Roman spelling, with the Devanagari used when writing notation out */
 const LEX={
@@ -508,7 +510,9 @@ const LEX={
   /* Kathak syllables and a few others the reader already knew */
   thei:"थेई",tat:"तत्",aa:"आ",tig:"तिग्",dig:"दिग",tan:"तां",kra:"क्र",dhun:"धुन",ni:"नि",gha:"घ",
   /* from the Kathak list */
-  tram:"ट्रम",thung:"थुंग",lung:"लुंग",tho:"थो",jhi:"झि",jha:"झ",kuk:"कुक्",nak:"नक्",thar:"थर्",rang:"रंग्",va:"व",dum:"दुम्"};
+  tram:"ट्रम",thung:"थुंग",lung:"लुंग",tho:"थो",jhi:"झि",jha:"झ",kuk:"कुक्",nak:"नक्",thar:"थर्",rang:"रंग्",va:"व",dum:"दुम्",
+  /* Theiya (row 140) = Thei + ya */
+  ya:"या"};
 /* (Tak is written तक in the dictionary; notation is written out as तक् so it can't be read back as Ta-ka) */
 /* other spellings of one stroke */
 const SPELL={dhey:"dhe",tey:"te",gey:"ge",ghey:"ghe",katt:"kat",dhuma:"dhum",thai:"thei",thay:"thei",they:"thei",theyi:"thei",khran:"kran",thho:"tho"};
@@ -517,7 +521,7 @@ const SPELL={dhey:"dhe",tey:"te",gey:"ge",ghey:"ghe",katt:"kat",dhuma:"dhum",tha
 const EXPAND={dhir:["dhi","ra"],tir:["ti","ra"],kit:["ki","ta"],tit:["ti","ta"],tigdha:["tig","da"]};
 /* written only in some transcriptions, so a split that avoids them wins a tie */
 const RARE=new Set(["tta","kta","kda"]);
-const KATHAK=new Set(["thei","tat","aa","tig","dig","thun","tha","thung","tram","lung","tho","jhi","jha","kuk","nak","thar","rang","dum"]);
+const KATHAK=new Set(["thei","tat","aa","tig","dig","thun","tha","thung","tram","lung","tho","jhi","jha","kuk","nak","thar","rang","dum","ya"]);
 const ALIAS={tirkit:"tirakita",tirakit:"tirakita",tirkita:"tirakita"};
 const PIECES={};
 Object.keys(LEX).forEach(k=>PIECES[k]=[k]);Object.keys(SPELL).forEach(k=>PIECES[k]=[SPELL[k]]);Object.keys(EXPAND).forEach(k=>PIECES[k]=EXPAND[k]);
@@ -1177,7 +1181,8 @@ function vBols(){
     NT.DICT.forEach(e=>{if(want.has(key(e.bols)))hits.add(e.of||e.n);});}
   const mains=NT.DICT.filter(e=>!e.of&&hits.has(e.n)&&ok(e));
   const filtered=q||f!=="all";
-  const rowsOf=g=>{const ns=NT.DICT.filter(e=>e.group===g).map(e=>e.n);return `${Math.min(...ns)}–${Math.max(...ns)}`;};
+  const rowsOf=g=>{const ns=NT.DICT.filter(e=>e.group===g).map(e=>e.n).sort((x,y)=>x-y),out=[];let a=ns[0],z=ns[0];
+    for(const x of ns.slice(1).concat([null])){if(x!==null&&x===z+1){z=x;continue;}out.push(z>a?`${a}–${z}`:`${a}`);a=z=x;}return out.join(", ");};
   const count=(g,es)=>{if(filtered)return `${es.length} matching`;const v=NT.DICT.filter(e=>e.group===g&&e.of).length;
     return `Rows ${rowsOf(g)}`+(g==="term"?" · forms and techniques, not strokes":v?` · ${v} ${v===1?"is another spelling, shown with its":"are other spellings, shown with their"} bol`:"");};
   return `<p class="eyebrow">Bols</p><h1>The bol dictionary</h1><p class="lede">The core, compound and Kathak bols that compositions are built from. Layakari recognises every spelling here, in Roman or Devanagari, whenever you write the bols of a composition. Kathak terms like Toda and Tihai are listed at the end.</p>
