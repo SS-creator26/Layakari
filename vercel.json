@@ -1,0 +1,11 @@
+{
+  "rewrites": [
+    { "source": "/c/:slug", "destination": "/api/share?type=c&slug=:slug" },
+    { "source": "/u/:slug", "destination": "/api/share?type=u&slug=:slug" },
+    { "source": "/a/:slug", "destination": "/api/share?type=a&slug=:slug" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ],
+  "functions": {
+    "api/share.js": { "includeFiles": "index.html" }
+  }
+}
