@@ -436,10 +436,52 @@ const DICT_ROWS=[
  [97,"Dhuma","धुम","Compound or phrase form"],
  [98,"Dhage-dhina","धागेधिना","Compound phrase"],
  [99,"Dha-dhin","धा धिन","Two-bol sequence"],
- [100,"Tin-na","तिन्ना","Compound phrase"]
+ [100,"Tin-na","तिन्ना","Compound phrase"],
+ /* Kathak bols, 101–139 (numbered 1–39 in the Kathak list) */
+ [101,"Thei","थेई","Dance syllable"],
+ [102,"Thai","थई","Dance syllable / variant"],
+ [103,"Tigda","तिगड़ा","Dance syllable"],
+ [104,"Dig Dig","दिग दिग","Rhythmic phrase"],
+ [105,"Tigdha Dig Dig","तिगधा दिग दिग","Composite phrase"],
+ [106,"Ta Thei","ता थेई","Composite phrase"],
+ [107,"Ta Thei Thei Tat","ता थेई थेई तत्","Composite phrase"],
+ [108,"Tat Tat Thei","तत् तत् थेई","Composite phrase"],
+ [109,"Aa Thei","आ थेई","Composite phrase"],
+ [110,"Ta Ta Thei","ता ता थेई","Composite phrase"],
+ [111,"Tram","ट्रम","Dance/percussion syllable"],
+ [112,"Theyi","थेयी","Dance syllable / variant"],
+ [113,"Khran / Kran","क्रान","Dance/percussion syllable"],
+ [114,"Thun Thun","थुन थुन","Rhythmic phrase"],
+ [115,"Thung","थुंग","Dance/percussion syllable"],
+ [116,"Thunga","थुंगा","Dance/percussion syllable"],
+ [117,"Lung","लुंग","Dance/percussion syllable"],
+ [118,"Thho / Tho","थो","Dance/percussion syllable"],
+ [119,"Jhijhi","झिझी","Parmelu-style syllable"],
+ [120,"Jhijhi Kit","झिझी किट","Composite phrase"],
+ [121,"Kukku","कुक्कु","Parmelu-style syllable"],
+ [122,"Kuku","कुकु","Variant spelling"],
+ [123,"Jhanak","झनक","Ringing / sound-imitative bol"],
+ [124,"Jhananana","झननन","Ringing / sound-imitative phrase"],
+ [125,"Tharree / Tharee","थर्री","Parmelu-style syllable"],
+ [126,"Thorang","थोरंग","Nature-inspired bol"],
+ [127,"Tak Thunga","तक थुंगा","Composite phrase"],
+ [128,"Tava Thunga","तब थुंगा","Composite phrase"],
+ [129,"Takita Thunga","तकित थुंगा","Composite phrase"],
+ [130,"Takadum Thei","तकदुम थेई","Composite phrase"],
+ [131,"Tatkar","तत्कार","Footwork vocabulary / technique"],
+ [132,"Natwari","नटवरी","Dance-bol style"],
+ [133,"Toda","तोड़ा","Composition form"],
+ [134,"Tukda","टुकड़ा","Composition form"],
+ [135,"Paran","परन","Composition form"],
+ [136,"Parmelu","परमेलु","Composition form"],
+ [137,"Tihai","तिहाई","Rhythmic structure repeated three times"],
+ [138,"Aamad","आमद","Kathak presentation/composition form"],
+ [139,"Chakkardar","चक्करदार","Repeated composition structure"]
 ];
+/* rows that name a technique or a form of composition rather than bols: kept as words, never read as strokes */
+const TERMS=new Set([131,132,133,134,135,136,137,138,139]);
 /* rows that are another spelling of an earlier row, as their notes say */
-const VARIANT_OF={2:1,4:3,6:5,9:8,14:13,16:15,18:17,22:21,24:23,26:25,30:29,39:38,41:40,51:50,76:75,78:77,82:81,92:91};
+const VARIANT_OF={2:1,4:3,6:5,9:8,14:13,16:15,18:17,22:21,24:23,26:25,30:29,39:38,41:40,51:50,76:75,78:77,82:81,92:91,102:101,112:101,122:121};
 
 /* single strokes the reader knows, by plain Roman spelling, with the Devanagari used when writing notation out */
 const LEX={
@@ -452,16 +494,19 @@ const LEX={
   /* parts of compounds that aren't rows of their own (Dhin-gi-na, Ghene) */
   gi:"गि",ne:"ने",
   /* Kathak syllables and a few others the reader already knew */
-  thei:"थेई",tat:"तत्",aa:"आ",tig:"तिग्",dig:"दिग्",tan:"तां",kra:"क्र",dhun:"धुन",ni:"नि",gha:"घ"};
+  thei:"थेई",tat:"तत्",aa:"आ",tig:"तिग्",dig:"दिग",tan:"तां",kra:"क्र",dhun:"धुन",ni:"नि",gha:"घ",
+  /* from the Kathak list */
+  tram:"ट्रम",thung:"थुंग",lung:"लुंग",tho:"थो",jhi:"झि",jha:"झ",kuk:"कुक्",nak:"नक्",thar:"थर्",rang:"रंग्",va:"व",dum:"दुम्"};
 /* (Tak is written तक in the dictionary; notation is written out as तक् so it can't be read back as Ta-ka) */
 /* other spellings of one stroke */
-const SPELL={dhey:"dhe",tey:"te",gey:"ge",ghey:"ghe",katt:"kat",dhuma:"dhum",thai:"thei",thay:"thei",they:"thei"};
-/* recited short forms that stand for two strokes: Dhir = Dhi-ra (row 68), Titkit = Titakita (row 82) */
-const EXPAND={dhir:["dhi","ra"],tir:["ti","ra"],kit:["ki","ta"],tit:["ti","ta"]};
+const SPELL={dhey:"dhe",tey:"te",gey:"ge",ghey:"ghe",katt:"kat",dhuma:"dhum",thai:"thei",thay:"thei",they:"thei",theyi:"thei",khran:"kran",thho:"tho"};
+/* recited short forms that stand for two strokes: Dhir = Dhi-ra (row 68), Titkit = Titakita (row 82).
+   Tigdha is the usual Roman spelling of Tigda: his row 105 (Tigdha Dig Dig) is row 103 (Tigda) and row 104 (Dig Dig) */
+const EXPAND={dhir:["dhi","ra"],tir:["ti","ra"],kit:["ki","ta"],tit:["ti","ta"],tigdha:["tig","da"]};
 /* written only in some transcriptions, so a split that avoids them wins a tie */
 const RARE=new Set(["tta","kta","kda"]);
-const KATHAK=new Set(["thei","tat","aa","tig","dig","thun","tha"]);
-const ALIAS={tirkit:"tirakita",tirakit:"tirakita",tirkita:"tirakita",tigdha:"tigda"};
+const KATHAK=new Set(["thei","tat","aa","tig","dig","thun","tha","thung","tram","lung","tho","jhi","jha","kuk","nak","thar","rang","dum"]);
+const ALIAS={tirkit:"tirakita",tirakit:"tirakita",tirkita:"tirakita"};
 const PIECES={};
 Object.keys(LEX).forEach(k=>PIECES[k]=[k]);Object.keys(SPELL).forEach(k=>PIECES[k]=[SPELL[k]]);Object.keys(EXPAND).forEach(k=>PIECES[k]=EXPAND[k]);
 const KEYS=Object.keys(PIECES).sort((a,b)=>b.length-a.length);
@@ -517,8 +562,9 @@ function devSyllables(w,kathak){
   return out;
 }
 
-/* Devanagari words spelled exactly as in the dictionary, and the strokes they stand for (filled in below) */
-const DEVA_EXACT={},AMBIG={};
+/* Devanagari words spelled exactly as in the dictionary, and the strokes they stand for (filled in below);
+   the dictionary's own spelling for a group of strokes, used when writing notation out; and second Roman spellings */
+const DEVA_EXACT={},AMBIG={},DEVA_FOR={},ROMAN_EXACT={};
 
 /* one run of letters with no gaps -> slots */
 function readPart(part,kathak){
@@ -530,7 +576,9 @@ function readPart(part,kathak){
       if(EXPAND[sy]){EXPAND[sy].forEach(b=>out.push({bol:b,src:b}));continue;}
       const b=SPELL[sy]||sy;out.push({bol:b,src:b,unknown:!LEX[b]});}
     return out;}
-  let segs=segment(normRoman(part));
+  const nr=normRoman(part);
+  if(ROMAN_EXACT[nr])return ROMAN_EXACT[nr].map(b=>({bol:b,src:b}));
+  let segs=segment(nr);
   if(!segs){const caps=part.split(/(?=[A-Z])/);
     if(caps.length>1){const all=[];let ok=true;for(const c of caps){const s=segment(normRoman(c));if(!s){ok=false;break;}all.push(...s);}if(ok)segs=all;}}
   if(segs&&segs.length)return segs.map(s=>({bol:s,src:s}));
@@ -586,9 +634,10 @@ function groupsOf(m){const g=[];m.slots.forEach(s=>{(g[s.half]=g[s.half]||[]).pu
 const tailC=m=>m.cutHalf?",":"";
 function matraRoman(m){return groupsOf(m).map(g=>g.map(s=>s.bol==null?"–":s.bol).join("")).join(",")+tailC(m);}
 function matraLabel(m){return groupsOf(m).map(g=>g.map(s=>bolName(s.bol)).join("")).join(",")+tailC(m);}
-/* a bol on its own in a matra is written as in the dictionary. Inside a fast group the usual short
-   forms are used (तिरकिट, गदिगन, किटतक), and a bol ending in a consonant is closed so the group reads back
-   the same: धिं at the end, धिन्ना before Na, कट् and तक् with a halant */
+/* a bol on its own in a matra is written as in the dictionary, and so is a group of strokes that is a row of
+   the dictionary (तिरकिट, थुंगा, तिगड़ा). Other fast groups use the usual short forms (गदिगन, किटतक), and a bol
+   ending in a consonant is closed so the group reads back the same: धिं at the end, धिन्ना before Na, कट् and
+   तक् with a halant. A group that still wouldn't read back the same is written with its pieces joined by hyphens */
 function devaOf(b,prev,pos,count,next){
   if(b==null)return "ऽ";
   const base=LEX[b]||b;
@@ -604,10 +653,20 @@ function devaOf(b,prev,pos,count,next){
     return stem+"्";}
   return base;
 }
-function matraDeva(m){return groupsOf(m).map(g=>{const cnt=g.filter(x=>x.bol!=null).length;
-  return g.map((s,i)=>devaOf(s.bol,i?g[i-1].bol:null,i,cnt,i+1<g.length?g[i+1].bol:null)).join("");}).join(",")+tailC(m);}
+function readsAs(str,bs,kathak){
+  return (kathak===undefined?[false,true]:[!!kathak]).every(k=>{const t=tokens(str,k);return t.length===bs.length&&t.every((x,i)=>x.bol===bs[i]);});}
+function groupDeva(g,kathak){
+  const bs=g.map(s=>s.bol),cnt=bs.filter(b=>b!=null).length;
+  if(cnt>1&&cnt===bs.length&&DEVA_FOR[bs.join(" ")])return DEVA_FOR[bs.join(" ")];
+  const composed=g.map((s,i)=>devaOf(s.bol,i?g[i-1].bol:null,i,cnt,i+1<g.length?g[i+1].bol:null)).join("");
+  if(cnt<2||readsAs(composed,bs,kathak))return composed;
+  const each=bs.map(b=>b==null?"ऽ":LEX[b]||b);let joined="";
+  each.forEach((w,i)=>{if(i&&w!=="ऽ"&&each[i-1]!=="ऽ")joined+="-";joined+=w;});
+  return readsAs(joined,bs,kathak)?joined:composed;
+}
+function matraDeva(m,kathak){return groupsOf(m).map(g=>groupDeva(g,kathak)).join(",")+tailC(m);}
 function toRoman(p){return p.matras.map(matraRoman).join(" ");}
-function toDeva(p){return p.matras.map(matraDeva).join(" ");}
+function toDeva(p){const k=isKathak(p);return p.matras.map(m=>matraDeva(m,k)).join(" ");}
 
 /* ---------- tihai arithmetic ---------- */
 const TAALS={
@@ -668,41 +727,58 @@ const romanKey=s=>normRoman(String(s||"").replace(/[-–—]/g,""));
 /* the same letters, ignoring case, accents, spaces and hyphens */
 const plainKey=s=>keyOf(String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"")).normalize("NFC");
 const DICT=DICT_ROWS.map(([n,roman,deva,note])=>{
-  const p=parse(roman,false);
-  return {n,roman,deva,devas:deva.split("/").map(s=>s.trim()).filter(Boolean),note,group:n<=60?"core":"compound",
+  const romans=roman.split("/").map(s=>s.trim()).filter(Boolean),term=TERMS.has(n);
+  const p=term?{matras:[],unknown:[]}:parse(romans[0],false);
+  return {n,roman,romans,deva,devas:deva.split("/").map(s=>s.trim()).filter(Boolean),note,
+    group:term?"term":n<=60?"core":n<=100?"compound":"kathak",term,
     of:VARIANT_OF[n]||null,bols:flatBols(p),matras:p.matras.length,unknown:p.unknown};});
 const BY_N={};DICT.forEach(e=>BY_N[e.n]=e);
 DICT.forEach(e=>{const main=e.of?BY_N[e.of]:e,t=main.note+" "+e.note;
   e.drum=/both drums/i.test(t)?"both":/treble/i.test(t)?"treble":/bass/i.test(t)?"bass":null;
   e.variants=DICT.filter(v=>v.of===e.n).map(v=>v.n);});
-DICT.forEach(e=>{const k=e.bols.join(" ");e.same=DICT.filter(o=>o!==e&&o.bols.join(" ")===k&&o.of!==e.n&&e.of!==o.n&&!(e.of&&e.of===o.of)).map(o=>o.n);});
+DICT.forEach(e=>{const k=e.bols.join(" ");e.same=e.term?[]:DICT.filter(o=>o!==e&&!o.term&&o.bols.join(" ")===k&&o.of!==e.n&&e.of!==o.n&&!(e.of&&e.of===o.of)).map(o=>o.n);});
 /* Devanagari spellings that stand for one reading; a spelling given for two different readings is left to the usual rules */
+/* the consonants of a reading, ignoring vowels and aspiration (Tigdha / तिगधा): a typo like Tava / तब still differs */
+const skel=s=>String(s).replace(/[aeiou\s]/g,"").replace(/([kgcjtdpb])h/g,"$1");
 (function(){const seen={};
-  DICT.forEach(e=>e.devas.forEach(d=>{if(/\s/.test(d))return;d=d.normalize("NFC");const k=e.bols.join(" ");
-    (seen[d]=seen[d]||{});(seen[d][k]=seen[d][k]||[]).push(e.n);}));
+  const add=(d,k,n)=>{d=d.normalize("NFC");(seen[d]=seen[d]||{});(seen[d][k]=seen[d][k]||[]).push(n);};
+  DICT.forEach(e=>{if(e.term)return;
+    const rw=e.romans[0].split(/\s+/);
+    e.devas.forEach(d=>{
+      if(!/\s/.test(d)){add(d,e.bols.join(" "),e.n);return;}
+      const dw=d.split(/\s+/);if(dw.length!==rw.length||rw.length<2)return;
+      dw.forEach((w,i)=>{const b=flatBols(parse(rw[i],false));
+        if(b.length&&b.every(x=>LEX[x])&&skel(devSyllables(w,false).join(""))===skel(b.join("")))add(w,b.join(" "),e.n);});});});
   for(const d in seen){const ks=Object.keys(seen[d]);
-    if(ks.length===1)DEVA_EXACT[d]=ks[0].split(" ");else AMBIG[d]=ks.map(k=>({bols:k.split(" "),rows:seen[d][k]}));}})();
+    if(ks.length===1)DEVA_EXACT[d]=ks[0].split(" ");else AMBIG[d]=ks.map(k=>({bols:k.split(" "),rows:seen[d][k]}));}
+  /* for writing out: the spelling of the earliest main row that has these strokes */
+  const rank=n=>(BY_N[n].of?1000:0)+n,best={};
+  for(const d in DEVA_EXACT){const k=DEVA_EXACT[d].join(" ");if(DEVA_EXACT[d].length<2)continue;
+    const r=Math.min(...Object.values(seen[d]).flat().map(rank));if(!best[k]||r<best[k].r)best[k]={d,r};}
+  for(const k in best)DEVA_FOR[k]=best[k].d;
+  DICT.forEach(e=>{if(e.term||e.matras!==1)return;e.romans.slice(1).forEach(r=>{
+    if(/\s/.test(r))return;const b=flatBols(parse(r,false));if(b.join(" ")!==e.bols.join(" "))ROMAN_EXACT[normRoman(r)]=e.bols.slice();});});})();
 
 /* what someone typed: how it reads, and which dictionary rows it is */
 function lookup(q){
   const t=String(q||"").trim();if(!t)return null;
   const p=parse(t),bols=flatBols(p),k=plainKey(t);
-  const spelled=DICT.filter(e=>plainKey(e.roman)===k||e.devas.some(d=>plainKey(d)===k));
-  const same=bols.length?DICT.filter(e=>e.bols.join(" ")===bols.join(" ")&&!spelled.includes(e)):[];
+  const spelled=DICT.filter(e=>e.romans.some(r=>plainKey(r)===k)||e.devas.some(d=>plainKey(d)===k));
+  const same=bols.length?DICT.filter(e=>!e.term&&e.bols.join(" ")===bols.join(" ")&&!spelled.includes(e)):[];
   return {parsed:p,bols,matras:p.matras.length,spelled,same,unknown:p.unknown,ambiguous:AMBIG[t.normalize("NFC")]||null};
 }
 /* rows whose name, Devanagari or note contain the search */
 function search(q){
   const t=String(q||"").trim();if(!t)return DICT.slice();
   const k=keyOf(t),rk=/[ऀ-ॿ]/.test(t)?"":romanKey(t),lo=t.toLowerCase();
-  return DICT.filter(e=>(rk&&romanKey(e.roman).includes(rk))||e.devas.some(d=>keyOf(d).includes(k))||e.note.toLowerCase().includes(lo)||String(e.n)===t);
+  const pk=plainKey(t);
+  return DICT.filter(e=>(rk&&e.romans.some(r=>romanKey(r).includes(rk)||plainKey(r).includes(pk)))||e.devas.some(d=>keyOf(d).includes(k))||e.note.toLowerCase().includes(lo)||String(e.n)===t);
 }
 
 return {LEX,KATHAK,TAALS,DICT,AMBIG,parse,tokens,segment,devSyllables,normRoman,bolName,flatBols,isKathak,matraRoman,matraLabel,matraDeva,toRoman,toDeva,
   lookup,search,timeline,innerTihai,tihai,posText,fmtN,mod};
 })();
 if(typeof module!=="undefined")module.exports=Notation;
-
 /* NOTATION:END */
 </script>
 <script>
@@ -942,24 +1018,33 @@ function vStudio(){
 }
 
 /* ---------------- Bols: the dictionary every composition is read with ---------------- */
-const BOL_F=[["all","All"],["core","Core"],["compound","Compound"],["both","Both drums"],["treble","Treble drum"],["bass","Bass drum"]];
+const BOL_F=[["all","All"],["core","Core"],["compound","Compound"],["kathak","Kathak"],["term","Terms"],["both","Both drums"],["treble","Treble drum"],["bass","Bass drum"]];
+const BOL_G=[["core","Core bols"],["compound","Compound bols"],["kathak","Kathak bols"],["term","Kathak terms"]];
+/* terms (Toda, Tihai…) name a form or a technique; they are never read as strokes */
+const termKey=w=>String(w||"").normalize("NFC").toLowerCase().replace(/[^a-z\u0900-\u097F]/g,"");
+let TERM_KEYS=null;
+const isTermWord=w=>{if(!TERM_KEYS)TERM_KEYS=new Set(NT.DICT.filter(e=>e.term).flatMap(e=>e.romans.concat(e.devas)).map(termKey));return TERM_KEYS.has(termKey(w));};
+const termOf=q=>{const L=NT.lookup(q);return L&&L.spelled.find(e=>e.term)||null;};
 const DRUM={both:"Both drums",treble:"Treble drum",bass:"Bass drum"};
 const bolRow=n=>NT.DICT[n-1];
 const bolRef=e=>`<button type="button" class="lnk" data-act="bol-go" data-n="${e.n}">${e.n} ${esc(e.roman)}</button>`;
 function bolCard(e,q){
-  const strokes=e.bols.map(NT.bolName),showK=strokes.length>1||strokes[0]!==e.roman;
+  const strokes=e.bols.map(NT.bolName),showK=!e.term&&(strokes.length>1||strokes[0]!==e.roman);
   const plain=x=>String(x).toLowerCase().replace(/[\s\-–—]/g,""),qq=plain(q||"");
   const hit=v=>qq&&(plain(v.roman).includes(qq)||v.devas.some(d=>plain(d).includes(qq)));
   return `<article class="bol" id="bol-${e.n}">
     <div class="bol-h"><span class="bol-n">${e.n}</span><b class="bol-r">${esc(e.roman)}</b><span class="bol-d" lang="hi">${esc(e.deva)}</span></div>
     <p class="bol-note">${esc(e.note)}</p>
-    ${showK?`<p class="bol-k"><span>${strokes.length} stroke${strokes.length===1?"":"s"}:</span>${strokes.map(b=>`<i>${esc(b)}</i>`).join("")}</p>`:""}
+    ${showK?`<p class="bol-k"><span>${strokes.length} stroke${strokes.length===1?"":"s"}${e.matras>1?` in ${e.matras} matras`:""}:</span>${strokes.map(b=>`<i>${esc(b)}</i>`).join("")}</p>`:""}
     ${e.variants.map(bolRow).map(v=>`<div class="bol-v${hit(v)?" hit":""}"><span class="bol-n">${v.n}</span><b>${esc(v.roman)}</b><span lang="hi">${esc(v.deva)}</span><p class="bol-note">${esc(v.note)}</p></div>`).join("")}
     ${e.same.length?`<p class="bol-s">Same strokes as ${e.same.map(bolRow).map(bolRef).join(", ")}</p>`:""}
-    ${e.drum?`<span class="pill ${e.drum==="both"?"gold":"teal"}">${DRUM[e.drum]}</span>`:""}
+    ${e.drum?`<span class="pill ${e.drum==="both"?"gold":"teal"}">${DRUM[e.drum]}</span>`:""}${e.term?`<span class="pill">Term</span>`:""}
   </article>`;
 }
 function bolReading(q){
+  const t=termOf(q);
+  if(t)return `<div class="panel bol-read" role="status" aria-live="polite"><span class="eyebrow" style="margin:0">Kathak term</span>
+    <p class="small">${bolRef(t)} names a ${esc(t.note.toLowerCase())}, so Layakari doesn't read it as strokes.</p></div>`;
   const L=NT.lookup(q);if(!L||!L.bols.some(b=>NT.LEX[b]))return "";
   const n=L.bols.length,list=es=>es.map(bolRef).join(", ");
   const kath=NT.flatBols(NT.parse(q,true)).map(NT.bolName).join(" "),here=L.bols.map(NT.bolName).join(" ");
@@ -975,26 +1060,26 @@ function bolReading(q){
 function vBols(){
   const q=S.bq.trim(),f=S.bolf,ok=e=>f==="all"||e.group===f||e.drum===f;
   const hits=new Set(NT.search(q).map(e=>e.of||e.n));
-  if(q){const p=NT.parse(q),key=bs=>bs.join(" "),want=new Set();
+  if(q&&!termOf(q)){const p=NT.parse(q),key=bs=>bs.join(" "),want=new Set();
     p.matras.forEach(m=>{const bs=m.slots.filter(x=>x.bol!=null).map(x=>x.bol);if(bs.length)want.add(key(bs));bs.forEach(b=>want.add(b));});
     NT.DICT.forEach(e=>{if(want.has(key(e.bols)))hits.add(e.of||e.n);});}
   const mains=NT.DICT.filter(e=>!e.of&&hits.has(e.n)&&ok(e));
-  const core=mains.filter(e=>e.group==="core"),comp=mains.filter(e=>e.group==="compound");
   const filtered=q||f!=="all";
-  const count=(g,es)=>filtered?`${es.length} matching`:`Rows ${g==="core"?"1–60":"61–100"} · ${NT.DICT.filter(e=>e.group===g&&e.of).length} are other spellings, shown with their bol`;
-  return `<p class="eyebrow">Bols</p><h1>The bol dictionary</h1><p class="lede">The core and compound bols that Kathak compositions are built from. Layakari recognises every spelling here, in Roman or Devanagari, whenever you write the bols of a composition.</p>
+  const rowsOf=g=>{const ns=NT.DICT.filter(e=>e.group===g).map(e=>e.n);return `${Math.min(...ns)}–${Math.max(...ns)}`;};
+  const count=(g,es)=>{if(filtered)return `${es.length} matching`;const v=NT.DICT.filter(e=>e.group===g&&e.of).length;
+    return `Rows ${rowsOf(g)}`+(g==="term"?" · forms and techniques, not strokes":v?` · ${v} ${v===1?"is another spelling, shown with its":"are other spellings, shown with their"} bol`:"");};
+  return `<p class="eyebrow">Bols</p><h1>The bol dictionary</h1><p class="lede">The core, compound and Kathak bols that compositions are built from. Layakari recognises every spelling here, in Roman or Devanagari, whenever you write the bols of a composition. Kathak terms like Toda and Tihai are listed at the end.</p>
   <label class="search">${I.search}<input id="bq" type="search" autocomplete="off" spellcheck="false" placeholder="Search, or type bols to see how they read: dheen, धीरे, dhagetirakita" value="${esc(S.bq)}" aria-label="Search the bols, or type bols to see how Layakari reads them"></label>
   ${q?bolReading(q):""}
   <div class="chips">${BOL_F.map(([k,l])=>`<button class="chip" data-act="bolf" data-f="${k}" aria-pressed="${f===k}">${l}</button>`).join("")}</div>
-  ${core.length?`<div class="sec"><h2>Core bols</h2><span>${count("core",core)}</span></div><div class="bolgrid">${core.map(e=>bolCard(e,q)).join("")}</div>`:""}
-  ${comp.length?`<div class="sec"><h2>Compound bols</h2><span>${count("compound",comp)}</span></div><div class="bolgrid">${comp.map(e=>bolCard(e,q)).join("")}</div>`:""}
+  ${BOL_G.map(([g,label])=>{const es=mains.filter(e=>e.group===g);return es.length?`<div class="sec"><h2>${label}</h2><span>${count(g,es)}</span></div><div class="bolgrid">${es.map(e=>bolCard(e,q)).join("")}</div>`:"";}).join("")}
   ${mains.length?"":`<div class="empty" style="margin-top:20px">No bols in the dictionary match${q?` “${esc(q)}”`:""}${f!=="all"?" with this filter":""}.${filtered?`<button class="btn sm ghost" data-act="bolf" data-f="all" data-clear="1">Show all bols</button>`:""}</div>`}`;
 }
 /* bols in a composition that aren't in the dictionary, from lines that are mostly bols (lyrics and notes are left alone) */
 function bolsNotInDict(text){
   const out=new Set();
   String(text||"").split("\n").forEach(line=>{const words=line.replace(/\([^)]*\)/g," ").split(/[\s|।॥]+/).filter(w=>w&&/[A-Za-zऀ-ॿ]/.test(w)&&!/^(x|o|[x×]\d+|\d+[x×])$/i.test(w));
-    if(!words.length)return;const bad=words.filter(w=>NT.parse(w).unknown.length);
+    if(!words.length)return;const bad=words.filter(w=>!isTermWord(w)&&NT.parse(w).unknown.length);
     if(bad.length&&bad.length<=words.length/2)bad.forEach(w=>NT.parse(w).unknown.forEach(u=>out.add(u)));});
   return [...out];
 }
